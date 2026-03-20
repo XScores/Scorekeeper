@@ -422,23 +422,6 @@
                 z-index: 101 !important;
             }
             
-            /* Move hamburger to button group on right */
-            header .hamburger-btn {
-                position: absolute !important;
-                top: 0px !important;
-                left: 570px !important;
-                width: 30px !important;
-                height: 30px !important;
-                z-index: 103 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                align-items: center !important;
-                opacity: 1 !important;
-                background: var(--button-bg, #E8E8E8) !important;
-                border-radius: 8px !important;
-            }
-            
             .hamburger-line {
                 width: 16px !important;
                 opacity: 1 !important;
@@ -512,6 +495,25 @@
                 min-height: 30px !important;
                 font-size: 0.9rem !important;
                 padding: 0 !important;
+            }
+            
+            /* Position hamburger as third button in voice group */
+            header .hamburger-btn {
+                position: absolute !important;
+                top: 0px !important;
+                left: 570px !important;
+                width: 30px !important;
+                height: 30px !important;
+                z-index: 102 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                opacity: 1 !important;
+                background: var(--button-bg, #E8E8E8) !important;
+                border-radius: 8px !important;
+                margin: 0 !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
             }
             
             /* === GAME TYPE DROPDOWN === */
