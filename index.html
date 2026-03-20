@@ -498,12 +498,12 @@
             }
             
             /* Position hamburger as third button in voice group */
-            /* Break it out of header's positioning context */
+            /* Use relative positioning - move it from its natural spot in header */
             header .hamburger-btn {
-                position: fixed !important;
-                top: 10px !important;
+                position: relative !important;
+                top: auto !important;
                 right: auto !important;
-                left: 570px !important;
+                left: 490px !important;
                 width: 30px !important;
                 height: 30px !important;
                 z-index: 102 !important;
