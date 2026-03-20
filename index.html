@@ -397,11 +397,6 @@
                 white-space: nowrap !important;
             }
             
-            /* Hide Start Voice Recognition button when game is active */
-            .start-button-container {
-                display: none !important;
-            }
-            
             /* === LANDSCAPE LAYOUT - WORKS WITH ACTUAL HTML STRUCTURE === */
             
             /* Container setup */
@@ -427,9 +422,18 @@
                 z-index: 101 !important;
             }
             
-            /* Hide hamburger from its original location */
+            /* Move hamburger to button group on right */
             header .hamburger-btn {
-                display: none !important;
+                position: absolute !important;
+                top: 0px !important;
+                left: 610px !important;
+                width: 30px !important;
+                height: 30px !important;
+                z-index: 102 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
             }
             
             .hamburger-line {
@@ -504,30 +508,6 @@
                 min-height: 30px !important;
                 font-size: 0.9rem !important;
                 padding: 0 !important;
-            }
-            
-            /* Add hamburger menu as third button after voice buttons */
-            .voice-btn-group::after {
-                content: '☰' !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                width: 30px !important;
-                height: 30px !important;
-                min-width: 30px !important;
-                min-height: 30px !important;
-                background: var(--button-bg, #E8E8E8) !important;
-                border-radius: 8px !important;
-                cursor: pointer !important;
-                font-size: 1.1rem !important;
-                color: var(--text-color, #2C2C2E) !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-                transition: all 0.2s ease !important;
-            }
-            
-            .voice-btn-group::after:hover {
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.20) !important;
             }
             
             /* === GAME TYPE DROPDOWN === */
