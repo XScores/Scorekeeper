@@ -397,7 +397,7 @@
                 white-space: nowrap !important;
             }
             
-            /* === LANDSCAPE LAYOUT === */
+            /* === LANDSCAPE LAYOUT - WORKS WITH ACTUAL HTML STRUCTURE === */
             
             /* Container setup */
             .container {
@@ -498,6 +498,7 @@
             }
             
             /* Position hamburger as third button in voice group */
+            /* Use relative positioning - move it from its natural spot in header */
             header .hamburger-btn {
                 position: relative !important;
                 top: -5px !important;
@@ -538,6 +539,8 @@
             .custom-dropdown-wrapper-game {
                 min-width: 140px !important;
             }
+                min-width: 110px !important;
+            }
             
             .custom-dropdown {
                 padding: 5px 8px !important;
@@ -551,20 +554,6 @@
             #highscoresTab {
                 margin-top: 0 !important;
                 padding-top: 5px !important;
-            }
-            
-            /* === HIDE HEADER ELEMENTS ON SCORING GRID PAGES ONLY === */
-            #scorekeeperTab.active header,
-            #scorekeeperTab.active .tab-navigation-container,
-            #scorekeeperTab.active .game-type-row,
-            #scorekeeperTab.active .voice-btn-group {
-                display: none !important;
-            }
-            
-            /* When on scoring grid, remove the spacer too */
-            #scorekeeperTab.active ~ .container::before,
-            body:has(#scorekeeperTab.active) .container::before {
-                height: 0px !important;
             }
             
             /* Compact header in landscape */
