@@ -269,19 +269,38 @@
             }
             
             .crowns-container {
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 10px 0 !important;
+                width: 95% !important;
+                max-width: 95% !important;
+                margin: 10px auto !important;
                 display: flex !important;
                 flex-direction: column !important;
-                overflow-x: visible !important;
+                overflow-x: auto !important;
             }
             
             .crowns-table {
                 width: 100% !important;
-                min-width: 100% !important;
+                min-width: auto !important;
                 display: table !important;
                 margin-bottom: 0 !important;
+                table-layout: auto !important;
+            }
+            
+            /* Apply same width constraints to all game containers */
+            .golf-container, .scrabble-container, .yahtzee-container,
+            .phase10-container, .dominoes-container, .farkle-container,
+            .darts-container, .generic-grid-container {
+                width: 95% !important;
+                max-width: 95% !important;
+                margin: 10px auto !important;
+                overflow-x: auto !important;
+            }
+            
+            /* Apply to all game tables */
+            #golfTable, #scrabbleTable, #yahtzeeTable, #phase10Table,
+            #dominoesTable, #farkleTable, #dartsTable, #genericGridTable {
+                width: 100% !important;
+                min-width: auto !important;
+                table-layout: auto !important;
             }
             
             /* Golf course selector full width above grid in landscape */
@@ -453,7 +472,7 @@
             .tab-navigation-container {
                 position: absolute !important;
                 top: 13px !important;
-                left: 22% !important;
+                left: 255px !important;
                 display: flex !important;
                 align-items: center !important;
                 gap: 10px !important;
@@ -477,12 +496,11 @@
                 align-items: center !important;
             }
             
-            /* Voice buttons group - position from right edge */
+            /* Voice buttons group - aligned within player field width */
             .voice-btn-group {
                 position: absolute !important;
                 top: 0 !important;
-                right: 50px !important;
-                left: auto !important;
+                left: 445px !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
@@ -498,15 +516,16 @@
                 padding: 0 !important;
             }
             
-            /* Position hamburger as third button - from right edge */
+            /* Position hamburger as third button in voice group */
+            /* Use relative positioning - move it from its natural spot in header */
             header .hamburger-btn {
-                position: absolute !important;
-                top: 0px !important;
-                right: 10px !important;
-                left: auto !important;
+                position: relative !important;
+                top: -5px !important;
+                right: auto !important;
+                left: 753px !important;
                 width: 30px !important;
                 height: 30px !important;
-                z-index: 103 !important;
+                z-index: 102 !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: center !important;
@@ -523,7 +542,7 @@
             .game-type-row {
                 position: absolute !important;
                 top: 20px !important;
-                left: 42% !important;
+                left: 455px !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
