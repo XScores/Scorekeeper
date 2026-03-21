@@ -453,7 +453,7 @@
             .tab-navigation-container {
                 position: absolute !important;
                 top: 13px !important;
-                left: 255px !important;
+                left: 22% !important;
                 display: flex !important;
                 align-items: center !important;
                 gap: 10px !important;
@@ -477,11 +477,12 @@
                 align-items: center !important;
             }
             
-            /* Voice buttons group - aligned within player field width */
+            /* Voice buttons group - position from right edge */
             .voice-btn-group {
                 position: absolute !important;
                 top: 0 !important;
-                left: 445px !important;
+                right: 50px !important;
+                left: auto !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
@@ -497,16 +498,15 @@
                 padding: 0 !important;
             }
             
-            /* Position hamburger as third button in voice group */
-            /* Use relative positioning - move it from its natural spot in header */
+            /* Position hamburger as third button - from right edge */
             header .hamburger-btn {
-                position: relative !important;
-                top: -5px !important;
-                right: auto !important;
-                left: 753px !important;
+                position: absolute !important;
+                top: 0px !important;
+                right: 10px !important;
+                left: auto !important;
                 width: 30px !important;
                 height: 30px !important;
-                z-index: 102 !important;
+                z-index: 103 !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: center !important;
@@ -523,7 +523,7 @@
             .game-type-row {
                 position: absolute !important;
                 top: 20px !important;
-                left: 455px !important;
+                left: 42% !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
