@@ -422,26 +422,6 @@
                 z-index: 101 !important;
             }
             
-            header .hamburger-btn {
-                position: absolute !important;
-                top: 0px !important;
-                right: 10px !important;
-                left: auto !important;
-                width: 30px !important;
-                height: 30px !important;
-                z-index: 103 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                align-items: center !important;
-                opacity: 1 !important;
-                background: var(--button-bg, #E8E8E8) !important;
-                border-radius: 8px !important;
-                margin: 0 !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-                border: none !important;
-            }
-            
             .hamburger-line {
                 width: 16px !important;
                 opacity: 1 !important;
@@ -473,7 +453,7 @@
             .tab-navigation-container {
                 position: absolute !important;
                 top: 13px !important;
-                left: 180px !important;
+                left: 255px !important;
                 display: flex !important;
                 align-items: center !important;
                 gap: 10px !important;
@@ -497,12 +477,11 @@
                 align-items: center !important;
             }
             
-            /* Voice buttons group - position from right edge */
+            /* Voice buttons group - aligned within player field width */
             .voice-btn-group {
                 position: absolute !important;
                 top: 0 !important;
-                right: 45px !important;
-                left: auto !important;
+                left: 445px !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
@@ -518,11 +497,33 @@
                 padding: 0 !important;
             }
             
+            /* Position hamburger as third button in voice group */
+            /* Use relative positioning - move it from its natural spot in header */
+            header .hamburger-btn {
+                position: relative !important;
+                top: -5px !important;
+                right: auto !important;
+                left: 753px !important;
+                width: 30px !important;
+                height: 30px !important;
+                z-index: 102 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                opacity: 1 !important;
+                background: var(--button-bg, #E8E8E8) !important;
+                border-radius: 8px !important;
+                margin: 0 !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+                border: none !important;
+            }
+            
             /* === GAME TYPE DROPDOWN === */
             .game-type-row {
                 position: absolute !important;
                 top: 20px !important;
-                left: 360px !important;
+                left: 455px !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
@@ -699,141 +700,6 @@
         
         /* Wider landscape tablets (iPad, etc.) */
         @media screen and (orientation: landscape) and (min-width: 768px) {
-            /* === HEADER LAYOUT === */
-            .container {
-                position: relative !important;
-            }
-            
-            .container::before {
-                content: '' !important;
-                display: block !important;
-                height: 55px !important;
-            }
-            
-            header {
-                position: absolute !important;
-                top: 0px !important;
-                left: 10px !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 8px !important;
-                z-index: 101 !important;
-            }
-            
-            header .hamburger-btn {
-                position: relative !important;
-                top: -5px !important;
-                right: auto !important;
-                left: 753px !important;
-                width: 30px !important;
-                height: 30px !important;
-                z-index: 102 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                align-items: center !important;
-                opacity: 1 !important;
-                background: var(--button-bg, #E8E8E8) !important;
-                border-radius: 8px !important;
-                margin: 0 !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-                border: none !important;
-            }
-            
-            header > div:last-child {
-                display: flex !important;
-                align-items: center !important;
-                gap: 6px !important;
-                padding: 0 !important;
-            }
-            
-            header h1 {
-                font-size: 0.8rem !important;
-                margin: 0 !important;
-                white-space: nowrap !important;
-            }
-            
-            header .subtitle {
-                display: none !important;
-            }
-            
-            header > div > span {
-                font-size: 1.4rem !important;
-            }
-            
-            .tab-navigation-container {
-                position: absolute !important;
-                top: 13px !important;
-                left: 255px !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 10px !important;
-                z-index: 101 !important;
-            }
-            
-            .tab-navigation {
-                display: flex !important;
-                gap: 4px !important;
-                padding: 2px !important;
-            }
-            
-            .tab-btn {
-                padding: 5px 10px !important;
-                font-size: 0.65rem !important;
-                white-space: nowrap !important;
-                min-height: 30px !important;
-                height: 30px !important;
-                display: flex !important;
-                align-items: center !important;
-            }
-            
-            .voice-btn-group {
-                position: absolute !important;
-                top: 0 !important;
-                left: 445px !important;
-                display: flex !important;
-                gap: 5px !important;
-                align-items: center !important;
-                z-index: 102 !important;
-            }
-            
-            .voice-btn {
-                width: 30px !important;
-                height: 30px !important;
-                min-width: 30px !important;
-                min-height: 30px !important;
-                font-size: 0.9rem !important;
-                padding: 0 !important;
-            }
-            
-            .game-type-row {
-                position: absolute !important;
-                top: 20px !important;
-                left: 455px !important;
-                display: flex !important;
-                gap: 5px !important;
-                align-items: center !important;
-                z-index: 101 !important;
-                height: 30px !important;
-            }
-            
-            .game-type-label {
-                font-size: 0.65rem !important;
-                white-space: nowrap !important;
-            }
-            
-            .custom-dropdown-wrapper-game {
-                min-width: 140px !important;
-            }
-            
-            .add-player-section,
-            #scorekeeperTab,
-            #highscoresTab {
-                margin-top: 0 !important;
-                padding-top: 5px !important;
-            }
-            
-            /* === ORIGINAL 768px+ LAYOUT === */
             /* Two-column layout for wider screens */
             .standard-mode {
                 display: flex !important;
@@ -872,141 +738,6 @@
         
         /* Ultra-wide landscape displays */
         @media screen and (orientation: landscape) and (min-width: 1024px) {
-            /* === HEADER LAYOUT === */
-            .container {
-                position: relative !important;
-            }
-            
-            .container::before {
-                content: '' !important;
-                display: block !important;
-                height: 55px !important;
-            }
-            
-            header {
-                position: absolute !important;
-                top: 0px !important;
-                left: 10px !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 8px !important;
-                z-index: 101 !important;
-            }
-            
-            header .hamburger-btn {
-                position: relative !important;
-                top: -5px !important;
-                right: auto !important;
-                left: 753px !important;
-                width: 30px !important;
-                height: 30px !important;
-                z-index: 102 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                align-items: center !important;
-                opacity: 1 !important;
-                background: var(--button-bg, #E8E8E8) !important;
-                border-radius: 8px !important;
-                margin: 0 !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-                border: none !important;
-            }
-            
-            header > div:last-child {
-                display: flex !important;
-                align-items: center !important;
-                gap: 6px !important;
-                padding: 0 !important;
-            }
-            
-            header h1 {
-                font-size: 0.8rem !important;
-                margin: 0 !important;
-                white-space: nowrap !important;
-            }
-            
-            header .subtitle {
-                display: none !important;
-            }
-            
-            header > div > span {
-                font-size: 1.4rem !important;
-            }
-            
-            .tab-navigation-container {
-                position: absolute !important;
-                top: 13px !important;
-                left: 255px !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 10px !important;
-                z-index: 101 !important;
-            }
-            
-            .tab-navigation {
-                display: flex !important;
-                gap: 4px !important;
-                padding: 2px !important;
-            }
-            
-            .tab-btn {
-                padding: 5px 10px !important;
-                font-size: 0.65rem !important;
-                white-space: nowrap !important;
-                min-height: 30px !important;
-                height: 30px !important;
-                display: flex !important;
-                align-items: center !important;
-            }
-            
-            .voice-btn-group {
-                position: absolute !important;
-                top: 0 !important;
-                left: 445px !important;
-                display: flex !important;
-                gap: 5px !important;
-                align-items: center !important;
-                z-index: 102 !important;
-            }
-            
-            .voice-btn {
-                width: 30px !important;
-                height: 30px !important;
-                min-width: 30px !important;
-                min-height: 30px !important;
-                font-size: 0.9rem !important;
-                padding: 0 !important;
-            }
-            
-            .game-type-row {
-                position: absolute !important;
-                top: 20px !important;
-                left: 455px !important;
-                display: flex !important;
-                gap: 5px !important;
-                align-items: center !important;
-                z-index: 101 !important;
-                height: 30px !important;
-            }
-            
-            .game-type-label {
-                font-size: 0.65rem !important;
-                white-space: nowrap !important;
-            }
-            
-            .custom-dropdown-wrapper-game {
-                min-width: 140px !important;
-            }
-            
-            .add-player-section,
-            #scorekeeperTab,
-            #highscoresTab {
-                margin-top: 0 !important;
-                padding-top: 5px !important;
-            }
-            
-            /* === ORIGINAL 1024px+ LAYOUT === */
             .container {
                 max-width: 1200px !important;
                 margin: 0 auto !important;
