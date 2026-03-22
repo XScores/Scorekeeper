@@ -554,9 +554,13 @@
             }
             
             /* Game dropdown specific positioning for scoring grids */
-            #scorekeeperTab .game-type-row {
-                top: 5px !important;
-                left: 65% !important;
+            #scorekeeperTab .game-type-row,
+            body #scorekeeperTab.active .game-type-row,
+            .container #scorekeeperTab .game-type-row {
+                top: 0px !important;
+                left: 70% !important;
+                margin-top: 0 !important;
+                padding-top: 0 !important;
             }
             
             .game-type-label {
