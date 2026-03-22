@@ -554,9 +554,9 @@
             }
             
             /* Game dropdown specific positioning for scoring grids */
-            #scorekeeperTab .game-type-row,
-            body #scorekeeperTab.active .game-type-row,
-            .container #scorekeeperTab .game-type-row {
+            /* When scorekeeper tab is active (game in progress), reposition dropdown */
+            #scorekeeperTab.active ~ .game-type-row,
+            .tab-content.active ~ .game-type-row {
                 top: 0px !important;
                 left: 70% !important;
                 margin-top: 0 !important;
