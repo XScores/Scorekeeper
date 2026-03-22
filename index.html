@@ -554,9 +554,17 @@
             }
             
             /* Game dropdown specific positioning for scoring grids */
-            /* When scorekeeper tab is active (game in progress), reposition dropdown */
-            #scorekeeperTab.active ~ .game-type-row,
-            .tab-content.active ~ .game-type-row {
+            /* When instructions are hidden (game active), reposition dropdown */
+            /* Use visibility of game containers to detect active game */
+            .container:has(.crowns-container) .game-type-row,
+            .container:has(.golf-container) .game-type-row,
+            .container:has(.scrabble-container) .game-type-row,
+            .container:has(.yahtzee-container) .game-type-row,
+            .container:has(.phase10-container) .game-type-row,
+            .container:has(.dominoes-container) .game-type-row,
+            .container:has(.farkle-container) .game-type-row,
+            .container:has(.darts-container) .game-type-row,
+            .container:has(.generic-grid-container) .game-type-row {
                 top: 0px !important;
                 left: 70% !important;
                 margin-top: 0 !important;
