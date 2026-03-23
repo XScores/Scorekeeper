@@ -553,18 +553,18 @@
                 width: auto !important;
             }
             
-            /* Game dropdown specific positioning for scoring grids */
+            /* Game dropdown specific positioning for scoring grids ONLY (not home page) */
             /* When instructions are hidden (game active), reposition dropdown */
-            /* Use visibility of game containers to detect active game */
-            .container:has(.crowns-container) .game-type-row,
-            .container:has(.golf-container) .game-type-row,
-            .container:has(.scrabble-container) .game-type-row,
-            .container:has(.yahtzee-container) .game-type-row,
-            .container:has(.phase10-container) .game-type-row,
-            .container:has(.dominoes-container) .game-type-row,
-            .container:has(.farkle-container) .game-type-row,
-            .container:has(.darts-container) .game-type-row,
-            .container:has(.generic-grid-container) .game-type-row {
+            /* Use visibility of game containers AND absence of instructions to detect active game */
+            .container:not(:has(#standardModeInstructions)):has(.crowns-container) .game-type-row,
+            .container:not(:has(#standardModeInstructions)):has(.golf-container) .game-type-row,
+            .container:not(:has(#standardModeInstructions)):has(.scrabble-container) .game-type-row,
+            .container:not(:has(#standardModeInstructions)):has(.yahtzee-container) .game-type-row,
+            .container:not(:has(#standardModeInstructions)):has(.phase10-container) .game-type-row,
+            .container:not(:has(#standardModeInstructions)):has(.dominoes-container) .game-type-row,
+            .container:not(:has(#standardModeInstructions)):has(.farkle-container) .game-type-row,
+            .container:not(:has(#standardModeInstructions)):has(.darts-container) .game-type-row,
+            .container:not(:has(#standardModeInstructions)):has(.generic-grid-container) .game-type-row {
                 top: 5px !important;
                 left: calc(48% + 60px) !important;
                 transform: none !important;
