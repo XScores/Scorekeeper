@@ -280,6 +280,11 @@
                 overflow-x: auto !important;
             }
             
+            /* Remove top margin in golf mode landscape */
+            #golfMode .crowns-container {
+                margin-top: 0 !important;
+            }
+            
             .crowns-table {
                 width: 100% !important;
                 min-width: auto !important;
@@ -2839,6 +2844,11 @@
             -webkit-overflow-scrolling: touch;
             width: 100%;
         }
+        
+        /* Remove top margin in golf mode since golf-course-selector provides spacing */
+        #golfMode .crowns-container {
+            margin-top: 0;
+        }
         .crowns-table {
             border-collapse: collapse;
             background: var(--card-bg);
@@ -3446,18 +3456,20 @@
         }
         /* Golf Course Selector */
         .golf-course-selector {
-            padding: 10px;
+            padding: 10px 0;
             margin-top: 10px;
             margin-bottom: 20px;
             background: transparent;
             color: #FFFFFF; /* White text */
             border-radius: 0;
             border: none;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         /* Match game-type panel styling in grid mode */
         body.grid-mode .golf-course-selector {
-            padding: 6px 10px;
+            padding: 6px 0;
             margin-bottom: 15px;
         }
         
@@ -3472,7 +3484,13 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            width: 100%;
+        }
+        
+        .golf-course-row .custom-dropdown-wrapper {
+            flex: 1;
+            max-width: none;
         }
         .golf-course-label {
             font-family: Outfit, sans-serif;
