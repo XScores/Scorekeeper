@@ -160,12 +160,15 @@
         }
         
         body[data-theme="stainless"] .card,
-        body[data-theme="stainless"] .side-menu,
         body[data-theme="stainless"] .tab-navigation {
-            background: radial-gradient(circle at 50% 20%, #e2e8f0, #cbd5e0);
-            box-shadow: 
-                inset 0 1px 0 rgba(255, 255, 255, 0.6),
-                0 4px 6px rgba(0, 0, 0, 0.2);
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+        
+        body[data-theme="stainless"] .side-menu {
+            background: var(--card-bg) !important;
+            border-left: 3px solid var(--neon-blue) !important;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4) !important;
         }
         
         body[data-theme="stainless"] #gameStateBtn {
@@ -566,6 +569,19 @@
                 border-radius: 0 !important;
                 padding: 0 !important;
                 margin: 0 !important;
+                flex: none !important;
+                width: auto !important;
+                max-width: none !important;
+                min-width: 0 !important;
+                order: 0 !important;
+            }
+            
+            /* Also override tab-navigation-container flex behavior in landscape */
+            body.grid-mode .tab-navigation-container {
+                display: flex !important;
+                align-items: center !important;
+                width: auto !important;
+                flex-wrap: nowrap !important;
             }
             
             .game-type-label {
@@ -581,8 +597,12 @@
             
             .custom-dropdown {
                 padding: 5px 8px !important;
-                font-size: 0.65rem !important;
+                font-size: 0.95rem !important;
                 min-height: 30px !important;
+            }
+            
+            .dropdown-selected {
+                font-size: 0.95rem !important;
             }
             
             /* === CONTENT BELOW HEADER === */
@@ -2041,8 +2061,8 @@
             display: flex;
             gap: 5px;
             flex: 1;
-            background: rgba(10, 14, 39, 0.6); /* Darker background for contrast */
-            border-radius: 12px;
+            background: transparent !important; /* Remove background panel */
+            border-radius: 0 !important; /* Remove rounded corners */
             padding: 4px;
             position: relative;
             top: -3px; /* Move up 3px */
@@ -2119,8 +2139,8 @@
             min-width: 0;
             max-width: none;
             margin: 0 4px 0 0;
-            background: rgba(10, 14, 39, 0.6);
-            border-radius: 12px;
+            background: transparent;
+            border-radius: 0;
             padding: 6px 8px 6px 10px;
             position: relative;
             top: 0;
@@ -2153,10 +2173,8 @@
         }
         
         body[data-theme="stainless"].grid-mode .game-type-row {
-            background: radial-gradient(circle at 50% 20%, #e2e8f0, #cbd5e0);
-            box-shadow: 
-                inset 0 1px 0 rgba(255, 255, 255, 0.6),
-                0 4px 6px rgba(0, 0, 0, 0.2);
+            background: transparent;
+            box-shadow: none;
         }
         
         .game-type-label {
@@ -3428,10 +3446,10 @@
         .golf-course-selector {
             padding: 10px;
             margin-bottom: 20px;
-            background: rgba(10, 14, 39, 0.6); /* Dark Neon background */
+            background: transparent;
             color: #FFFFFF; /* White text */
-            border-radius: 12px;
-            border: 2px solid var(--neon-blue); /* Neon blue border */
+            border-radius: 0;
+            border: none;
         }
         
         /* Match game-type panel styling in grid mode */
@@ -3513,6 +3531,9 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            font-size: 0.95rem;
+            font-family: Outfit, sans-serif;
+            font-weight: 600;
         }
         .dropdown-arrow {
             margin-left: 10px;
@@ -3773,8 +3794,8 @@
             box-shadow: 0 4px 15px rgba(57, 255, 20, 0.4);
         }
         body[data-theme="stainless"] .golf-course-selector {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(160, 174, 192, 0.4);
+            background: transparent;
+            border: none;
         }
         body[data-theme="stainless"] .golf-course-label {
             color: #2d3748;
@@ -4477,9 +4498,9 @@
         /* Cards / containers */
         body[data-theme="ios"] .card,
         body[data-theme="ios"] .tab-navigation {
-            background: #FFFFFF;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.10), 0 0.5px 0 rgba(0,0,0,0.06);
+            background: transparent !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
             border: none;
         }
 
@@ -4563,16 +4584,16 @@
 
         /* Tab navigation container */
         body[data-theme="ios"] .tab-navigation {
-            background: #E5E5EA;
-            border-radius: 10px;
+            background: transparent !important;
+            border-radius: 0 !important;
             padding: 3px;
         }
         body[data-theme="ios"] .tab-navigation-container { gap: 10px; }
 
         /* Game type row */
         body[data-theme="ios"].grid-mode .game-type-row {
-            background: #FFFFFF;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.10);
+            background: transparent;
+            box-shadow: none;
         }
 
         /* Dropdowns */
@@ -4868,8 +4889,8 @@
             color: #000000 !important;
         }
         body[data-theme="ios"] .golf-course-selector {
-            background: #FFFFFF !important;
-            border: 0.5px solid rgba(60,60,67,0.29) !important;
+            background: transparent !important;
+            border: none !important;
             color: #000000 !important;
         }
         body[data-theme="ios"] .golf-course-label {
@@ -4886,7 +4907,7 @@
             background: transparent;
         }
         body[data-theme="ios"] .tab-navigation {
-            background: #E5E5EA;
+            background: transparent !important;
             box-shadow: none;
             border: none;
             top: 0;
@@ -4927,8 +4948,11 @@
             background: rgba(28,28,30,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-bottom: 0.5px solid rgba(255,255,255,0.10); box-shadow: none;
         }
-        body[data-theme="ios-dark"] .card, body[data-theme="ios-dark"] .tab-navigation {
+        body[data-theme="ios-dark"] .card {
             background: #1C1C1E; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.40); border: none;
+        }
+        body[data-theme="ios-dark"] .tab-navigation {
+            background: transparent !important; border-radius: 0 !important; box-shadow: none !important; border: none;
         }
         body[data-theme="ios-dark"] button {
             background: #0A84FF; color: #FFFFFF; border: none; border-radius: 12px;
@@ -4949,9 +4973,9 @@
         body[data-theme="ios-dark"] .hamburger-btn { background: #0A84FF; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.40); }
         body[data-theme="ios-dark"] .hamburger-btn:hover { background: #0070E0; box-shadow: 0 2px 8px rgba(10,132,255,0.45); }
         body[data-theme="ios-dark"] .hamburger-line { background: #FFFFFF; }
-        body[data-theme="ios-dark"] .tab-navigation { background: #2C2C2E; border-radius: 10px; padding: 3px; box-shadow: none; border: none; top: 0; }
+        body[data-theme="ios-dark"] .tab-navigation { background: transparent !important; border-radius: 0 !important; padding: 3px; box-shadow: none; border: none; top: 0; }
         body[data-theme="ios-dark"] .tab-navigation-container { gap: 10px; background: transparent; }
-        body[data-theme="ios-dark"].grid-mode .game-type-row { background: #3A3A3C; box-shadow: 0 1px 3px rgba(0,0,0,0.40); }
+        body[data-theme="ios-dark"].grid-mode .game-type-row { background: transparent; box-shadow: none; }
         body[data-theme="ios-dark"] .custom-dropdown { background: #5A5A5C; border: 0.5px solid rgba(255,255,255,0.24); border-radius: 10px; color: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.30); }
         body[data-theme="ios-dark"] .custom-dropdown-list { background: #5A5A5C; border: 0.5px solid rgba(255,255,255,0.24); border-top: none; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.50); color: #FFFFFF; }
         body[data-theme="ios-dark"] .dropdown-list-item, body[data-theme="ios-dark"] .dropdown-list-item-theme, body[data-theme="ios-dark"] .dropdown-list-item-game { color: #FFFFFF; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
@@ -5037,8 +5061,8 @@
         
         /* Golf course selector - Dark theme */
         body[data-theme="ios-dark"] .golf-course-selector {
-            background: #2C2C2E;
-            border: 0.5px solid rgba(255,255,255,0.12);
+            background: transparent;
+            border: none;
         }
         body[data-theme="ios-dark"] .golf-course-label {
             color: #FFFFFF;
