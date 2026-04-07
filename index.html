@@ -3832,9 +3832,9 @@
             font-weight: 800;
             font-size: 0.95rem;
             font-family: Outfit, sans-serif;
-            min-width: 35px !important;
-            max-width: 45px !important;
-            width: 40px !important;
+            min-width: 50px !important;
+            max-width: 60px !important;
+            width: 55px !important;
             padding: 4px 2px !important;
             white-space: nowrap;
         }
@@ -9393,12 +9393,6 @@
                 display.innerHTML = html;
             } else {
                 console.log('Players found:', players.length, 'players');
-                // Sort players by win percentage (descending)
-                players.sort((a, b) => {
-                    const aPercent = gameData[a].played > 0 ? (gameData[a].wins / gameData[a].played) * 100 : 0;
-                    const bPercent = gameData[b].played > 0 ? (gameData[b].wins / gameData[b].played) * 100 : 0;
-                    return bPercent - aPercent;
-                });
                 
                 console.log('About to build stats table');
                 html += `
@@ -9419,7 +9413,56 @@
                 // Load scorecards to calculate total points for each player
                 const savedScorecards = loadGameScorecards(gameType);
                 
-                players.forEach(playerName => {
+                // Sort players by: 1) Most recent game date (newest first), 2) Best score for that game type
+                const sortedPlayers = players.sort((a, b) => {
+                    // Get most recent game date for each player
+                    let mostRecentDateA = null;
+                    let mostRecentDateB = null;
+                    let bestScoreA = Infinity;
+                    let bestScoreB = Infinity;
+                    
+                    savedScorecards.forEach(scorecard => {
+                        if (scorecard.finalScores) {
+                            const playerScoreA = scorecard.finalScores.find(ps => ps.name === a);
+                            const playerScoreB = scorecard.finalScores.find(ps => ps.name === b);
+                            
+                            if (playerScoreA) {
+                                const scoreDate = new Date(scorecard.date);
+                                if (!mostRecentDateA || scoreDate > mostRecentDateA) {
+                                    mostRecentDateA = scoreDate;
+                                }
+                                if (typeof playerScoreA.total === 'number' && playerScoreA.total < bestScoreA) {
+                                    bestScoreA = playerScoreA.total;
+                                }
+                            }
+                            
+                            if (playerScoreB) {
+                                const scoreDate = new Date(scorecard.date);
+                                if (!mostRecentDateB || scoreDate > mostRecentDateB) {
+                                    mostRecentDateB = scoreDate;
+                                }
+                                if (typeof playerScoreB.total === 'number' && playerScoreB.total < bestScoreB) {
+                                    bestScoreB = playerScoreB.total;
+                                }
+                            }
+                        }
+                    });
+                    
+                    // Sort by most recent date first (newest at top)
+                    if (mostRecentDateA && mostRecentDateB) {
+                        if (mostRecentDateA > mostRecentDateB) return -1;
+                        if (mostRecentDateA < mostRecentDateB) return 1;
+                    } else if (mostRecentDateA) {
+                        return -1; // a has games, b doesn't
+                    } else if (mostRecentDateB) {
+                        return 1; // b has games, a doesn't
+                    }
+                    
+                    // If dates are equal, sort by best score (lowest/best score first)
+                    return bestScoreA - bestScoreB;
+                });
+                
+                sortedPlayers.forEach(playerName => {
                     const stats = gameData[playerName];
                     const percentage = stats.played > 0 ? ((stats.wins / stats.played) * 100).toFixed(1) : '0.0';
                     
@@ -18416,17 +18459,47 @@
                 });
             });
             
-            // Convert to array and sort by win percentage (highest first)
-            const sortedPlayers = Array.from(playerStats.entries()).map(([name, stats]) => ({
-                name,
-                played: stats.played,
-                wins: stats.wins,
-                totalPoints: stats.totalPoints,
-                percentage: stats.played > 0 ? ((stats.wins / stats.played) * 100).toFixed(1) : '0.0'
-            })).sort((a, b) => {
-                const aPercent = parseFloat(a.percentage);
-                const bPercent = parseFloat(b.percentage);
-                return bPercent - aPercent;
+            // Convert to array and add sorting by most recent game date, then best score
+            const sortedPlayers = Array.from(playerStats.entries()).map(([name, stats]) => {
+                // Find most recent game date and best score for this player
+                let mostRecentDate = null;
+                let bestScore = Infinity;
+                
+                gameTypeGames.forEach(game => {
+                    const playerInGame = game.players.find(p => p.name === name);
+                    if (playerInGame) {
+                        const gameDate = new Date(game.date);
+                        if (!mostRecentDate || gameDate > mostRecentDate) {
+                            mostRecentDate = gameDate;
+                        }
+                        if (typeof playerInGame.score === 'number' && playerInGame.score < bestScore) {
+                            bestScore = playerInGame.score;
+                        }
+                    }
+                });
+                
+                return {
+                    name,
+                    played: stats.played,
+                    wins: stats.wins,
+                    totalPoints: stats.totalPoints,
+                    percentage: stats.played > 0 ? ((stats.wins / stats.played) * 100).toFixed(1) : '0.0',
+                    mostRecentDate,
+                    bestScore
+                };
+            }).sort((a, b) => {
+                // Sort by most recent date first (newest at top)
+                if (a.mostRecentDate && b.mostRecentDate) {
+                    if (a.mostRecentDate > b.mostRecentDate) return -1;
+                    if (a.mostRecentDate < b.mostRecentDate) return 1;
+                } else if (a.mostRecentDate) {
+                    return -1; // a has games, b doesn't
+                } else if (b.mostRecentDate) {
+                    return 1; // b has games, a doesn't
+                }
+                
+                // If dates are equal, sort by best score (lowest/best score first)
+                return a.bestScore - b.bestScore;
             });
             
             // Build HTML
