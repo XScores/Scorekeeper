@@ -530,7 +530,7 @@
                 left: auto !important;
                 width: 30px !important;
                 height: 30px !important;
-                z-index: 103 !important;
+                z-index: 10005 !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: center !important;
@@ -541,6 +541,8 @@
                 margin: 0 !important;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
                 border: none !important;
+                pointer-events: auto !important;
+                cursor: pointer !important;
             }
             
             /* === GAME TYPE DROPDOWN === */
@@ -9472,8 +9474,7 @@
                 console.log(`Adding ${gameType} scorecards tab for players exist case`);
                 html += '</div><div id="winsTrackerScorecardsTab" class="wins-tracker-tab" style="display: none; width: 100%;">';
                 
-                // Load scorecards for this game type
-                const savedScorecards = loadGameScorecards(gameType);
+                // Use savedScorecards already loaded above (line 9420)
                 console.log(`${gameType} saved scorecards:`, savedScorecards.length, 'scorecards');
                 if (savedScorecards.length > 0) {
                     html += '<div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">';
