@@ -9423,16 +9423,22 @@
                     const stats = gameData[playerName];
                     const percentage = stats.played > 0 ? ((stats.wins / stats.played) * 100).toFixed(1) : '0.0';
                     
-                    // Calculate total points from all scorecards for this player
+                    // Use stored totalPoints if available, otherwise auto-calculate from scorecards
                     let totalPoints = 0;
-                    savedScorecards.forEach(scorecard => {
-                        if (scorecard.finalScores) {
-                            const playerScore = scorecard.finalScores.find(ps => ps.name === playerName);
-                            if (playerScore && typeof playerScore.total === 'number') {
-                                totalPoints += playerScore.total;
+                    if (typeof stats.totalPoints === 'number') {
+                        // Use manually edited value if it exists
+                        totalPoints = stats.totalPoints;
+                    } else {
+                        // Auto-calculate from all scorecards for this player
+                        savedScorecards.forEach(scorecard => {
+                            if (scorecard.finalScores) {
+                                const playerScore = scorecard.finalScores.find(ps => ps.name === playerName);
+                                if (playerScore && typeof playerScore.total === 'number') {
+                                    totalPoints += playerScore.total;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                     
                     html += `
                         <tr>
@@ -9457,7 +9463,13 @@
                                        style="width: 34px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                             </td>
                             <td style="font-weight: 700; color: #000000; padding: 4px 2px; text-align: center; font-size: 0.95rem;">${percentage}%</td>
-                            <td style="font-weight: 700; color: #000000; padding: 4px 8px; text-align: center; font-size: 0.95rem;">${totalPoints}</td>
+                            <td style="padding: 4px 8px;">
+                                <input type="number" value="${totalPoints}" 
+                                       class="wins-tracker-input" 
+                                       inputmode="numeric"
+                                       onchange="updateWinsTrackerStat('${gameType}', '${escapeHtml(playerName)}', 'totalPoints', this.value)"
+                                       style="width: 60px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
+                            </td>
                             <td style="text-align: center;">
                                 <button class="delete-btn" onclick="deleteWinsTrackerEntry('${gameType}', '${escapeHtml(playerName)}')" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
                             </td>
@@ -18458,7 +18470,13 @@
                                    style="width: 34px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                         </td>
                         <td style="font-weight: 700; color: #000000; padding: 4px 2px; text-align: center; font-size: 0.95rem;">${player.percentage}%</td>
-                        <td style="font-weight: 700; color: #000000; padding: 4px 8px; text-align: center; font-size: 0.95rem;">${player.totalPoints}</td>
+                        <td style="padding: 4px 8px;">
+                            <input type="number" value="${player.totalPoints}" 
+                                   class="wins-tracker-input" 
+                                   inputmode="numeric"
+                                   onchange="updateCustomGameStat('${escapeHtml(gameType)}', '${escapeHtml(player.name)}', 'totalPoints', this.value)"
+                                   style="width: 60px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
+                        </td>
                         <td style="text-align: center;">
                             <button class="delete-btn" onclick="deleteCustomGamePlayerStats('${escapeHtml(gameType)}', '${escapeHtml(player.name)}')" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
                         </td>
@@ -18592,7 +18610,7 @@
             
             // Ensure structure exists
             if (!winsData[gameTypeKey]) winsData[gameTypeKey] = {};
-            if (!winsData[gameTypeKey][playerName]) winsData[gameTypeKey][playerName] = { played: 0, wins: 0 };
+            if (!winsData[gameTypeKey][playerName]) winsData[gameTypeKey][playerName] = { played: 0, wins: 0, totalPoints: 0 };
             
             // Update the stat
             winsData[gameTypeKey][playerName][statType] = value;
