@@ -2858,7 +2858,7 @@
             color: #000000; /* Black text for better contrast on light blue */
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             position: sticky;
             top: 0;
             z-index: 10;
@@ -9403,19 +9403,34 @@
                     <table class="crowns-table" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="text-align: left; width: 100px;">Player</th>
-                                <th style="width: 60px; padding: 4px 8px;">Played</th>
-                                <th style="width: 50px; padding: 4px 8px;">Wins</th>
-                                <th style="width: 45px; padding: 4px 2px;">%</th>
+                                <th style="text-align: left; width: 100px; font-size: 0.95rem; color: #000000;">Player</th>
+                                <th style="width: 60px; padding: 4px 8px; font-size: 0.95rem; color: #000000;">Games</th>
+                                <th style="width: 50px; padding: 4px 8px; font-size: 0.95rem; color: #000000;">Wins</th>
+                                <th style="width: 45px; padding: 4px 2px; font-size: 0.95rem; color: #000000;">%</th>
+                                <th style="width: 60px; padding: 4px 8px; font-size: 0.95rem; color: #000000;">Tot</th>
                                 <th style="width: 50px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                 `;
                 
+                // Load scorecards to calculate total points for each player
+                const savedScorecards = loadGameScorecards(gameType);
+                
                 players.forEach(playerName => {
                     const stats = gameData[playerName];
                     const percentage = stats.played > 0 ? ((stats.wins / stats.played) * 100).toFixed(1) : '0.0';
+                    
+                    // Calculate total points from all scorecards for this player
+                    let totalPoints = 0;
+                    savedScorecards.forEach(scorecard => {
+                        if (scorecard.finalScores) {
+                            const playerScore = scorecard.finalScores.find(ps => ps.name === playerName);
+                            if (playerScore && typeof playerScore.total === 'number') {
+                                totalPoints += playerScore.total;
+                            }
+                        }
+                    });
                     
                     html += `
                         <tr>
@@ -9423,23 +9438,24 @@
                                 <input type="text" value="${escapeHtml(playerName)}" 
                                        class="wins-tracker-input" 
                                        onchange="updateWinsTrackerPlayerName('${gameType}', '${escapeHtml(playerName)}', this.value)"
-                                       style="width: 100%; background: transparent; border: 1px solid transparent; color: var(--text-primary); padding: 4px; font-family: Outfit, sans-serif; font-weight: 600;">
+                                       style="width: 100%; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                             </td>
                             <td style="padding: 4px 8px;">
                                 <input type="number" value="${stats.played}" 
                                        class="wins-tracker-input" 
                                        inputmode="numeric"
                                        onchange="updateWinsTrackerStat('${gameType}', '${escapeHtml(playerName)}', 'played', this.value)"
-                                       style="width: 44px; text-align: center; background: transparent; border: 1px solid transparent; color: var(--text-primary); padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600;">
+                                       style="width: 44px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                             </td>
                             <td style="padding: 4px 8px;">
                                 <input type="number" value="${stats.wins}" 
                                        class="wins-tracker-input" 
                                        inputmode="numeric"
                                        onchange="updateWinsTrackerStat('${gameType}', '${escapeHtml(playerName)}', 'wins', this.value)"
-                                       style="width: 34px; text-align: center; background: transparent; border: 1px solid transparent; color: var(--text-primary); padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600;">
+                                       style="width: 34px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                             </td>
-                            <td style="font-weight: 700; color: var(--neon-blue); padding: 4px 2px; text-align: center;">${percentage}%</td>
+                            <td style="font-weight: 700; color: #000000; padding: 4px 2px; text-align: center; font-size: 0.95rem;">${percentage}%</td>
+                            <td style="font-weight: 700; color: #000000; padding: 4px 8px; text-align: center; font-size: 0.95rem;">${totalPoints}</td>
                             <td style="text-align: center;">
                                 <button class="delete-btn" onclick="deleteWinsTrackerEntry('${gameType}', '${escapeHtml(playerName)}')" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
                             </td>
@@ -18364,13 +18380,13 @@
                 return;
             }
             
-            // Calculate player statistics
+            // Calculate player statistics including total points
             const playerStats = new Map();
             
             gameTypeGames.forEach(game => {
                 game.players.forEach(player => {
                     if (!playerStats.has(player.name)) {
-                        playerStats.set(player.name, { played: 0, wins: 0 });
+                        playerStats.set(player.name, { played: 0, wins: 0, totalPoints: 0 });
                     }
                     
                     const stats = playerStats.get(player.name);
@@ -18378,6 +18394,11 @@
                     
                     if (player.name === game.winner) {
                         stats.wins++;
+                    }
+                    
+                    // Add player's score to total points
+                    if (typeof player.score === 'number') {
+                        stats.totalPoints += player.score;
                     }
                 });
             });
@@ -18387,6 +18408,7 @@
                 name,
                 played: stats.played,
                 wins: stats.wins,
+                totalPoints: stats.totalPoints,
                 percentage: stats.played > 0 ? ((stats.wins / stats.played) * 100).toFixed(1) : '0.0'
             })).sort((a, b) => {
                 const aPercent = parseFloat(a.percentage);
@@ -18400,10 +18422,11 @@
                     <table class="crowns-table" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="text-align: left; width: 100px;">Player</th>
-                                <th style="width: 60px; padding: 4px 8px;">Played</th>
-                                <th style="width: 50px; padding: 4px 8px;">Wins</th>
-                                <th style="width: 45px; padding: 4px 2px;">%</th>
+                                <th style="text-align: left; width: 100px; font-size: 0.95rem; color: #000000;">Player</th>
+                                <th style="width: 60px; padding: 4px 8px; font-size: 0.95rem; color: #000000;">Games</th>
+                                <th style="width: 50px; padding: 4px 8px; font-size: 0.95rem; color: #000000;">Wins</th>
+                                <th style="width: 45px; padding: 4px 2px; font-size: 0.95rem; color: #000000;">%</th>
+                                <th style="width: 60px; padding: 4px 8px; font-size: 0.95rem; color: #000000;">Tot</th>
                                 <th style="width: 50px;"></th>
                             </tr>
                         </thead>
@@ -18417,23 +18440,24 @@
                             <input type="text" value="${escapeHtml(player.name)}" 
                                    class="wins-tracker-input" 
                                    onchange="updateCustomGamePlayerName('${escapeHtml(gameType)}', '${escapeHtml(player.name)}', this.value)"
-                                   style="width: 100%; background: transparent; border: 1px solid transparent; color: var(--text-primary); padding: 4px; font-family: Outfit, sans-serif; font-weight: 600;">
+                                   style="width: 100%; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                         </td>
                         <td style="padding: 4px 8px;">
                             <input type="number" value="${player.played}" 
                                    class="wins-tracker-input" 
                                    inputmode="numeric"
                                    onchange="updateCustomGameStat('${escapeHtml(gameType)}', '${escapeHtml(player.name)}', 'played', this.value)"
-                                   style="width: 44px; text-align: center; background: transparent; border: 1px solid transparent; color: var(--text-primary); padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600;">
+                                   style="width: 44px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                         </td>
                         <td style="padding: 4px 8px;">
                             <input type="number" value="${player.wins}" 
                                    class="wins-tracker-input" 
                                    inputmode="numeric"
                                    onchange="updateCustomGameStat('${escapeHtml(gameType)}', '${escapeHtml(player.name)}', 'wins', this.value)"
-                                   style="width: 34px; text-align: center; background: transparent; border: 1px solid transparent; color: var(--text-primary); padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600;">
+                                   style="width: 34px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                         </td>
-                        <td style="font-weight: 700; color: var(--neon-blue); padding: 4px 2px; text-align: center;">${player.percentage}%</td>
+                        <td style="font-weight: 700; color: #000000; padding: 4px 2px; text-align: center; font-size: 0.95rem;">${player.percentage}%</td>
+                        <td style="font-weight: 700; color: #000000; padding: 4px 8px; text-align: center; font-size: 0.95rem;">${player.totalPoints}</td>
                         <td style="text-align: center;">
                             <button class="delete-btn" onclick="deleteCustomGamePlayerStats('${escapeHtml(gameType)}', '${escapeHtml(player.name)}')" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
                         </td>
