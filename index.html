@@ -900,6 +900,10 @@
                 width: auto !important;
                 min-width: 0 !important;
                 max-width: 240px !important;
+                overflow: visible !important;
+            }
+            .custom-dropdown-wrapper-game {
+                overflow: visible !important;
             }
             .game-type-label {
                 font-size: 0.72rem !important;
@@ -1280,7 +1284,7 @@
         
         .final-scores-title {
             font-family: 'Rubik Mono One', monospace;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             text-align: center;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -1293,37 +1297,46 @@
         
         .final-scores-winner {
             font-family: 'Rubik Mono One', monospace;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-align: center;
-            margin-bottom: 25px;
-            color: var(--neon-yellow);
+            margin-bottom: 16px;
+            color: #2d3748;
             font-weight: 900;
-            padding: 15px;
-            background: rgba(255, 190, 11, 0.1);
-            border-radius: 10px;
-            border: 2px solid var(--neon-yellow);
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #f9e784, #f4c842, #e6a817);
+            border-radius: 14px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35),
+                        inset 0 1px 0 rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            -webkit-text-fill-color: #2d3748;
         }
         
         .final-scores-list {
             list-style: none;
             padding: 0;
-            margin: 0 0 25px 0;
+            margin: 0 0 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
         
         .final-scores-list li {
-            padding: 12px;
-            margin: 8px 0;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
             font-family: Outfit, sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--text-primary);
             border-left: 4px solid var(--neon-blue);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
         }
         
         .final-scores-list li:first-child {
-            border-left-color: var(--neon-yellow);
-            background: rgba(255, 190, 11, 0.05);
+            border-left-color: #d4af37;
+            background: rgba(255, 215, 50, 0.08);
         }
         
         .final-scores-ok-btn {
@@ -1540,6 +1553,14 @@
             font-weight: 800;
             color: #1a202c; /* Even darker for strong emphasis */
         }
+        /* Game completion message: remove the box styling so inner cards show cleanly */
+        #gameCompletionMessage {
+            background: transparent;
+            padding: 0;
+            margin: 0 0 10px 0;
+            white-space: normal;
+            font-size: 1rem;
+        }
         /* Save options for Golf modal */
         .save-options-container {
             margin-top: 20px;
@@ -1751,7 +1772,8 @@
         
         body[data-theme="stainless"] .final-scores-winner {
             color: #2d3748;
-            background: linear-gradient(135deg, #f4e4a6, #d4af37);
+            -webkit-text-fill-color: #2d3748;
+            background: linear-gradient(135deg, #f9e784, #f4c842, #e6a817);
             border: 2px solid #b8941e;
             box-shadow: 
                 inset 0 1px 2px rgba(255, 255, 255, 0.6),
@@ -1759,14 +1781,16 @@
         }
         
         body[data-theme="stainless"] .final-scores-list li {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.35);
             color: #2d3748;
             border-left-color: #718096;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6),
+                        0 1px 3px rgba(0,0,0,0.1);
         }
         
         body[data-theme="stainless"] .final-scores-list li:first-child {
             border-left-color: #d4af37;
-            background: rgba(244, 228, 166, 0.2);
+            background: rgba(244, 228, 166, 0.35);
         }
         
         body[data-theme="stainless"] .final-scores-ok-btn {
@@ -2210,6 +2234,35 @@
         .delete-btn:hover {
             background: rgba(255, 0, 110, 0.5);
         }
+        /* Statistics and Wins Tracker modal delete buttons — force 30px to match High Scores visual */
+        #customGameStatisticsDisplay .delete-btn,
+        #winsTrackerDisplay .delete-btn {
+            width: 30px !important;
+            height: 30px !important;
+            min-width: 30px !important;
+            max-width: 30px !important;
+            min-height: 0 !important;
+            max-height: 30px !important;
+            font-size: 0.875rem !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            flex-shrink: 0 !important;
+            line-height: 1 !important;
+        }
+        /* Stainless theme: apply metallic style to delete-btn, overriding the pink base style */
+        body[data-theme="stainless"] .delete-btn {
+            background: radial-gradient(circle at 30% 30%, #e2e8f0, #b0b8c0) !important;
+            color: #2d3748 !important;
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+            box-shadow:
+                inset 0 1px 2px rgba(255, 255, 255, 0.8),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.25),
+                0 2px 4px rgba(0, 0, 0, 0.3),
+                0 1px 0 rgba(255, 255, 255, 0.5) !important;
+        }
+        body[data-theme="stainless"] .delete-btn:hover {
+            background: radial-gradient(circle at 30% 30%, #f7fafc, #cbd5e0) !important;
+        }
         .start-button-container {
             margin: 10px 0;
             display: flex;
@@ -2311,6 +2364,15 @@
             outline: none;
             border-color: var(--neon-pink) !important;
             background: rgba(255, 0, 110, 0.05) !important;
+        }
+        /* Hide number input spinners in Statistics modal */
+        .wins-tracker-input::-webkit-outer-spin-button,
+        .wins-tracker-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .wins-tracker-input[type=number] {
+            -moz-appearance: textfield;
         }
         
         /* Reduce padding on Scoring tab only for more space */
@@ -3358,26 +3420,38 @@
             background: transparent;
         }
         .crowns-score-input {
-            width: 60px;
-            padding: 8px;
-            background: rgba(0, 245, 255, 0.25);
-            border: 2px solid var(--neon-blue);
-            border-radius: 6px;
-            color: #FFFFFF;
-            font-size: 1.2rem;
-            font-weight: 600;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            background: transparent;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            color: inherit;
+            font-size: inherit;
+            font-weight: inherit;
             text-align: center;
-            font-family: Outfit, sans-serif;
-            text-shadow: 0 0 6px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,1);
+            font-family: inherit;
+            text-shadow: none;
+            box-shadow: none;
+            box-sizing: border-box;
+            transition: border-color 0.15s ease;
         }
         .crowns-score-input:focus {
             outline: none;
-            border-color: var(--neon-pink);
+            border-color: var(--neon-blue);
+            background: rgba(0, 245, 255, 0.08);
         }
         .crowns-score-input::-webkit-outer-spin-button,
         .crowns-score-input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
+        }
+        /* Cell must be position:relative so the absolute input is contained */
+        .crowns-table td:has(.crowns-score-input) {
+            position: relative;
+            overflow: hidden;
         }
         .crowns-mode-toggle {
             display: flex;
@@ -3846,11 +3920,11 @@
             border-top: none;
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
-            z-index: 1000;
+            z-index: 2100;
             transition: max-height 0.3s ease, border-width 0.3s ease;
         }
         .custom-dropdown-list.open {
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
             border-width: 2px; /* Show border when open */
         }
@@ -5740,7 +5814,9 @@
                     </div>
                 </div>
                 <hr style="margin-bottom: 30px;">
-                <button class="btn-secondary" onclick="window.clearAllWalls()">Clear All Scores</button>
+                <div style="display: flex; justify-content: center;">
+                    <button class="btn-secondary" onclick="window.clearAllWalls()">Clear All Scores</button>
+                </div>
             </div>
         </div>
         <div id="voiceFeedback" class="voice-feedback">
@@ -6859,17 +6935,50 @@
             
             // Create winner text with Supreme Champion format or tie format
             const winnerText = tiedWinners.length > 1 
-                ? `${tiedWinners.map(w => w.name || w.player?.name).join(' and ')} tied with ${winnerScore} ${getScoreUnit(winnerScore)}!`
-                : `${winnerData.name || winnerData.player?.name} is the Supreme Champion with ${winnerScore} ${getScoreUnit(winnerScore)}!`;
+                ? `🎉 ${tiedWinners.map(w => w.name || w.player?.name).join(' & ')} tied with ${winnerScore} ${getScoreUnit(winnerScore)}!`
+                : `🎉 ${winnerData.name || winnerData.player?.name} is the Supreme Champion with ${winnerScore} ${getScoreUnit(winnerScore)}!`;
                 
             const scoresHTML = finalScores.map((score, index) => {
                 const position = index + 1;
                 const name = score.name || score.player?.name || 'Unknown';
                 const total = score.total || score.score || 0;
-                return `${position}. ${name}: ${total}`;
-            }).join('<br>');
+                return `<div style="
+                    padding: 12px 16px;
+                    margin: 0;
+                    background: rgba(255,255,255,0.18);
+                    border-radius: 12px;
+                    font-family: Outfit, sans-serif;
+                    font-size: 1.05rem;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    border-left: 4px solid ${index === 0 ? '#d4af37' : 'var(--neon-blue)'};
+                    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+                    text-align: left;
+                ">${position}. ${name}: ${total} ${getScoreUnit(total)}</div>`;
+            }).join('');
             
-            const message = `<strong>${winnerText}</strong><br><br>${scoresHTML}`;
+            const message = `
+                <div style="
+                    font-family: 'Rubik Mono One', monospace;
+                    font-size: 1rem;
+                    text-align: center;
+                    color: #2d3748;
+                    -webkit-text-fill-color: #2d3748;
+                    font-weight: 900;
+                    padding: 14px 18px;
+                    background: linear-gradient(135deg, #f9e784, #f4c842, #e6a817);
+                    border-radius: 14px;
+                    border: 2px solid #d4af37;
+                    box-shadow: 0 4px 12px rgba(212,175,55,0.35), inset 0 1px 0 rgba(255,255,255,0.5);
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    margin-bottom: 14px;
+                    line-height: 1.4;
+                ">${winnerText}</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    ${scoresHTML}
+                </div>
+            `;
             
             try {
                 const result = await showGameCompletionModal(gameType, message, winnerData, finalScores);
@@ -18535,11 +18644,21 @@
             // Save to localStorage
             saveCustomGameRecord(customGame);
             
-            // Update wins tracking for all players
+            // Update wins tracking for all players (wins/played) and totalPoints in scorekeeper_wins
+            const gameTypeKey = gameType.toLowerCase().replace(/\s+/g, '');
+            const winsData = JSON.parse(localStorage.getItem('scorekeeper_wins') || '{}');
+            if (!winsData[gameTypeKey]) winsData[gameTypeKey] = {};
             players.forEach(player => {
                 const isWinner = player.name === winner;
                 updatePlayerWins(player.name, gameType.toLowerCase().replace(/\s+/g, ''), isWinner);
+                // Add this game's score to the running totalPoints in scorekeeper_wins
+                if (!winsData[gameTypeKey][player.name]) {
+                    winsData[gameTypeKey][player.name] = { played: 0, wins: 0, totalPoints: 0 };
+                }
+                winsData[gameTypeKey][player.name].totalPoints =
+                    (winsData[gameTypeKey][player.name].totalPoints || 0) + (player.score || 0);
             });
+            localStorage.setItem('scorekeeper_wins', JSON.stringify(winsData));
             
             // Show success message and close modal
             await customAlert(`${gameType} game saved successfully!\n\nWinner: ${winner}`, '✅ Game Saved');
@@ -18757,12 +18876,24 @@
                         stats.wins++;
                     }
                     
-                    // Add player's score to total points
-                    if (typeof player.score === 'number') {
-                        stats.totalPoints += player.score;
-                    }
+                    // Add player's score to total points (coerce string scores saved by older versions)
+                    const score = typeof player.score === 'number' ? player.score : parseInt(player.score) || 0;
+                    stats.totalPoints += score;
                 });
             });
+
+            // Merge in any manually-edited totalPoints from scorekeeper_wins
+            // (updateCustomGameStat saves edits there; those override the recalculated value)
+            const gameTypeKey = gameType.toLowerCase().replace(/\s+/g, '');
+            const winsData = JSON.parse(localStorage.getItem('scorekeeper_wins') || '{}');
+            if (winsData[gameTypeKey]) {
+                playerStats.forEach((stats, name) => {
+                    const saved = winsData[gameTypeKey][name];
+                    if (saved && typeof saved.totalPoints === 'number') {
+                        stats.totalPoints = saved.totalPoints;
+                    }
+                });
+            }
             
             // Convert to array and add sorting by most recent game date, then best score
             const sortedPlayers = Array.from(playerStats.entries()).map(([name, stats]) => {
@@ -18818,7 +18949,7 @@
                                 <th style="width: 50px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Wins</th>
                                 <th style="width: 43px; padding: 4px 2px; font-size: 0.95rem; color: #000000;">%</th>
                                 <th style="width: 50px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Tot</th>
-                                <th style="width: 50px;"></th>
+                                <th style="width: 40px; min-width: 40px; padding: 2px;"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -18856,8 +18987,8 @@
                                    onchange="updateCustomGameStat('${escapeHtml(gameType)}', '${escapeHtml(player.name)}', 'totalPoints', this.value)"
                                    style="width: 50px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                         </td>
-                        <td style="text-align: center;">
-                            <button class="delete-btn" onclick="deleteCustomGamePlayerStats('${escapeHtml(gameType)}', '${escapeHtml(player.name)}')" style="width: 36px; height: 36px; min-height: 0; font-size: 1.2rem; flex-shrink: 0;">✕</button>
+                        <td style="text-align: center; padding: 2px; width: 40px; min-width: 40px;">
+                            <button class="delete-btn" onclick="deleteCustomGamePlayerStats('${escapeHtml(gameType)}', '${escapeHtml(player.name)}')" style="width: 30px; height: 30px; min-height: 0; font-size: 0.875rem; flex-shrink: 0; display: inline-flex;">✕</button>
                         </td>
                     </tr>
                 `;
