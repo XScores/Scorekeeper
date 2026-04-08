@@ -850,7 +850,9 @@
 
             /* ── TAB NAVIGATION: fixed on same row, right of title ──
                Title region: 12px padding + ~26px emoji + 8px gap + ~130px "ScoreKeeper" + 12px buffer = ~188px
-               We use 270px to be safe on all iPad sizes. top:9px matches hamburger vertical alignment. */
+               We use 270px to be safe on all iPad sizes. top:9px matches hamburger vertical alignment.
+               align-items:center overrides the base align-items:flex-start that was pushing tabs to the top.
+               .tab-navigation top:0 overrides the base rule's position:relative; top:-3px offset. */
             .tab-navigation-container {
                 position: fixed !important;
                 top: 9px !important;            /* same as hamburger — vertically centred in 52px bar */
@@ -858,7 +860,7 @@
                 right: auto !important;
                 height: 34px !important;
                 display: flex !important;
-                align-items: center !important;
+                align-items: center !important; /* overrides base align-items:flex-start */
                 justify-content: flex-start !important;
                 padding: 0 !important;
                 z-index: 201 !important;
@@ -871,6 +873,8 @@
                 display: flex !important;
                 gap: 5px !important;
                 padding: 0 !important;
+                position: static !important;    /* overrides base position:relative */
+                top: 0 !important;              /* overrides base top:-3px offset */
             }
             .tab-btn {
                 padding: 5px 12px !important;
@@ -884,12 +888,12 @@
 
             /* ── GAME TYPE ROW: fixed, anchored left past the tabs ──
                Tabs start at 270px. Two tab buttons (~75px each) + gap = ~160px → tabs end ~430px.
-               Game type starts at 440px, leaving a comfortable gap. */
+               Game type starts at 490px (was 440px, moved +50px per user request). */
             .game-type-row,
             body.grid-mode .game-type-row {
                 position: fixed !important;
                 top: 9px !important;
-                left: 440px !important;
+                left: 490px !important;
                 transform: none !important;
                 display: flex !important;
                 align-items: center !important;
