@@ -848,18 +848,20 @@
                 padding-right: 0 !important;
             }
 
-            /* ── TAB NAVIGATION: fixed on same row, right of title ── */
+            /* ── TAB NAVIGATION: fixed on same row, right of title ──
+               Title region: 12px padding + ~26px emoji + 8px gap + ~130px "ScoreKeeper" + 12px buffer = ~188px
+               We use 270px to be safe on all iPad sizes. top:9px matches hamburger vertical alignment. */
             .tab-navigation-container {
                 position: fixed !important;
-                top: 0 !important;
-                left: 185px !important;         /* clears emoji + "ScoreKeeper" title */
+                top: 9px !important;            /* same as hamburger — vertically centred in 52px bar */
+                left: 270px !important;         /* clears emoji + "ScoreKeeper" title comfortably */
                 right: auto !important;
-                height: 52px !important;
+                height: 34px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: flex-start !important;
                 padding: 0 !important;
-                z-index: 201 !important;        /* above header bg */
+                z-index: 201 !important;
                 background: transparent !important;
                 gap: 6px !important;
                 width: auto !important;
@@ -880,13 +882,15 @@
                 align-items: center !important;
             }
 
-            /* ── GAME TYPE ROW: fixed, centred in the bar ── */
+            /* ── GAME TYPE ROW: fixed, anchored left past the tabs ──
+               Tabs start at 270px. Two tab buttons (~75px each) + gap = ~160px → tabs end ~430px.
+               Game type starts at 440px, leaving a comfortable gap. */
             .game-type-row,
             body.grid-mode .game-type-row {
                 position: fixed !important;
                 top: 9px !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
+                left: 440px !important;
+                transform: none !important;
                 display: flex !important;
                 align-items: center !important;
                 gap: 8px !important;
@@ -899,7 +903,7 @@
                 border-radius: 0 !important;
                 width: auto !important;
                 min-width: 0 !important;
-                max-width: 280px !important;
+                max-width: 240px !important;
             }
             .game-type-label {
                 font-size: 0.72rem !important;
