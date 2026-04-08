@@ -878,15 +878,23 @@
                 align-items: center !important;
             }
 
-            /* ── STANDARD MODE: stack vertically so Start button sits below instructions ── */
+            /* ── STANDARD MODE: centred column — instructions + button stacked in the middle ── */
             .standard-mode {
                 display: flex !important;
                 flex-direction: column !important;
+                align-items: center !important;
                 gap: 0 !important;
             }
-            .start-button-container {
-                padding: 10px 0 !important;
+            #standardModeInstructions {
                 width: 100% !important;
+                max-width: 560px !important;
+                flex: none !important;
+                min-width: 0 !important;
+            }
+            .start-button-container {
+                width: 100% !important;
+                max-width: 560px !important;
+                padding: 10px 0 !important;
             }
 
             /* ── GAME TYPE ROW: fixed, anchored left past the tabs ──
@@ -969,6 +977,13 @@
                 top: 60px !important;
                 right: 10px !important;
                 max-width: 280px !important;
+            }
+            /* Override ultra-wide grid layout (min-width:1024px) which also fires on iPad Pro */
+            .standard-mode {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                grid-template-columns: none !important;
             }
         }
         
