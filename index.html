@@ -878,25 +878,6 @@
                 align-items: center !important;
             }
 
-            /* ── STANDARD MODE: centred column — instructions + button stacked in the middle ── */
-            .standard-mode {
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                gap: 0 !important;
-            }
-            #standardModeInstructions {
-                width: 100% !important;
-                max-width: 560px !important;
-                flex: none !important;
-                min-width: 0 !important;
-            }
-            .start-button-container {
-                width: 100% !important;
-                max-width: 560px !important;
-                padding: 10px 0 !important;
-            }
-
             /* ── GAME TYPE ROW: fixed, anchored left past the tabs ──
                Tabs start at 270px. Two tab buttons (~75px each) + gap = ~160px → tabs end ~430px.
                Game type starts at 490px (was 440px, moved +50px per user request). */
@@ -978,13 +959,6 @@
                 right: 10px !important;
                 max-width: 280px !important;
             }
-            /* Override ultra-wide grid layout (min-width:1024px) which also fires on iPad Pro */
-            .standard-mode {
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                grid-template-columns: none !important;
-            }
         }
         
         /* Ultra-wide landscape displays */
@@ -1009,6 +983,33 @@
             
             .crowns-table th, .crowns-table td {
                 padding: 8px 10px !important;
+            }
+        }
+
+        /* iPad landscape content layout — must come AFTER the ultra-wide query (min-width:1024px)
+           so these rules win in the cascade and override the 3-column grid. */
+        @media screen and (orientation: landscape) and (min-height: 601px) and (min-width: 768px) {
+            .standard-mode {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+            #standardModeInstructions {
+                width: 100% !important;
+                max-width: 560px !important;
+                flex: none !important;
+                min-width: 0 !important;
+            }
+            .start-button-container {
+                width: 100% !important;
+                max-width: 560px !important;
+                padding: 10px 0 !important;
+            }
+            /* Also override the add-player-section flex from the wider tablet query */
+            .add-player-section {
+                flex: none !important;
+                min-width: 0 !important;
+                width: 100% !important;
             }
         }
         
