@@ -339,6 +339,56 @@
             }
             
             /* Game-specific Turn/Round/Crown column widths in landscape */
+            /* These match the portrait mode widths to ensure consistency */
+            
+            /* 5 Crowns: Crown column */
+            #crownsTable .round-label {
+                min-width: 70px !important;
+                width: 70px !important;
+                max-width: 70px !important;
+            }
+            
+            /* Golf: Hole column (not golf-info-column like Tee/Par/HCP) */
+            #golfTable .crowns-hole-label:not(.golf-info-column) {
+                min-width: 35px !important;
+                width: auto !important;
+                max-width: 60px !important;
+            }
+            
+            /* Scrabble: Round column */
+            #scrabbleTable .crowns-hole-label {
+                min-width: 35px !important;
+                width: auto !important;
+                max-width: 120px !important;
+            }
+            
+            /* Dominoes: Turn column */
+            #dominoesTable .crowns-hole-label {
+                min-width: 35px !important;
+                width: auto !important;
+                max-width: 80px !important;
+            }
+            
+            /* Farkle/General: Turn column */
+            #genericGridTable .crowns-hole-label {
+                min-width: 35px !important;
+                width: auto !important;
+                max-width: 60px !important;
+            }
+            
+            /* Phase 10: Phase column */
+            #phase10Table .crowns-hole-label {
+                min-width: 140px !important;
+                width: 140px !important;
+                max-width: 140px !important;
+            }
+            
+            /* Yahtzee: Category column */
+            #yahtzeeTable .crowns-hole-label {
+                min-width: 120px !important;
+                width: 120px !important;
+                max-width: 120px !important;
+            }
             
             /* Force game management buttons into horizontal row below table in landscape */
             #crownsButtons, #golfButtons, #scrabbleButtons, #yahtzeeButtons, 
