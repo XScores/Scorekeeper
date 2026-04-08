@@ -645,12 +645,6 @@
                 max-width: 100% !important;
             }
             
-            /* Hide voice recognition button in landscape mode */
-            #gameStateBtn,
-            .start-button-container {
-                display: none !important;
-            }
-            
             /* Optimize table layouts for landscape */
             .crowns-table, .golf-table {
                 font-size: 0.85rem !important;
@@ -962,10 +956,6 @@
             }
 
             /* ── MISC ── */
-            #gameStateBtn,
-            .start-button-container {
-                display: none !important;
-            }
             .voice-feedback {
                 top: 60px !important;
                 right: 10px !important;
@@ -1281,6 +1271,20 @@
         
         .final-scores-ok-btn:active {
             transform: translateY(0);
+        }
+        /* Modal Delete buttons: override blue OK styling with pink delete colouring */
+        .final-scores-ok-btn.delete-btn {
+            background: rgba(255, 0, 110, 0.2);
+            border: 1px solid var(--neon-pink);
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(255, 0, 110, 0.3);
+            width: auto;
+            flex: 1;
+        }
+        .final-scores-ok-btn.delete-btn:hover {
+            background: rgba(255, 0, 110, 0.5);
+            box-shadow: 0 6px 20px rgba(255, 0, 110, 0.5);
+            transform: translateY(-2px);
         }
         /* Golf Course Selection Modal */
         .course-list-container {
@@ -3810,6 +3814,20 @@
         .dropdown-action-btn:hover {
             background: rgba(0, 245, 255, 0.2);
             border-color: var(--neon-blue);
+            transform: scale(1.1);
+        }
+        /* Course dropdown delete button: keep compact size, apply pink delete colouring */
+        .dropdown-action-btn.delete-btn {
+            width: 28px;
+            height: 28px;
+            font-size: 0.95rem;
+            background: rgba(255, 0, 110, 0.2);
+            border-color: var(--neon-pink);
+            color: #FFFFFF;
+        }
+        .dropdown-action-btn.delete-btn:hover {
+            background: rgba(255, 0, 110, 0.5);
+            border-color: var(--neon-pink);
             transform: scale(1.1);
         }
         .dropdown-list-item:last-child {
@@ -7057,7 +7075,7 @@
                                 ${gameType === 'golf' ? `<div style="color: black; font-size: 0.95rem; text-align: left;">${escapeHtml(playerNames)}</div>` : ''}
                             </div>
                             <button class="delete-btn" onclick="event.stopPropagation(); window.deleteGameScorecardFromWins('${gameType}', ${actualIndex})" 
-                                    style="width: 36px; height: 36px; font-size: 1.2rem; flex-shrink: 0;">✕</button>
+                                    style="width: 36px; height: 36px; min-height: 0; font-size: 1.2rem; flex-shrink: 0;">✕</button>
                         </div>
                     `;
                 });
@@ -8628,28 +8646,28 @@
                 return;
             }
             
-            console.log('Updating button, gameInProgress:', gameInProgress, 'isVoiceGuidedSetup:', isVoiceGuidedSetup);
+            console.log('Updating button, gameInProgress:', gameInProgress, 'isVoiceGuidedSetup:', isVoiceGuidedSetup, 'isDoneAdding:', isDoneAdding);
             
             if (isVoiceGuidedSetup) {
                 // During voice-guided setup, show "Stop Voice Input"
                 btn.textContent = 'Stop Voice Input';
-                btn.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a24)'; // Red gradient for stop
+                btn.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a24)';
                 btn.style.color = 'white';
                 btn.style.boxShadow = '0 4px 15px rgba(238, 90, 36, 0.4)';
-                btn.classList.remove('pulse'); // Remove pulsing for stop state
+                btn.classList.remove('pulse');
                 btn.style.display = 'block';
                 console.log('Button set to: Stop Voice Input (red) - Voice guided setup');
-            } else if (gameInProgress) {
-                // Hide the button when game is in progress - use individual game End Game buttons instead
+            } else if (gameInProgress && isDoneAdding) {
+                // Only hide when a game grid is actually active (player setup is done).
+                // If isDoneAdding is false we are on the home/setup screen — keep button visible.
                 btn.style.display = 'none';
-                console.log('Button hidden - game in progress, use game-specific buttons');
+                console.log('Button hidden - game in progress and grid active');
             } else {
                 btn.textContent = 'Start Voice Recognition';
                 btn.style.background = 'linear-gradient(135deg, var(--neon-green), #2ed600)';
                 btn.style.color = 'black';
                 btn.style.boxShadow = '0 4px 15px rgba(57, 255, 20, 0.4)';
                 btn.style.display = 'block';
-                // Don't re-add pulse class when game ends - only pulse on initial load
                 console.log('Button set to: Start Voice Recognition (green)');
             }
         }
@@ -9584,7 +9602,7 @@
                                     ${gameType === 'golf' ? `<div style="color: black; font-size: 0.95rem; text-align: left;">${escapeHtml(playerNames)}</div>` : ''}
                                 </div>
                                 <button class="delete-btn" onclick="event.stopPropagation(); window.deleteGameScorecardFromWins('${gameType}', ${actualIndex})" 
-                                        style="width: 36px; height: 36px; font-size: 1.2rem; flex-shrink: 0;">✕</button>
+                                        style="width: 36px; height: 36px; min-height: 0; font-size: 1.2rem; flex-shrink: 0;">✕</button>
                             </div>
                         `;
                     });
@@ -9719,7 +9737,7 @@
                                        style="width: 50px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                             </td>
                             <td style="text-align: center;">
-                                <button class="delete-btn" onclick="deleteWinsTrackerEntry('${gameType}', '${escapeHtml(playerName)}')" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
+                                <button class="delete-btn" onclick="deleteWinsTrackerEntry('${gameType}', '${escapeHtml(playerName)}')" style="width: 36px; height: 36px; min-height: 0; font-size: 1.2rem; flex-shrink: 0;">✕</button>
                             </td>
                         </tr>
                     `;
@@ -9783,7 +9801,7 @@
                                     ${gameType === 'golf' ? `<div style="color: black; font-size: 0.95rem; text-align: left;">${escapeHtml(playerNames)}</div>` : ''}
                                 </div>
                                 <button class="delete-btn" onclick="event.stopPropagation(); window.deleteGameScorecardFromWins('${gameType}', ${actualIndex})" 
-                                        style="width: 36px; height: 36px; font-size: 1.2rem; flex-shrink: 0;">✕</button>
+                                        style="width: 36px; height: 36px; min-height: 0; font-size: 1.2rem; flex-shrink: 0;">✕</button>
                             </div>
                         `;
                     });
@@ -10552,9 +10570,12 @@
                 const instructionsWidth = instructionsPanel.getBoundingClientRect().width;
                 console.log('Instructions panel width:', instructionsWidth + 'px');
                 
-                // Apply this exact width to the start button
-                startButton.style.width = instructionsWidth + 'px';
-                console.log('Applied width to Start button:', instructionsWidth + 'px');
+                // Only apply if positive — a zero width means the panel is hidden,
+                // and stamping width:0px would make the button invisible.
+                if (instructionsWidth > 0) {
+                    startButton.style.width = instructionsWidth + 'px';
+                    console.log('Applied width to Start button:', instructionsWidth + 'px');
+                }
             }
         }
         
@@ -11797,7 +11818,7 @@
                     
                     // Delete button
                     const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'dropdown-action-btn';
+                    deleteBtn.className = 'dropdown-action-btn delete-btn';
                     deleteBtn.innerHTML = '✕';
                     deleteBtn.title = 'Delete course';
                     deleteBtn.addEventListener('click', async function(e) {
@@ -18329,7 +18350,7 @@
                        style="flex: 1; padding: 8px; background: var(--card-bg); border: 2px solid var(--neon-blue); border-radius: 8px; color: var(--text-primary); font-family: Outfit, sans-serif; font-weight: 400; font-size: 0.85rem; box-shadow: 0 0 15px rgba(0, 245, 255, 0.2); transition: all 0.3s ease; text-align: center;">
                 <input type="number" class="custom-player-score" placeholder="Score" inputmode="numeric"
                        style="width: 80px; padding: 8px; background: var(--card-bg); border: 2px solid var(--neon-blue); border-radius: 8px; color: var(--text-primary); font-family: Outfit, sans-serif; font-weight: 400; font-size: 0.85rem; box-shadow: 0 0 15px rgba(0, 245, 255, 0.2); transition: all 0.3s ease; text-align: center;">
-                <button class="delete-btn" onclick="removeCustomGamePlayer(this)" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
+                <button class="delete-btn" onclick="removeCustomGamePlayer(this)" style="width: 36px; height: 36px; min-height: 0; font-size: 1.2rem; flex-shrink: 0;">✕</button>
             `;
             
             container.appendChild(newPlayerDiv);
@@ -18757,7 +18778,7 @@
                                    style="width: 50px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                         </td>
                         <td style="text-align: center;">
-                            <button class="delete-btn" onclick="deleteCustomGamePlayerStats('${escapeHtml(gameType)}', '${escapeHtml(player.name)}')" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
+                            <button class="delete-btn" onclick="deleteCustomGamePlayerStats('${escapeHtml(gameType)}', '${escapeHtml(player.name)}')" style="width: 36px; height: 36px; min-height: 0; font-size: 1.2rem; flex-shrink: 0;">✕</button>
                         </td>
                     </tr>
                 `;
@@ -19738,7 +19759,7 @@
             </div>
             <div style="display: flex; gap: 10px;">
                 <button class="final-scores-ok-btn" onclick="closeSavedScorecardsModal()">Close</button>
-                <button class="final-scores-ok-btn" onclick="deleteCurrentScorecard()" id="deleteScorecardBtn">Delete</button>
+                <button class="final-scores-ok-btn delete-btn" onclick="deleteCurrentScorecard()" id="deleteScorecardBtn">Delete</button>
             </div>
         </div>
     </div>
@@ -19751,7 +19772,7 @@
                 <!-- Wins tracker stats will be displayed here -->
             </div>
             <div style="display: flex; gap: 10px;">
-                <button id="deleteAllScorecardsBtn" class="final-scores-ok-btn" onclick="window.deleteAllGameScorecards('golf')" style="display: none;">Delete All</button>
+                <button id="deleteAllScorecardsBtn" class="final-scores-ok-btn delete-btn" onclick="window.deleteAllGameScorecards('golf')" style="display: none;">Delete All</button>
                 <button class="final-scores-ok-btn" onclick="closeWinsTrackerModal()">Close</button>
             </div>
         </div>
