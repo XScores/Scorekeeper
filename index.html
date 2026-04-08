@@ -843,18 +843,16 @@
             }
 
             /* ── TAB NAVIGATION: fixed on same row, right of title ──
-               Title region: 12px padding + ~26px emoji + 8px gap + ~130px "ScoreKeeper" + 12px buffer = ~188px
-               We use 270px to be safe on all iPad sizes. top:9px matches hamburger vertical alignment.
-               align-items:center overrides the base align-items:flex-start that was pushing tabs to the top.
-               .tab-navigation top:0 overrides the base rule's position:relative; top:-3px offset. */
+               top:9px + align-items:flex-start means the tab tops align with the
+               top of the Game Type dropdown (also top:9px, height:34px). */
             .tab-navigation-container {
                 position: fixed !important;
-                top: 9px !important;            /* same as hamburger — vertically centred in 52px bar */
-                left: 270px !important;         /* clears emoji + "ScoreKeeper" title comfortably */
+                top: 9px !important;
+                left: 270px !important;
                 right: auto !important;
                 height: 34px !important;
                 display: flex !important;
-                align-items: center !important; /* overrides base align-items:flex-start */
+                align-items: flex-start !important; /* align tab tops with dropdown top */
                 justify-content: flex-start !important;
                 padding: 0 !important;
                 z-index: 201 !important;
@@ -867,8 +865,8 @@
                 display: flex !important;
                 gap: 5px !important;
                 padding: 0 !important;
-                position: static !important;    /* overrides base position:relative */
-                top: 0 !important;              /* overrides base top:-3px offset */
+                position: static !important;
+                top: 0 !important;
             }
             .tab-btn {
                 padding: 5px 12px !important;
@@ -878,6 +876,17 @@
                 height: 30px !important;
                 display: flex !important;
                 align-items: center !important;
+            }
+
+            /* ── STANDARD MODE: stack vertically so Start button sits below instructions ── */
+            .standard-mode {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 0 !important;
+            }
+            .start-button-container {
+                padding: 10px 0 !important;
+                width: 100% !important;
             }
 
             /* ── GAME TYPE ROW: fixed, anchored left past the tabs ──
