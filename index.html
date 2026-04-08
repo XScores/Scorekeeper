@@ -1011,6 +1011,11 @@
                 min-width: 0 !important;
                 width: 100% !important;
             }
+            /* Hide Start Voice Recognition button when a scoring grid is active */
+            body.grid-mode .start-button-container,
+            body.grid-mode #gameStateBtn {
+                display: none !important;
+            }
         }
         
         .container {
