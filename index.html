@@ -9424,7 +9424,7 @@
                                 <th style="width: 60px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Games</th>
                                 <th style="width: 50px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Wins</th>
                                 <th style="width: 45px; padding: 4px 2px; font-size: 0.95rem; color: #000000;">%</th>
-                                <th style="width: 60px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Tot</th>
+                                <th style="width: 52px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Tot</th>
                                 <th style="width: 50px;"></th>
                             </tr>
                         </thead>
@@ -9531,8 +9531,9 @@
                                 <input type="number" value="${totalPoints}" 
                                        class="wins-tracker-input" 
                                        inputmode="numeric"
+                                       onfocus="if(this.value == '0') this.value = ''"
                                        onchange="updateWinsTrackerStat('${gameType}', '${escapeHtml(playerName)}', 'totalPoints', this.value)"
-                                       style="width: 60px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
+                                       style="width: 52px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                             </td>
                             <td style="text-align: center;">
                                 <button class="delete-btn" onclick="deleteWinsTrackerEntry('${gameType}', '${escapeHtml(playerName)}')" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
@@ -18533,7 +18534,7 @@
                                 <th style="width: 60px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Games</th>
                                 <th style="width: 50px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Wins</th>
                                 <th style="width: 45px; padding: 4px 2px; font-size: 0.95rem; color: #000000;">%</th>
-                                <th style="width: 60px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Tot</th>
+                                <th style="width: 52px; padding: 4px 6px; font-size: 0.95rem; color: #000000;">Tot</th>
                                 <th style="width: 50px;"></th>
                             </tr>
                         </thead>
@@ -18568,8 +18569,9 @@
                             <input type="number" value="${player.totalPoints}" 
                                    class="wins-tracker-input" 
                                    inputmode="numeric"
+                                   onfocus="if(this.value == '0') this.value = ''"
                                    onchange="updateCustomGameStat('${escapeHtml(gameType)}', '${escapeHtml(player.name)}', 'totalPoints', this.value)"
-                                   style="width: 60px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
+                                   style="width: 52px; text-align: center; background: transparent; border: 1px solid transparent; color: #000000; padding: 4px 4px; font-family: Outfit, sans-serif; font-weight: 600; font-size: 0.95rem;">
                         </td>
                         <td style="text-align: center;">
                             <button class="delete-btn" onclick="deleteCustomGamePlayerStats('${escapeHtml(gameType)}', '${escapeHtml(player.name)}')" style="width: 36px; height: 36px; font-size: 1.2rem;">✕</button>
