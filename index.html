@@ -1016,6 +1016,55 @@
             body.grid-mode #gameStateBtn {
                 display: none !important;
             }
+            /* ── LABEL COLUMNS: minimum width, no truncation, consistent padding ── */
+            /* 5 Crowns: single-char round labels */
+            #crownsTable .round-label {
+                width: 1% !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                white-space: nowrap !important;
+                padding: 6px 10px !important;
+            }
+            /* Scrabble: longest label is "Opponents' Tiles" */
+            #scrabbleTable .crowns-hole-label {
+                width: 1% !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                white-space: nowrap !important;
+                padding: 6px 10px !important;
+            }
+            /* Yahtzee: longest label is "BONUS 35 (if ≥63)" */
+            #yahtzeeTable .crowns-hole-label {
+                width: 1% !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                white-space: nowrap !important;
+                padding: 6px 10px !important;
+            }
+            /* Phase 10: "Phase N" header + phase name subtitle wraps — allow natural width */
+            #phase10Table .crowns-hole-label {
+                width: 1% !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                white-space: nowrap !important;
+                padding: 6px 10px !important;
+            }
+            /* General/Farkle: "Turn N", "TOTAL" */
+            #genericGridTable .crowns-hole-label {
+                width: 1% !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                white-space: nowrap !important;
+                padding: 6px 10px !important;
+            }
+            /* Dominoes: "Turn N", "TOTAL" */
+            #dominoesTable .crowns-hole-label {
+                width: 1% !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                white-space: nowrap !important;
+                padding: 6px 10px !important;
+            }
         }
         
         .container {
