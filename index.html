@@ -443,7 +443,22 @@
                 gap: 8px !important;
                 padding: 0 10px !important;
                 z-index: 101 !important;
-                width: auto !important;
+                background: #0a0e27 !important;
+            }
+            body[data-theme="stainless"] header {
+                background: linear-gradient(90deg, #d0d5db, #b0b8c0) !important;
+            }
+            body[data-theme="ios"] header {
+                background: rgba(242,242,247,0.98) !important;
+                backdrop-filter: blur(20px) !important;
+                -webkit-backdrop-filter: blur(20px) !important;
+                border-bottom: 0.5px solid rgba(60,60,67,0.29) !important;
+            }
+            body[data-theme="ios-dark"] header {
+                background: rgba(28,28,30,0.98) !important;
+                backdrop-filter: blur(20px) !important;
+                -webkit-backdrop-filter: blur(20px) !important;
+                border-bottom: 0.5px solid rgba(255,255,255,0.10) !important;
             }
             
             .hamburger-line {
@@ -451,7 +466,7 @@
                 opacity: 1 !important;
             }
             
-            /* Dartboard + title */
+            /* Dartboard + title — left side, natural flow */
             header > div:last-child {
                 display: flex !important;
                 align-items: center !important;
@@ -474,15 +489,17 @@
             }
             
             /* === TAB NAVIGATION CONTAINER (hidden in landscape) === */
-            /* Tab navigation hidden in landscape */
             
-            /* Voice buttons — static in flex header */
+            /* Voice buttons — fixed right, vertically centred in 50px bar */
             header .voice-btn-group {
-                position: static !important;
+                position: fixed !important;
+                top: 0 !important;
+                right: 45px !important;
+                height: 50px !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
-                margin-left: auto !important;
+                z-index: 102 !important;
             }
             
             .voice-btn {
@@ -494,14 +511,14 @@
                 padding: 0 !important;
             }
             
-            /* Hamburger — static in flex header, pushed to far right */
+            /* Hamburger — fixed far right, vertically centred in 50px bar */
             header .hamburger-btn {
-                position: static !important;
-                top: auto !important;
-                right: auto !important;
+                position: fixed !important;
+                top: 0 !important;
+                right: 10px !important;
                 left: auto !important;
+                height: 50px !important;
                 width: 30px !important;
-                height: 30px !important;
                 z-index: 10005 !important;
                 display: flex !important;
                 flex-direction: column !important;
@@ -514,14 +531,13 @@
                 border: none !important;
                 pointer-events: auto !important;
                 cursor: pointer !important;
-                flex-shrink: 0 !important;
             }
             
             .tab-navigation-container {
                 display: none !important;
             }
             
-            /* === GAME TYPE DROPDOWN — centred in the fixed header bar === */
+            /* === GAME TYPE DROPDOWN — fixed, vertically centred in 50px bar === */
             .game-type-row {
                 position: fixed !important;
                 top: 0 !important;
