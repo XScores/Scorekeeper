@@ -2494,6 +2494,9 @@
         
         .theme-selector .custom-dropdown {
             width: 100%;
+            height: 44px;
+            padding: 0 15px;
+            box-sizing: border-box;
         }
         
         .theme-selector .custom-dropdown-list {
@@ -2520,6 +2523,9 @@
         
         .wins-tracker-selector .custom-dropdown {
             width: 100%;
+            height: 44px;
+            padding: 0 15px;
+            box-sizing: border-box;
         }
         
         .wins-tracker-selector .custom-dropdown-list {
@@ -3690,7 +3696,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
+            padding: 0 15px;
+            height: 44px;
+            box-sizing: border-box;
             background: rgba(0, 0, 0, 0.5);
             border: 2px solid var(--neon-blue);
             border-radius: 8px;
@@ -4258,6 +4266,9 @@
         }
         .timer-selector .custom-dropdown {
             width: 100%;
+            height: 44px;
+            padding: 0 15px;
+            box-sizing: border-box;
         }
         .timer-selector .custom-dropdown-list {
             width: 100%;
@@ -4966,6 +4977,12 @@
             color: #000000;
             box-shadow: 0 1px 2px rgba(0,0,0,0.08);
         }
+        body[data-theme="ios"] .wins-tracker-selector .custom-dropdown,
+        body[data-theme="ios"] .theme-selector .custom-dropdown,
+        body[data-theme="ios"] .timer-selector .custom-dropdown {
+            height: 44px;
+            box-sizing: border-box;
+        }
         body[data-theme="ios"] .custom-dropdown-list {
             background: #FFFFFF;
             border: 0.5px solid rgba(60,60,67,0.29);
@@ -5351,6 +5368,12 @@
         body[data-theme="ios-dark"] .tab-navigation-container { gap: 10px; background: transparent; }
         body[data-theme="ios-dark"].grid-mode .game-type-row { background: transparent; box-shadow: none; }
         body[data-theme="ios-dark"] .custom-dropdown { background: #5A5A5C; border: 0.5px solid rgba(255,255,255,0.24); border-radius: 10px; color: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.30); }
+        body[data-theme="ios-dark"] .wins-tracker-selector .custom-dropdown,
+        body[data-theme="ios-dark"] .theme-selector .custom-dropdown,
+        body[data-theme="ios-dark"] .timer-selector .custom-dropdown {
+            height: 44px;
+            box-sizing: border-box;
+        }
         body[data-theme="ios-dark"] .custom-dropdown-list { background: #5A5A5C; border: 0.5px solid rgba(255,255,255,0.24); border-top: none; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.50); color: #FFFFFF; }
         body[data-theme="ios-dark"] .dropdown-list-item, body[data-theme="ios-dark"] .dropdown-list-item-theme, body[data-theme="ios-dark"] .dropdown-list-item-game { color: #FFFFFF; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
         body[data-theme="ios-dark"] .dropdown-list-item:hover, body[data-theme="ios-dark"] .dropdown-list-item-theme:hover, body[data-theme="ios-dark"] .dropdown-list-item-game:hover { background: rgba(10,132,255,0.18); }
