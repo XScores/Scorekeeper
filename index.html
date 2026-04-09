@@ -534,7 +534,6 @@
                 justify-content: center !important;
                 align-items: center !important;
                 opacity: 1 !important;
-                background: var(--button-bg, #E8E8E8) !important;
                 border-radius: 8px !important;
                 margin: 0 !important;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
@@ -4946,6 +4945,29 @@
         body[data-theme="ios"] .speaker-icon { color: #FFFFFF; }
         body[data-theme="ios"] .voice-btn:hover .mic-icon,
         body[data-theme="ios"] .voice-btn:hover .speaker-icon { color: #FFFFFF; }
+        /* Light theme: Scrabble checkmark matches Speaker button style */
+        body[data-theme="ios"] #scrabbleCheckButton {
+            background: #007AFF !important;
+            color: #FFFFFF !important;
+            border: none !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15) !important;
+        }
+        body[data-theme="ios"] #scrabbleCheckButton:hover {
+            background: #0062CC !important;
+            box-shadow: 0 3px 10px rgba(0,122,255,0.4) !important;
+        }
+        /* Dark theme: Scrabble checkmark matches Speaker button style */
+        body[data-theme="ios-dark"] #scrabbleCheckButton {
+            background: #0A84FF !important;
+            color: #FFFFFF !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            border: none !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.40) !important;
+        }
+        body[data-theme="ios-dark"] #scrabbleCheckButton:hover {
+            background: #0070E0 !important;
+            box-shadow: 0 2px 6px rgba(10,132,255,0.45) !important;
+        }
 
         /* Hamburger button */
         body[data-theme="ios"] .hamburger-btn {
@@ -5264,6 +5286,12 @@
         }
         body[data-theme="ios"] thead .crowns-hole-label:not(.golf-info-column) {
             color: #000000 !important;
+        }
+        /* Light theme: remove dark label column background on all scoring grids */
+        body[data-theme="ios"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
+            background: rgba(0, 0, 0, 0.06) !important;
+            color: #000000 !important;
+            border-right-color: rgba(0, 0, 0, 0.15) !important;
         }
         body[data-theme="ios"] .golf-course-selector {
             background: transparent !important;
@@ -5643,9 +5671,9 @@
                                    onkeypress="if(event.key==='Enter') checkWordFromInput()"
                                    oninput="updateScrabbleCheckButton()"
                                    onpaste="setTimeout(updateScrabbleCheckButton, 10)"
-                                   style="padding: 8px 12px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; width: 150px; font-size: 0.95rem; font-weight: 700;">
+                                   style="padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; width: 150px; font-size: 0.95rem; font-weight: 700;">
                             <button id="scrabbleCheckButton" onclick="checkWordFromInput()" 
-                                    style="width: 40px; height: 40px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--neon-blue); color: black; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;">✓</button>
+                                    style="width: 38px; height: 38px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--neon-blue); color: black; font-size: 2.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; line-height: 1; padding: 0; flex-shrink: 0;">✓</button>
                         </div>
                         
                         <!-- Second row: Timer Controls with exact alignment -->
@@ -5654,7 +5682,7 @@
                             <!-- Timer duration selector - aligned exactly under word input field -->
                             <div class="custom-dropdown-wrapper" style="width: 150px; position: relative; z-index: 100;">
                                 <!-- Timer dropdown (shown when timer not running) -->
-                                <div class="custom-dropdown" id="scrabbleTimerDropdown" onclick="toggleScrabbleTimerDropdown()" style="padding: 8px 12px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; font-size: 0.95rem; width: 100%; display: flex; justify-content: space-between; align-items: center; text-align: left;">
+                                <div class="custom-dropdown" id="scrabbleTimerDropdown" onclick="toggleScrabbleTimerDropdown()" style="padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; font-size: 0.95rem; width: 100%; display: flex; justify-content: space-between; align-items: center; text-align: left;">
                                     <span id="selectedTimerDuration" class="dropdown-selected">2 minutes</span>
                                     <span class="dropdown-arrow">▼</span>
                                 </div>
@@ -5679,7 +5707,7 @@
                             
                             <!-- Go/Stop toggle button - aligned exactly under checkmark button -->
                             <button id="scrabbleGoBtn" onclick="toggleScrabbleTimer()" 
-                                    style="width: 40px; height: 40px; border-radius: 6px; border: 2px solid var(--neon-green); background: linear-gradient(135deg, var(--neon-green), #2ed600); color: black; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; padding: 0; min-width: 40px; max-width: 40px; flex: none;">▶</button>
+                                    style="width: 38px; height: 38px; border-radius: 6px; border: 2px solid var(--neon-green); background: linear-gradient(135deg, var(--neon-green), #2ed600); color: black; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; padding: 0; min-width: 38px; max-width: 38px; flex: none;">▶</button>
                         </div>
                     </div>
                     
