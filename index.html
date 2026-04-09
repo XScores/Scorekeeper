@@ -462,7 +462,6 @@
             }
             
             .hamburger-line {
-                width: 16px !important;
                 opacity: 1 !important;
             }
             
@@ -475,7 +474,6 @@
             }
             
             header h1 {
-                font-size: 0.8rem !important;
                 margin: 0 !important;
                 white-space: nowrap !important;
             }
@@ -484,41 +482,28 @@
                 display: none !important;
             }
             
-            header > div > span {
-                font-size: 1.4rem !important;
-            }
-            
             /* === TAB NAVIGATION CONTAINER (hidden in landscape) === */
             
             /* Voice buttons — fixed right, vertically centred in 50px bar */
             header .voice-btn-group {
                 position: fixed !important;
-                top: 10px !important;
-                right: 45px !important;
-                height: 30px !important;
+                top: 3px !important;
+                right: 58px !important;
+                height: 44px !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
                 z-index: 102 !important;
             }
             
-            .voice-btn {
-                width: 30px !important;
-                height: 30px !important;
-                min-width: 30px !important;
-                min-height: 30px !important;
-                font-size: 0.9rem !important;
-                padding: 0 !important;
-            }
-            
             /* Hamburger — fixed far right, vertically centred in 50px bar */
             header .hamburger-btn {
                 position: fixed !important;
-                top: 10px !important;
+                top: 3px !important;
                 right: 10px !important;
                 left: auto !important;
-                height: 30px !important;
-                width: 30px !important;
+                height: 44px !important;
+                width: 44px !important;
                 z-index: 10005 !important;
                 display: flex !important;
                 flex-direction: column !important;
@@ -527,7 +512,6 @@
                 opacity: 1 !important;
                 border-radius: 8px !important;
                 margin: 0 !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
                 border: none !important;
                 pointer-events: auto !important;
                 cursor: pointer !important;
@@ -796,15 +780,11 @@
             }
 
             header h1 {
-                font-size: 1rem !important;
                 margin: 0 !important;
                 white-space: nowrap !important;
             }
             header .subtitle {
                 display: none !important;
-            }
-            header > div > span {
-                font-size: 1.6rem !important;
             }
             header > div {
                 display: flex !important;
@@ -813,35 +793,15 @@
                 padding-right: 0 !important;
             }
 
-            /* ── TAB NAVIGATION: fixed on same row, right of title ──
-               top:9px + align-items:flex-start means the tab tops align with the
-               top of the Game Type dropdown (also top:9px, height:34px). */
+            /* ── TAB NAVIGATION: hidden ── */
             .tab-navigation-container {
                 display: none !important;
             }
             body.grid-mode .tab-navigation-container {
                 display: none !important;
             }
-            .tab-navigation {
-                display: flex !important;
-                gap: 5px !important;
-                padding: 0 !important;
-                position: static !important;
-                top: 0 !important;
-            }
-            .tab-btn {
-                padding: 5px 12px !important;
-                font-size: 0.7rem !important;
-                white-space: nowrap !important;
-                min-height: 30px !important;
-                height: 30px !important;
-                display: flex !important;
-                align-items: center !important;
-            }
 
-            /* ── GAME TYPE ROW: fixed, anchored left past the tabs ──
-               Tabs start at 270px. Two tab buttons (~75px each) + gap = ~160px → tabs end ~430px.
-               Game type starts at 490px (was 440px, moved +50px per user request). */
+            /* ── GAME TYPE ROW: fixed, anchored left past the title ── */
             .game-type-row {
                 position: fixed !important;
                 top: 0 !important;
@@ -851,7 +811,6 @@
                 display: flex !important;
                 align-items: center !important;
                 gap: 8px !important;
-                height: 34px !important;
                 z-index: 202 !important;
                 margin: 0 !important;
                 padding: 0 !important;
@@ -868,32 +827,15 @@
             }
             .custom-dropdown-wrapper-game {
                 overflow: visible !important;
-            }
-            .game-type-label {
-                font-size: 0.72rem !important;
-                white-space: nowrap !important;
-            }
-            .custom-dropdown-wrapper-game {
                 min-width: 140px !important;
                 max-width: 200px !important;
             }
-            .custom-dropdown {
-                padding: 5px 8px !important;
-                font-size: 0.85rem !important;
-                min-height: 34px !important;
-            }
-            .dropdown-selected {
-                font-size: 0.85rem !important;
-            }
 
             /* ── VOICE BUTTONS: fixed, right side just left of hamburger ── */
-            /* hamburger: right 10px, width 34px → its left edge is at right: 44px
-               two btns (34px) + gap (6px) = 74px wide → start at right: 54px */
             header .voice-btn-group {
                 position: fixed !important;
-                top: 0 !important;
-                height: 52px !important;
-                right: 54px !important;
+                top: 4px !important;
+                right: 58px !important;
                 left: auto !important;
                 display: flex !important;
                 flex-direction: row !important;
@@ -901,23 +843,15 @@
                 align-items: center !important;
                 z-index: 203 !important;
             }
-            .voice-btn {
-                width: 34px !important;
-                height: 34px !important;
-                min-width: 34px !important;
-                min-height: 34px !important;
-                font-size: 1rem !important;
-                padding: 0 !important;
-            }
 
             /* ── HAMBURGER: fixed top-right ── */
             header .hamburger-btn {
                 position: fixed !important;
-                top: 0 !important;
-                height: 52px !important;
+                top: 4px !important;
                 right: 10px !important;
                 left: auto !important;
-                width: 34px !important;
+                width: 44px !important;
+                height: 44px !important;
                 z-index: 204 !important;
                 margin: 0 !important;
             }
