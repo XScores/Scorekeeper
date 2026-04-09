@@ -471,33 +471,7 @@
             }
             
             /* === TAB NAVIGATION CONTAINER (contains tabs + voice buttons) === */
-            .tab-navigation-container {
-                position: absolute !important;
-                top: 13px !important;
-                left: 24% !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 10px !important;
-                z-index: 101 !important;
-                width: auto !important;
-            }
-            
-            /* Tab navigation */
-            .tab-navigation {
-                display: flex !important;
-                gap: 4px !important;
-                padding: 2px !important;
-            }
-            
-            .tab-btn {
-                padding: 5px 10px !important;
-                font-size: 0.65rem !important;
-                white-space: nowrap !important;
-                min-height: 30px !important;
-                height: 30px !important;
-                display: flex !important;
-                align-items: center !important;
-            }
+            /* Tab navigation hidden in landscape */
             
             /* Voice buttons group - MUST position relative to .container, not tab-navigation-container */
             header .voice-btn-group {
@@ -542,10 +516,14 @@
                 cursor: pointer !important;
             }
             
+            .tab-navigation-container {
+                display: none !important;
+            }
+            
             /* === GAME TYPE DROPDOWN === */
             .game-type-row {
                 position: absolute !important;
-                top: 20px !important;
+                top: 10px !important;
                 left: 52% !important;
                 display: flex !important;
                 gap: 5px !important;
@@ -558,14 +536,6 @@
             /* Game dropdown hidden on scoring grids */
             body.grid-mode .game-type-row {
                 display: none !important;
-            }
-            
-            /* Also override tab-navigation-container flex behavior in landscape */
-            body.grid-mode .tab-navigation-container {
-                display: flex !important;
-                align-items: center !important;
-                width: auto !important;
-                flex-wrap: nowrap !important;
             }
             
             .game-type-label {
@@ -829,21 +799,11 @@
             /* ── TAB NAVIGATION: fixed on same row, right of title ──
                top:9px + align-items:flex-start means the tab tops align with the
                top of the Game Type dropdown (also top:9px, height:34px). */
+            .tab-navigation-container {
+                display: none !important;
+            }
             body.grid-mode .tab-navigation-container {
-                position: fixed !important;
-                top: 9px !important;
-                left: 270px !important;
-                right: auto !important;
-                height: 34px !important;
-                display: flex !important;
-                align-items: flex-start !important; /* align tab tops with dropdown top */
-                justify-content: flex-start !important;
-                padding: 0 !important;
-                z-index: 201 !important;
-                background: transparent !important;
-                gap: 6px !important;
-                width: auto !important;
-                box-shadow: none !important;
+                display: none !important;
             }
             .tab-navigation {
                 display: flex !important;
@@ -5451,7 +5411,15 @@
         body[data-theme="ios-dark"] .score-input { background: #48484A; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.12); -webkit-text-fill-color: #FFFFFF; }
         body[data-theme="ios-dark"] .final-scores-modal { background: var(--modal-overlay-bg); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
         body[data-theme="ios-dark"] .final-scores-content { background: #1C1C1E; border-radius: 14px; border: none; box-shadow: 0 8px 32px rgba(0,0,0,0.60); }
-        body[data-theme="ios-dark"] .final-scores-title { color: #FFFFFF; font-weight: 700; border-bottom: 0.5px solid rgba(255,255,255,0.10); }
+        body[data-theme="ios-dark"] .final-scores-title { 
+            color: #FFFFFF; 
+            -webkit-text-fill-color: #FFFFFF;
+            background: none;
+            -webkit-background-clip: initial;
+            background-clip: initial;
+            font-weight: 700; 
+            border-bottom: 0.5px solid rgba(255,255,255,0.10); 
+        }
         body[data-theme="ios-dark"] .final-scores-ok-btn { background: #0A84FF; color: #FFFFFF; -webkit-text-fill-color: #FFFFFF; border-radius: 12px; border: none; box-shadow: none; }
         body[data-theme="ios-dark"] .final-scores-ok-btn:hover { background: #0070E0; transform: none; }
         body[data-theme="ios-dark"] .custom-modal-content { background: #1C1C1E; border-radius: 14px; border: none; box-shadow: 0 8px 32px rgba(0,0,0,0.60); }
