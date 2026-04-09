@@ -431,14 +431,17 @@
                 height: 55px !important;
             }
             
-            /* === HEADER (contains hamburger + dartboard + title) === */
+            /* === HEADER: fixed full-width bar === */
             header {
-                position: absolute !important;
-                top: 0px !important;
-                left: 1% !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                height: 50px !important;
                 display: flex !important;
                 align-items: center !important;
                 gap: 8px !important;
+                padding: 0 10px !important;
                 z-index: 101 !important;
                 width: auto !important;
             }
@@ -470,19 +473,16 @@
                 font-size: 1.4rem !important;
             }
             
-            /* === TAB NAVIGATION CONTAINER (contains tabs + voice buttons) === */
+            /* === TAB NAVIGATION CONTAINER (hidden in landscape) === */
             /* Tab navigation hidden in landscape */
             
-            /* Voice buttons group - MUST position relative to .container, not tab-navigation-container */
+            /* Voice buttons — static in flex header */
             header .voice-btn-group {
-                position: fixed !important;
-                top: 10px !important;
-                right: 45px !important;
-                left: auto !important;
+                position: static !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
-                z-index: 102 !important;
+                margin-left: auto !important;
             }
             
             .voice-btn {
@@ -494,11 +494,11 @@
                 padding: 0 !important;
             }
             
-            /* Position hamburger from RIGHT edge of VIEWPORT */
+            /* Hamburger — static in flex header, pushed to far right */
             header .hamburger-btn {
-                position: fixed !important;
-                top: 10px !important;
-                right: 10px !important;
+                position: static !important;
+                top: auto !important;
+                right: auto !important;
                 left: auto !important;
                 width: 30px !important;
                 height: 30px !important;
@@ -514,22 +514,23 @@
                 border: none !important;
                 pointer-events: auto !important;
                 cursor: pointer !important;
+                flex-shrink: 0 !important;
             }
             
             .tab-navigation-container {
                 display: none !important;
             }
             
-            /* === GAME TYPE DROPDOWN === */
+            /* === GAME TYPE DROPDOWN — centred in the fixed header bar === */
             .game-type-row {
-                position: absolute !important;
-                top: 10px !important;
+                position: fixed !important;
+                top: 0 !important;
                 left: 52% !important;
+                height: 50px !important;
                 display: flex !important;
                 gap: 5px !important;
                 align-items: center !important;
                 z-index: 101 !important;
-                height: 30px !important;
                 width: auto !important;
             }
             
@@ -827,7 +828,8 @@
                Game type starts at 490px (was 440px, moved +50px per user request). */
             .game-type-row {
                 position: fixed !important;
-                top: 9px !important;
+                top: 0 !important;
+                height: 52px !important;
                 left: 490px !important;
                 transform: none !important;
                 display: flex !important;
@@ -873,7 +875,8 @@
                two btns (34px) + gap (6px) = 74px wide → start at right: 54px */
             header .voice-btn-group {
                 position: fixed !important;
-                top: 9px !important;
+                top: 0 !important;
+                height: 52px !important;
                 right: 54px !important;
                 left: auto !important;
                 display: flex !important;
@@ -894,11 +897,11 @@
             /* ── HAMBURGER: fixed top-right ── */
             header .hamburger-btn {
                 position: fixed !important;
-                top: 9px !important;
+                top: 0 !important;
+                height: 52px !important;
                 right: 10px !important;
                 left: auto !important;
                 width: 34px !important;
-                height: 34px !important;
                 z-index: 204 !important;
                 margin: 0 !important;
             }
