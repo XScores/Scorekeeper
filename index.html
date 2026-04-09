@@ -12,7 +12,7 @@
     <title>ScoreKeeper</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -500,7 +500,7 @@
             }
             
             /* Voice buttons group - MUST position relative to .container, not tab-navigation-container */
-            .tab-navigation-container .voice-btn-group {
+            header .voice-btn-group {
                 position: fixed !important;
                 top: 10px !important;
                 right: 45px !important;
@@ -555,24 +555,9 @@
                 width: auto !important;
             }
             
-            /* Game dropdown specific positioning for scoring grids ONLY (not home page) */
-            /* When body has grid-mode class (game active), reposition dropdown */
+            /* Game dropdown hidden on scoring grids */
             body.grid-mode .game-type-row {
-                top: 0px !important;
-                left: calc(48% + 160px) !important;
-                transform: none !important;
-                margin-top: 0 !important;
-                padding-top: 0 !important;
-                background: transparent !important;
-                box-shadow: none !important;
-                border-radius: 0 !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                flex: none !important;
-                width: auto !important;
-                max-width: none !important;
-                min-width: 0 !important;
-                order: 0 !important;
+                display: none !important;
             }
             
             /* Also override tab-navigation-container flex behavior in landscape */
@@ -844,7 +829,7 @@
             /* ── TAB NAVIGATION: fixed on same row, right of title ──
                top:9px + align-items:flex-start means the tab tops align with the
                top of the Game Type dropdown (also top:9px, height:34px). */
-            .tab-navigation-container {
+            body.grid-mode .tab-navigation-container {
                 position: fixed !important;
                 top: 9px !important;
                 left: 270px !important;
@@ -880,8 +865,7 @@
             /* ── GAME TYPE ROW: fixed, anchored left past the tabs ──
                Tabs start at 270px. Two tab buttons (~75px each) + gap = ~160px → tabs end ~430px.
                Game type starts at 490px (was 440px, moved +50px per user request). */
-            .game-type-row,
-            body.grid-mode .game-type-row {
+            .game-type-row {
                 position: fixed !important;
                 top: 9px !important;
                 left: 490px !important;
@@ -900,6 +884,9 @@
                 min-width: 0 !important;
                 max-width: 240px !important;
                 overflow: visible !important;
+            }
+            body.grid-mode .game-type-row {
+                display: none !important;
             }
             .custom-dropdown-wrapper-game {
                 overflow: visible !important;
@@ -924,7 +911,7 @@
             /* ── VOICE BUTTONS: fixed, right side just left of hamburger ── */
             /* hamburger: right 10px, width 34px → its left edge is at right: 44px
                two btns (34px) + gap (6px) = 74px wide → start at right: 54px */
-            .tab-navigation-container .voice-btn-group {
+            header .voice-btn-group {
                 position: fixed !important;
                 top: 9px !important;
                 right: 54px !important;
@@ -1282,7 +1269,8 @@
         }
         
         .final-scores-title {
-            font-family: 'Rubik Mono One', monospace;
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
             font-size: 1.2rem;
             text-align: center;
             margin-bottom: 20px;
@@ -1295,7 +1283,8 @@
         }
         
         .final-scores-winner {
-            font-family: 'Rubik Mono One', monospace;
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
             font-size: 1.1rem;
             text-align: center;
             margin-bottom: 16px;
@@ -1552,7 +1541,29 @@
             font-weight: 800;
             color: #1a202c; /* Even darker for strong emphasis */
         }
-        /* Game completion message: remove the box styling so inner cards show cleanly */
+        /* Scrabble word checker: enforce square buttons matching dropdown height */
+        #scrabbleCheckButton,
+        #scrabbleGoBtn {
+            width: 38px !important;
+            height: 38px !important;
+            min-width: 38px !important;
+            max-width: 38px !important;
+            min-height: 0 !important;
+            max-height: 38px !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Target icon game-switcher button */
+        #targetIconBtn:hover {
+            opacity: 0.75;
+            transform: scale(1.1);
+            transition: all 0.2s ease;
+        }
+        #targetIconBtn:active {
+            transform: scale(0.95);
+        }
         #gameCompletionMessage {
             background: transparent;
             padding: 0;
@@ -1874,7 +1885,8 @@
             letter-spacing: 1px;
         }
         h1 {
-            font-family: 'Rubik Mono One', monospace;
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
             font-size: 1.2rem;
             background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
             -webkit-background-clip: text;
@@ -2140,7 +2152,8 @@
             gap: 8px;
         }
         .score-number {
-            font-family: 'Rubik Mono One', monospace;
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
             font-size: 2rem;
             background: linear-gradient(135deg, var(--neon-yellow), var(--neon-green));
             -webkit-background-clip: text;
@@ -2163,7 +2176,8 @@
             opacity: 0.8;
         }
         .score-input {
-            font-family: 'Rubik Mono One', monospace;
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
             font-size: 2rem;
             background: rgba(255, 190, 11, 0.25);
             border: 2px solid var(--neon-yellow);
@@ -2387,11 +2401,14 @@
             transform: scale(0.95);
         }
         .tab-navigation-container {
-            display: flex;
+            display: none;
             justify-content: space-between;
             align-items: flex-start;
             gap: 15px;
             margin: 0 0 0 0;
+        }
+        body.grid-mode .tab-navigation-container {
+            display: flex;
         }
         .tab-navigation {
             display: flex;
@@ -2419,9 +2436,11 @@
             display: flex;
             gap: 5px;
             flex: 0 0 auto;
-            margin-left: -12px;
+            position: absolute;
+            top: 16px;
+            right: 54px;
         }
-        #speakerBtn { margin-left: 4px; }
+        #speakerBtn { margin-left: 0; }
         
         .tab-btn.active {
             background: linear-gradient(135deg, var(--neon-blue), #00c4cc);
@@ -2452,7 +2471,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin: -7px 0 10px 0;
+            margin: 10px 0 10px 0;
             position: relative;
             z-index: 1002; /* Ensure game type row is above all other dropdowns */
         }
@@ -2471,19 +2490,7 @@
         }
         
         body.grid-mode .game-type-row {
-            flex: 1;
-            min-width: 0;
-            max-width: none;
-            margin: 0 4px 0 0;
-            background: transparent;
-            border-radius: 0;
-            padding: 6px 8px 6px 10px;
-            position: relative;
-            top: 0;
-            gap: 6px;
-            order: -1;
-            display: flex;
-            align-items: center;
+            display: none !important;
         }
         
         body.grid-mode .game-type-label {
@@ -2800,7 +2807,8 @@
         .wall-entry-score {
             font-size: 1.2rem;
             font-weight: 800;
-            font-family: 'Rubik Mono One', monospace;
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
         }
         .wall-entry.fame .wall-entry-score {
             color: var(--neon-green);
@@ -3173,6 +3181,26 @@
             -webkit-overflow-scrolling: touch;
             width: 100%;
         }
+        /* Tighten gap between header and scoring grid in grid mode */
+        body.grid-mode header {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        body.grid-mode header .hamburger-btn {
+            top: 8px;
+        }
+        body.grid-mode header .voice-btn-group {
+            top: 8px;
+        }
+        body.grid-mode #targetIconBtn {
+            top: 0;
+        }
+        body.grid-mode .tab-navigation-container {
+            margin-bottom: 4px;
+        }
+        body.grid-mode .crowns-container {
+            margin-top: 6px;
+        }
         
         /* Remove top margin in golf mode since golf-course-selector provides spacing */
         #golfMode .crowns-container {
@@ -3285,10 +3313,21 @@
             filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
         }
         
-        /* Neon theme - bright cyan crown */
+        /* Neon theme - orange crown */
         body[data-theme="default"] .crown-icon svg path {
-            fill: var(--neon-blue);
-            stroke: var(--neon-blue);
+            fill: #FF6B00;
+            stroke: #FF6B00;
+        }
+        /* Neon theme: Scrabble checkmark matches Speaker button (cyan bg, black text) */
+        body[data-theme="default"] #scrabbleCheckButton {
+            background: linear-gradient(135deg, var(--neon-blue), #00c4cc) !important;
+            color: #000000 !important;
+            border: none !important;
+            box-shadow: 0 4px 15px rgba(0, 245, 255, 0.4) !important;
+        }
+        body[data-theme="default"] #scrabbleCheckButton:hover {
+            background: rgba(0, 245, 255, 0.2) !important;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3) !important;
         }
         
         body[data-theme="stainless"] .crown-icon svg {
@@ -3759,7 +3798,7 @@
             flex: 1;
             color: var(--text-primary);
             font-family: Outfit, sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
         }
         .voice-help-toggle {
@@ -3895,7 +3934,7 @@
             white-space: nowrap;
             font-size: 0.95rem;
             font-family: Outfit, sans-serif;
-            font-weight: 600;
+            font-weight: 700;
         }
         .dropdown-arrow {
             margin-left: 10px;
@@ -4848,11 +4887,11 @@
             -webkit-text-fill-color: #000000;
             background-clip: initial;
             color: #000000;
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-            font-size: 1.5rem;
+            font-family: Outfit, sans-serif;
+            font-size: 1.2rem;
             font-weight: 700;
             text-shadow: none;
-            letter-spacing: -0.3px;
+            letter-spacing: 1px;
         }
         body[data-theme="ios"] .subtitle {
             color: #6C6C70;
@@ -4860,6 +4899,12 @@
         }
         body[data-theme="ios"] * {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        }
+        body[data-theme="ios"] h1,
+        body[data-theme="ios"] .final-scores-title,
+        body[data-theme="ios"] .final-scores-winner {
+            font-family: Outfit, sans-serif !important;
+            font-weight: 700 !important;
         }
 
         /* Header */
@@ -5344,11 +5389,17 @@
         body[data-theme="ios-dark"] h1 {
             background: none; -webkit-background-clip: initial; -webkit-text-fill-color: #FFFFFF;
             background-clip: initial; color: #FFFFFF;
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-            font-size: 1.5rem; font-weight: 700; text-shadow: none; letter-spacing: -0.3px;
+            font-family: Outfit, sans-serif;
+            font-size: 1.2rem; font-weight: 700; text-shadow: none; letter-spacing: 1px;
         }
         body[data-theme="ios-dark"] .subtitle { color: #AEAEB2; }
         body[data-theme="ios-dark"] * { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif; }
+        body[data-theme="ios-dark"] h1,
+        body[data-theme="ios-dark"] .final-scores-title,
+        body[data-theme="ios-dark"] .final-scores-winner {
+            font-family: Outfit, sans-serif !important;
+            font-weight: 700 !important;
+        }
         body[data-theme="ios-dark"] header {
             background: rgba(28,28,30,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-bottom: 0.5px solid rgba(255,255,255,0.10); box-shadow: none;
@@ -5498,19 +5549,6 @@
                 <div class="hamburger-line"></div>
                 <div class="hamburger-line"></div>
             </div>
-            <div style="display: flex; align-items: center; gap: 12px; padding-right: 55px;">
-                <span style="font-size: 2.5rem; position: relative; top: -4px;">🎯</span>
-                <div>
-                    <h1 style="margin: 0;">ScoreKeeper</h1>
-                    <div class="subtitle" style="margin-top: -5px;">Track • Compete • Win</div>
-                </div>
-            </div>
-        </header>
-        <div class="tab-navigation-container">
-            <div class="tab-navigation">
-                <button class="tab-btn tab-btn-scoring active" onclick="switchTab('scorekeeper')">Scoring</button>
-                <button class="tab-btn" onclick="switchTab('highscores')">High Scores</button>
-            </div>
             <div class="voice-btn-group">
             <button class="voice-btn" id="speakerBtn" onclick="toggleSpeaker()">
                 <svg class="speaker-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -5529,6 +5567,23 @@
                     <path d="M9 21H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
             </button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding-right: 115px;">
+                <div id="targetIconWrapper" style="position: relative;">
+                    <button id="targetIconBtn" onclick="toggleTargetDropdown()" 
+                            style="background: none; border: none; padding: 0; cursor: pointer; font-size: 2.5rem; line-height: 1; position: relative; top: -4px; box-shadow: none; min-height: 0; display: flex; align-items: center; justify-content: center;"
+                            title="Switch game type">🎯</button>
+                </div>
+                <div>
+                    <h1 style="margin: 0;">ScoreKeeper</h1>
+                    <div class="subtitle" style="margin-top: -5px;">Track • Compete • Win</div>
+                </div>
+            </div>
+        </header>
+        <div class="tab-navigation-container">
+            <div class="tab-navigation">
+                <button class="tab-btn tab-btn-scoring active" onclick="switchTab('scorekeeper')">Scoring</button>
+                <button class="tab-btn" onclick="switchTab('highscores')">High Scores</button>
             </div>
         </div>
         
@@ -5673,7 +5728,7 @@
                                    onpaste="setTimeout(updateScrabbleCheckButton, 10)"
                                    style="padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; width: 150px; font-size: 0.95rem; font-weight: 700;">
                             <button id="scrabbleCheckButton" onclick="checkWordFromInput()" 
-                                    style="width: 38px; height: 38px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--neon-blue); color: black; font-size: 2.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; line-height: 1; padding: 0; flex-shrink: 0;">✓</button>
+                                    style="width: 38px; height: 38px; min-height: 0; min-width: 38px; max-width: 38px; max-height: 38px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--neon-blue); color: black; font-size: 2.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; line-height: 1; padding: 0; flex-shrink: 0; box-sizing: border-box;">✓</button>
                         </div>
                         
                         <!-- Second row: Timer Controls with exact alignment -->
@@ -5707,7 +5762,7 @@
                             
                             <!-- Go/Stop toggle button - aligned exactly under checkmark button -->
                             <button id="scrabbleGoBtn" onclick="toggleScrabbleTimer()" 
-                                    style="width: 38px; height: 38px; border-radius: 6px; border: 2px solid var(--neon-green); background: linear-gradient(135deg, var(--neon-green), #2ed600); color: black; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; padding: 0; min-width: 38px; max-width: 38px; flex: none;">▶</button>
+                                    style="width: 38px; height: 38px; min-height: 0; min-width: 38px; max-width: 38px; max-height: 38px; border-radius: 6px; border: 2px solid var(--neon-green); background: linear-gradient(135deg, var(--neon-green), #2ed600); color: black; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; padding: 0; flex: none; box-sizing: border-box;">▶</button>
                         </div>
                     </div>
                     
@@ -5842,7 +5897,8 @@
                     </div>
                 </div>
                 <hr style="margin-bottom: 30px;">
-                <div style="display: flex; justify-content: center;">
+                <div style="display: flex; justify-content: center; gap: 12px;">
+                    <button class="btn-secondary" onclick="switchTab('scorekeeper')">Home</button>
                     <button class="btn-secondary" onclick="window.clearAllWalls()">Clear All Scores</button>
                 </div>
             </div>
@@ -5856,6 +5912,10 @@
     <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
     
     <div class="side-menu" id="sideMenu">
+        
+        <div class="menu-section">
+            <button class="btn-secondary" onclick="switchTab('highscores'); toggleMenu();" style="width: 100%; font-family: Outfit, sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px;">🏆 High Scores</button>
+        </div>
         
         <div class="menu-section">
             <div class="menu-section-title">Wins Tracker</div>
@@ -6987,7 +7047,8 @@
             
             const message = `
                 <div style="
-                    font-family: 'Rubik Mono One', monospace;
+                    font-family: Outfit, sans-serif;
+            font-weight: 700;
                     font-size: 1rem;
                     text-align: center;
                     color: #2d3748;
@@ -12105,6 +12166,85 @@
             loadCourseByName(courseName);
         }
         
+        function toggleTargetDropdown() {
+            // If not in grid mode, just use the normal game type dropdown
+            if (!document.body.classList.contains('grid-mode')) {
+                toggleGameTypeDropdown();
+                return;
+            }
+
+            // In grid mode: show/hide a floating game type picker anchored to the icon
+            let picker = document.getElementById('targetIconPicker');
+
+            if (picker) {
+                picker.remove();
+                return;
+            }
+
+            const gameTypes = [
+                { value: '5crowns',  label: '5 Crowns' },
+                { value: 'darts',    label: 'Darts' },
+                { value: 'dominoes', label: 'Dominoes' },
+                { value: 'farkle',   label: 'Farkle' },
+                { value: 'general',  label: 'General' },
+                { value: 'golf',     label: 'Golf' },
+                { value: 'phase10',  label: 'Phase 10' },
+                { value: 'scrabble', label: 'Scrabble' },
+                { value: 'yahtzee',  label: 'Yahtzee' },
+            ];
+
+            picker = document.createElement('div');
+            picker.id = 'targetIconPicker';
+            picker.style.cssText = `
+                position: fixed;
+                top: 76px;
+                left: 12px;
+                z-index: 20000;
+                background: var(--card-bg, #151b3d);
+                border: 2px solid var(--neon-blue, #00f5ff);
+                border-radius: 10px;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+                min-width: 180px;
+                overflow: hidden;
+            `;
+
+            gameTypes.forEach(({ value, label }) => {
+                const item = document.createElement('div');
+                const isActive = value === currentGameType;
+                item.textContent = label;
+                item.style.cssText = `
+                    padding: 12px 18px;
+                    font-family: Outfit, sans-serif;
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    color: ${isActive ? 'var(--neon-blue, #00f5ff)' : 'var(--text-primary, #fff)'};
+                    background: ${isActive ? 'rgba(0,245,255,0.1)' : 'transparent'};
+                    border-left: ${isActive ? '3px solid var(--neon-blue, #00f5ff)' : '3px solid transparent'};
+                    transition: background 0.15s ease;
+                `;
+                item.onmouseover = () => { if (!isActive) item.style.background = 'rgba(0,245,255,0.05)'; };
+                item.onmouseout  = () => { if (!isActive) item.style.background = 'transparent'; };
+                item.onclick = () => {
+                    picker.remove();
+                    selectGameType(value);
+                };
+                picker.appendChild(item);
+            });
+
+            document.body.appendChild(picker);
+
+            // Close on outside click
+            setTimeout(() => {
+                document.addEventListener('click', function closePicker(e) {
+                    if (!picker.contains(e.target) && e.target.id !== 'targetIconBtn') {
+                        picker.remove();
+                        document.removeEventListener('click', closePicker);
+                    }
+                });
+            }, 0);
+        }
+
         function toggleGameTypeDropdown() {
             const dropdown = document.getElementById('gameTypeDropdown');
             const dropdownList = document.getElementById('gameTypeDropdownList');
