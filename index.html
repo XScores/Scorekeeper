@@ -701,6 +701,11 @@
                 font-size: 0.85rem !important;
             }
             
+            /* Timer dropdown wrapper matches word input width */
+            #scrabbleWordChecker .custom-dropdown-wrapper {
+                width: 100px !important;
+            }
+            
             /* Voice feedback positioning */
             .voice-feedback {
                 top: 10px !important;
@@ -10759,6 +10764,51 @@
         }
         
         // Function to match Start button width to instructions panel width
+        function alignLandscapeGridHeader() {
+            // Only applies in landscape + grid-mode
+            if (!document.body.classList.contains('grid-mode')) return;
+            const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+            if (!isLandscape) return;
+
+            const grid = document.querySelector('.crowns-container');
+            const titleDiv = document.querySelector('header > div:last-child');
+            const voiceGroup = document.querySelector('header .voice-btn-group');
+            const hamburger = document.querySelector('header .hamburger-btn');
+            if (!grid || !titleDiv || !hamburger) return;
+
+            const gridRect = grid.getBoundingClientRect();
+            const hamburgerW = hamburger.offsetWidth;
+            const voiceGroupW = voiceGroup ? voiceGroup.offsetWidth : 0;
+            const gap = 8;
+
+            // Left-align title with grid left edge
+            titleDiv.style.setProperty('position', 'fixed', 'important');
+            titleDiv.style.setProperty('left', gridRect.left + 'px', 'important');
+            titleDiv.style.setProperty('top', '6px', 'important');
+
+            // Right-align hamburger with grid right edge
+            const hamburgerLeft = gridRect.right - hamburgerW;
+            hamburger.style.setProperty('right', 'auto', 'important');
+            hamburger.style.setProperty('left', hamburgerLeft + 'px', 'important');
+
+            // Position voice group just left of hamburger
+            if (voiceGroup) {
+                const voiceLeft = hamburgerLeft - gap - voiceGroupW;
+                voiceGroup.style.setProperty('right', 'auto', 'important');
+                voiceGroup.style.setProperty('left', voiceLeft + 'px', 'important');
+            }
+        }
+
+        function resetLandscapeGridHeader() {
+            // Reset inline styles when leaving grid-mode or landscape
+            const titleDiv = document.querySelector('header > div:last-child');
+            const voiceGroup = document.querySelector('header .voice-btn-group');
+            const hamburger = document.querySelector('header .hamburger-btn');
+            if (titleDiv) { titleDiv.style.removeProperty('position'); titleDiv.style.removeProperty('left'); titleDiv.style.removeProperty('top'); }
+            if (voiceGroup) { voiceGroup.style.removeProperty('left'); voiceGroup.style.removeProperty('right'); }
+            if (hamburger) { hamburger.style.removeProperty('left'); hamburger.style.removeProperty('right'); }
+        }
+
         function matchStartButtonWidth() {
             const instructionsPanel = document.getElementById('standardModeInstructions');
             const startButton = document.getElementById('gameStateBtn');
@@ -12226,6 +12276,7 @@
             // Trigger change
             console.log('About to call changeGameType()');
             changeGameType();
+            setTimeout(alignLandscapeGridHeader, 150);
         }
         
         function toggleThemeDropdown() {
@@ -18078,7 +18129,8 @@
             // Add grid-mode class to body to trigger tab bar replacement
             document.body.classList.add('grid-mode');
             
-            // Move game-type-row into tab-navigation-container
+            // Align header elements with grid edges in landscape
+            setTimeout(alignLandscapeGridHeader, 100);
             const gameTypeRow = document.querySelector('.game-type-row');
             const tabNavContainer = document.querySelector('.tab-navigation-container');
             if (gameTypeRow && tabNavContainer) {
@@ -18392,6 +18444,7 @@
                 
                 // Remove grid-mode class from body
                 document.body.classList.remove('grid-mode');
+                resetLandscapeGridHeader();
                 
                 // Move game-type-row back to its original position (after tab-navigation-container)
                 const gameTypeRow = document.querySelector('.game-type-row');
@@ -19789,6 +19842,8 @@
             
             // Add resize listener to keep button width matched
             window.addEventListener('resize', matchStartButtonWidth);
+            window.addEventListener('resize', alignLandscapeGridHeader);
+            window.addEventListener('orientationchange', () => setTimeout(alignLandscapeGridHeader, 200));
             
             // Set grid-mode class if players exist and done adding
             if (isDoneAdding && players.length > 0) {
