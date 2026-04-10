@@ -783,6 +783,20 @@
                 background: linear-gradient(90deg, #d0d5db, #b0b8c0) !important;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
             }
+            body[data-theme="ios"] header {
+                background: rgba(242,242,247,0.98) !important;
+                backdrop-filter: blur(20px) !important;
+                -webkit-backdrop-filter: blur(20px) !important;
+                border-bottom: 0.5px solid rgba(60,60,67,0.29) !important;
+                box-shadow: none !important;
+            }
+            body[data-theme="ios-dark"] header {
+                background: rgba(28,28,30,0.98) !important;
+                backdrop-filter: blur(20px) !important;
+                -webkit-backdrop-filter: blur(20px) !important;
+                border-bottom: 0.5px solid rgba(255,255,255,0.10) !important;
+                box-shadow: none !important;
+            }
 
             header h1 {
                 margin: 0 !important;
@@ -832,8 +846,8 @@
             }
             .custom-dropdown-wrapper-game {
                 overflow: visible !important;
-                min-width: 140px !important;
-                max-width: 200px !important;
+                min-width: 180px !important;
+                max-width: 280px !important;
             }
 
             /* ── VOICE BUTTONS: fixed, right side just left of hamburger ── */
@@ -5093,6 +5107,7 @@
             background: #F2F2F7;
             color: #3C3C43;
             border: 0.5px solid rgba(60,60,67,0.45);
+            border-bottom: 2px solid #007AFF;
             box-shadow: none;
         }
         body[data-theme="ios"] .crowns-table td {
@@ -5314,7 +5329,10 @@
         body[data-theme="ios"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
             background: rgba(0, 0, 0, 0.06) !important;
             color: #000000 !important;
-            border-right-color: rgba(0, 0, 0, 0.15) !important;
+            border-right: 2px solid #007AFF !important;
+        }
+        body[data-theme="ios"] .crowns-table th.crowns-hole-label:not(.golf-info-column) {
+            border-right: 2px solid #007AFF !important;
         }
         body[data-theme="ios"] .golf-course-selector {
             background: transparent !important;
@@ -5430,8 +5448,14 @@
         body[data-theme="ios-dark"] .score-cell, body[data-theme="ios-dark"] td, body[data-theme="ios-dark"] .player-score { background: #1C1C1E; color: #FFFFFF; border-color: rgba(255,255,255,0.08); }
         body[data-theme="ios-dark"] th { background: #2C2C2E; color: #EBEBF5; border-color: rgba(255,255,255,0.10); }
         body[data-theme="ios-dark"] table { border-color: rgba(255,255,255,0.10); }
-        body[data-theme="ios-dark"] .crowns-table th { background: #2C2C2E; color: #EBEBF5; border: 0.5px solid rgba(255,255,255,0.30); box-shadow: none; }
+        body[data-theme="ios-dark"] .crowns-table th { background: #2C2C2E; color: #EBEBF5; border: 0.5px solid rgba(255,255,255,0.30); border-bottom: 2px solid #0A84FF; box-shadow: none; }
         body[data-theme="ios-dark"] .crowns-table td { background: #1C1C1E; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.22); }
+        body[data-theme="ios-dark"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
+            border-right: 2px solid #0A84FF !important;
+        }
+        body[data-theme="ios-dark"] .crowns-table th.crowns-hole-label:not(.golf-info-column) {
+            border-right: 2px solid #0A84FF !important;
+        }
         body[data-theme="ios-dark"] .score-input { background: #48484A; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.12); -webkit-text-fill-color: #FFFFFF; }
         body[data-theme="ios-dark"] .final-scores-modal { background: var(--modal-overlay-bg); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
         body[data-theme="ios-dark"] .final-scores-content { background: #1C1C1E; border-radius: 14px; border: none; box-shadow: 0 8px 32px rgba(0,0,0,0.60); }
@@ -19911,7 +19935,20 @@
             // Add resize listener to keep button width matched
             window.addEventListener('resize', matchStartButtonWidth);
             window.addEventListener('resize', alignLandscapeGridHeader);
-            window.addEventListener('orientationchange', () => setTimeout(alignLandscapeGridHeader, 200));
+            window.addEventListener('resize', () => {
+                if (!window.matchMedia('(orientation: landscape)').matches) {
+                    resetLandscapeGridHeader();
+                }
+            });
+            window.addEventListener('orientationchange', () => {
+                setTimeout(() => {
+                    if (window.matchMedia('(orientation: landscape)').matches) {
+                        alignLandscapeGridHeader();
+                    } else {
+                        resetLandscapeGridHeader();
+                    }
+                }, 200);
+            });
             
             // Set grid-mode class if players exist and done adding
             if (isDoneAdding && players.length > 0) {
