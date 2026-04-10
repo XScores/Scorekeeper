@@ -697,13 +697,19 @@
             
             #scrabbleWordInput {
                 width: 100px !important;
+                min-width: 100px !important;
+                max-width: 100px !important;
                 padding: 4px 6px !important;
                 font-size: 0.85rem !important;
+                box-sizing: border-box !important;
             }
             
             /* Timer dropdown wrapper matches word input width */
             #scrabbleWordChecker .custom-dropdown-wrapper {
                 width: 100px !important;
+                min-width: 100px !important;
+                max-width: 100px !important;
+                box-sizing: border-box !important;
             }
             
             /* Voice feedback positioning */
@@ -880,6 +886,19 @@
                 top: 60px !important;
                 right: 10px !important;
                 max-width: 280px !important;
+            }
+
+            /* Scrabble: Word Check + Timer on one row in iPad landscape */
+            #scrabbleWordChecker {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 20px !important;
+                margin-bottom: 10px !important;
+            }
+            #scrabbleWordChecker > div {
+                margin-bottom: 0 !important;
             }
         }
         
