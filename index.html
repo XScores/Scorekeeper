@@ -696,19 +696,25 @@
             }
             
             #scrabbleWordInput {
-                width: 100px !important;
-                min-width: 100px !important;
-                max-width: 100px !important;
                 padding: 4px 6px !important;
                 font-size: 0.85rem !important;
-                box-sizing: border-box !important;
             }
             
-            /* Timer dropdown wrapper matches word input width */
+            /* iPhone landscape: Word Check + Timer on one row */
+            #scrabbleWordChecker {
+                flex-direction: row !important;
+                gap: 15px !important;
+                margin-bottom: 8px !important;
+            }
+            #scrabbleWordCheckRow,
+            #scrabbleTimerRow {
+                margin-bottom: 0 !important;
+                flex: 1 !important;
+            }
+            
+            /* Timer dropdown wrapper matches word input */
             #scrabbleWordChecker .custom-dropdown-wrapper {
-                width: 100px !important;
-                min-width: 100px !important;
-                max-width: 100px !important;
+                min-width: 0 !important;
                 box-sizing: border-box !important;
             }
             
@@ -893,12 +899,13 @@
                 display: flex !important;
                 flex-direction: row !important;
                 align-items: center !important;
-                justify-content: center !important;
                 gap: 20px !important;
                 margin-bottom: 10px !important;
             }
-            #scrabbleWordChecker > div {
+            #scrabbleWordCheckRow,
+            #scrabbleTimerRow {
                 margin-bottom: 0 !important;
+                flex: 1 !important;
             }
         }
         
@@ -2243,7 +2250,20 @@
             -webkit-text-fill-color: #FFFFFF !important;
         }
 
-        /* Statistics modal header row — consistent 8px vertical padding in all orientations */
+        /* Scrabble word checker: column layout in portrait, row in landscape */
+        #scrabbleWordChecker {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        #scrabbleWordCheckRow,
+        #scrabbleTimerRow {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+        }
         #winsTrackerDisplay .crowns-table th,
         #customGameStatisticsDisplay .stats-table th {
             padding-top: 8px !important;
@@ -5839,24 +5859,24 @@
             <div id="scrabbleMode" class="crowns-mode">
                 <div class="crowns-container">
                     <!-- Word checker above the grid -->
-                    <div id="scrabbleWordChecker" style="display: none; margin-bottom: 15px; text-align: center;">
+                    <div id="scrabbleWordChecker" style="display: none; margin-bottom: 15px;">
                         <!-- First row: Word Check -->
-                        <div style="display: flex; gap: 15px; align-items: center; justify-content: center; margin-bottom: 10px;">
-                            <label style="font-weight: 600; color: var(--text-primary); width: 81px; text-align: right; font-size: 0.95rem; white-space: nowrap;">Word Check:</label>
+                        <div id="scrabbleWordCheckRow">
+                            <label style="font-weight: 600; color: var(--text-primary); flex-shrink: 0; font-size: 0.95rem; white-space: nowrap;">Word Check:</label>
                             <input type="text" id="scrabbleWordInput" placeholder="Enter word..." 
                                    onkeypress="if(event.key==='Enter') checkWordFromInput()"
                                    oninput="updateScrabbleCheckButton()"
                                    onpaste="setTimeout(updateScrabbleCheckButton, 10)"
-                                   style="padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; width: 150px; font-size: 0.95rem; font-weight: 700;">
+                                   style="flex: 1; min-width: 0; padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; font-size: 0.95rem; font-weight: 700;">
                             <button id="scrabbleCheckButton" onclick="checkWordFromInput()" 
                                     style="width: 38px; height: 38px; min-height: 0; min-width: 38px; max-width: 38px; max-height: 38px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--neon-blue); color: black; font-size: 2.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; line-height: 1; padding: 0; flex-shrink: 0; box-sizing: border-box;">✓</button>
                         </div>
                         
-                        <!-- Second row: Timer Controls with exact alignment -->
-                        <div style="display: flex; gap: 15px; align-items: center; justify-content: center;">
-                            <label style="font-weight: 600; color: var(--text-primary); width: 81px; text-align: right; font-size: 0.95rem; white-space: nowrap;">Timer:</label>
-                            <!-- Timer duration selector - aligned exactly under word input field -->
-                            <div class="custom-dropdown-wrapper" style="width: 150px; position: relative; z-index: 100;">
+                        <!-- Second row: Timer Controls -->
+                        <div id="scrabbleTimerRow">
+                            <label style="font-weight: 600; color: var(--text-primary); flex-shrink: 0; font-size: 0.95rem; white-space: nowrap;">Timer:</label>
+                            <!-- Timer duration selector -->
+                            <div class="custom-dropdown-wrapper" style="flex: 1; min-width: 0; position: relative; z-index: 100;">
                                 <!-- Timer dropdown (shown when timer not running) -->
                                 <div class="custom-dropdown" id="scrabbleTimerDropdown" onclick="toggleScrabbleTimerDropdown()" style="padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; font-size: 0.95rem; width: 100%; display: flex; justify-content: space-between; align-items: center; text-align: left;">
                                     <span id="selectedTimerDuration" class="dropdown-selected">2 minutes</span>
