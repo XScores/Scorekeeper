@@ -797,10 +797,6 @@
                 gap: 8px !important;
                 padding: 3px 0 0 0 !important;
             }
-            /* In grid-mode, title left edge matches grid left edge (container padding 10px vs header padding 12px) */
-            body.grid-mode header {
-                padding-left: 10px !important;
-            }
 
             /* ── TAB NAVIGATION: hidden ── */
             .tab-navigation-container {
@@ -10841,14 +10837,18 @@
             if (!isLandscape) return;
 
             const grid = document.querySelector('.crowns-container');
+            const header = document.querySelector('header');
             const voiceGroup = document.querySelector('header .voice-btn-group');
             const hamburger = document.querySelector('header .hamburger-btn');
-            if (!grid || !hamburger) return;
+            if (!grid || !header || !hamburger) return;
 
             const gridRect = grid.getBoundingClientRect();
             const hamburgerW = hamburger.offsetWidth;
             const voiceGroupW = voiceGroup ? voiceGroup.offsetWidth : 0;
             const gap = 8;
+
+            // Align title: set header padding-left so first flex child starts at grid left edge
+            header.style.setProperty('padding-left', gridRect.left + 'px', 'important');
 
             // Right-align hamburger with grid right edge
             const hamburgerLeft = gridRect.right - hamburgerW;
@@ -10862,8 +10862,10 @@
         }
 
         function resetLandscapeGridHeader() {
+            const header = document.querySelector('header');
             const voiceGroup = document.querySelector('header .voice-btn-group');
             const hamburger = document.querySelector('header .hamburger-btn');
+            if (header) header.style.removeProperty('padding-left');
             if (voiceGroup) voiceGroup.style.cssText = '';
             if (hamburger) hamburger.style.cssText = '';
         }
