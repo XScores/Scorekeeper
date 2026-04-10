@@ -2254,7 +2254,7 @@
         #scrabbleWordChecker {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 19px;
             width: 100%;
         }
         #scrabbleWordCheckRow,
@@ -2263,6 +2263,12 @@
             gap: 10px;
             align-items: center;
             width: 100%;
+        }
+        #scrabbleWordCheckRow label,
+        #scrabbleTimerRow label {
+            width: 90px;
+            flex-shrink: 0;
+            text-align: right;
         }
         #winsTrackerDisplay .crowns-table th,
         #customGameStatisticsDisplay .stats-table th {
@@ -4796,7 +4802,7 @@
         }
         .sand-controls-row {
             display: flex;
-            gap: 14px;
+            gap: 19px;
             justify-content: center;
         }
         .sand-ctrl-btn {
@@ -5862,7 +5868,7 @@
                     <div id="scrabbleWordChecker" style="display: none; margin-bottom: 15px;">
                         <!-- First row: Word Check -->
                         <div id="scrabbleWordCheckRow">
-                            <label style="font-weight: 600; color: var(--text-primary); flex-shrink: 0; font-size: 0.95rem; white-space: nowrap;">Word Check:</label>
+                            <label style="font-weight: 600; color: var(--text-primary); font-size: 0.95rem; white-space: nowrap;">Word Check:</label>
                             <input type="text" id="scrabbleWordInput" placeholder="Enter word..." 
                                    onkeypress="if(event.key==='Enter') checkWordFromInput()"
                                    oninput="updateScrabbleCheckButton()"
@@ -5874,7 +5880,7 @@
                         
                         <!-- Second row: Timer Controls -->
                         <div id="scrabbleTimerRow">
-                            <label style="font-weight: 600; color: var(--text-primary); flex-shrink: 0; font-size: 0.95rem; white-space: nowrap;">Timer:</label>
+                            <label style="font-weight: 600; color: var(--text-primary); font-size: 0.95rem; white-space: nowrap;">Timer:</label>
                             <!-- Timer duration selector -->
                             <div class="custom-dropdown-wrapper" style="flex: 1; min-width: 0; position: relative; z-index: 100;">
                                 <!-- Timer dropdown (shown when timer not running) -->
