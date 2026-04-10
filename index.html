@@ -840,8 +840,8 @@
             header .voice-btn-group {
                 position: fixed !important;
                 top: 7px !important;
-                right: 58px !important;
-                left: auto !important;
+                right: 58px;
+                left: auto;
                 display: flex !important;
                 flex-direction: row !important;
                 gap: 6px !important;
@@ -853,8 +853,8 @@
             header .hamburger-btn {
                 position: fixed !important;
                 top: 7px !important;
-                right: 10px !important;
-                left: auto !important;
+                right: 10px;
+                left: auto;
                 width: 44px !important;
                 height: 44px !important;
                 z-index: 204 !important;
@@ -3134,7 +3134,6 @@
             border-collapse: collapse;
             background: var(--card-bg);
             border-radius: 12px;
-            overflow: hidden;
             width: auto;
             min-width: 100%;
             display: table;
@@ -4076,6 +4075,50 @@
         }
         body[data-theme="neon"] .golf-course-label {
             color: #FFFFFF !important;
+        }
+
+        /* Neon theme: cyan border around scoring grid — pseudo-element sits on top of all layers */
+        body[data-theme="default"] .crowns-container,
+        body[data-theme="ios"] .crowns-container,
+        body[data-theme="ios-dark"] .crowns-container {
+            overflow: visible;
+            padding: 0;
+        }
+        body[data-theme="default"] .crowns-table,
+        body[data-theme="ios"] .crowns-table,
+        body[data-theme="ios-dark"] .crowns-table {
+            overflow: auto;
+            position: relative;
+        }
+        body[data-theme="default"] .crowns-table::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0, 245, 255, 0.25);
+            pointer-events: none;
+            z-index: 9999;
+        }
+        body[data-theme="ios"] .crowns-table::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2px solid #007AFF;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 122, 255, 0.18);
+            pointer-events: none;
+            z-index: 9999;
+        }
+        body[data-theme="ios-dark"] .crowns-table::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2px solid #0A84FF;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(10, 132, 255, 0.25);
+            pointer-events: none;
+            z-index: 9999;
         }
         
         /* Steel theme for Voice Commands dropdown */
@@ -5049,13 +5092,13 @@
         body[data-theme="ios"] .crowns-table th {
             background: #F2F2F7;
             color: #3C3C43;
-            border: 0.5px solid rgba(60,60,67,0.20);
+            border: 0.5px solid rgba(60,60,67,0.45);
             box-shadow: none;
         }
         body[data-theme="ios"] .crowns-table td {
             background: #FFFFFF;
             color: #000000;
-            border: 0.5px solid rgba(60,60,67,0.15);
+            border: 0.5px solid rgba(60,60,67,0.35);
         }
 
         /* Score input inline cells */
@@ -5387,8 +5430,8 @@
         body[data-theme="ios-dark"] .score-cell, body[data-theme="ios-dark"] td, body[data-theme="ios-dark"] .player-score { background: #1C1C1E; color: #FFFFFF; border-color: rgba(255,255,255,0.08); }
         body[data-theme="ios-dark"] th { background: #2C2C2E; color: #EBEBF5; border-color: rgba(255,255,255,0.10); }
         body[data-theme="ios-dark"] table { border-color: rgba(255,255,255,0.10); }
-        body[data-theme="ios-dark"] .crowns-table th { background: #2C2C2E; color: #EBEBF5; border: 0.5px solid rgba(255,255,255,0.10); box-shadow: none; }
-        body[data-theme="ios-dark"] .crowns-table td { background: #1C1C1E; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.08); }
+        body[data-theme="ios-dark"] .crowns-table th { background: #2C2C2E; color: #EBEBF5; border: 0.5px solid rgba(255,255,255,0.30); box-shadow: none; }
+        body[data-theme="ios-dark"] .crowns-table td { background: #1C1C1E; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.22); }
         body[data-theme="ios-dark"] .score-input { background: #48484A; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.12); -webkit-text-fill-color: #FFFFFF; }
         body[data-theme="ios-dark"] .final-scores-modal { background: var(--modal-overlay-bg); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
         body[data-theme="ios-dark"] .final-scores-content { background: #1C1C1E; border-radius: 14px; border: none; box-shadow: 0 8px 32px rgba(0,0,0,0.60); }
@@ -10804,10 +10847,15 @@
             const voiceGroupW = voiceGroup ? voiceGroup.offsetWidth : 0;
             const gap = 8;
 
+            // Detect iPad landscape (min-height > 600) vs iPhone landscape
+            const isIPad = window.matchMedia('(orientation: landscape) and (min-height: 601px) and (min-width: 768px)').matches;
+            const topValue = isIPad ? '7px' : '6px';
+
             // Left-align title with grid left edge
             titleDiv.style.setProperty('position', 'fixed', 'important');
             titleDiv.style.setProperty('left', gridRect.left + 'px', 'important');
-            titleDiv.style.setProperty('top', '6px', 'important');
+            titleDiv.style.setProperty('top', topValue, 'important');
+            titleDiv.style.setProperty('padding-right', '0', 'important');
 
             // Right-align hamburger with grid right edge
             const hamburgerLeft = gridRect.right - hamburgerW;
@@ -18154,6 +18202,7 @@
             
             // Align header elements with grid edges in landscape
             setTimeout(alignLandscapeGridHeader, 100);
+            setTimeout(alignLandscapeGridHeader, 400); // second pass for iPad
             const gameTypeRow = document.querySelector('.game-type-row');
             const tabNavContainer = document.querySelector('.tab-navigation-container');
             if (gameTypeRow && tabNavContainer) {
