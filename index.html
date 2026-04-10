@@ -797,6 +797,10 @@
                 gap: 8px !important;
                 padding: 3px 0 0 0 !important;
             }
+            /* In grid-mode, title left edge matches grid left edge (container padding 10px vs header padding 12px) */
+            body.grid-mode header {
+                padding-left: 10px !important;
+            }
 
             /* ── TAB NAVIGATION: hidden ── */
             .tab-navigation-container {
@@ -10837,47 +10841,31 @@
             if (!isLandscape) return;
 
             const grid = document.querySelector('.crowns-container');
-            const titleDiv = document.querySelector('header > div:last-child');
             const voiceGroup = document.querySelector('header .voice-btn-group');
             const hamburger = document.querySelector('header .hamburger-btn');
-            if (!grid || !titleDiv || !hamburger) return;
+            if (!grid || !hamburger) return;
 
             const gridRect = grid.getBoundingClientRect();
             const hamburgerW = hamburger.offsetWidth;
             const voiceGroupW = voiceGroup ? voiceGroup.offsetWidth : 0;
             const gap = 8;
 
-            // Detect iPad landscape (min-height > 600) vs iPhone landscape
-            const isIPad = window.matchMedia('(orientation: landscape) and (min-height: 601px) and (min-width: 768px)').matches;
-            const topValue = isIPad ? '7px' : '6px';
-
-            // Left-align title with grid left edge
-            titleDiv.style.setProperty('position', 'fixed', 'important');
-            titleDiv.style.setProperty('left', gridRect.left + 'px', 'important');
-            titleDiv.style.setProperty('top', topValue, 'important');
-            titleDiv.style.setProperty('padding-right', '0', 'important');
-
             // Right-align hamburger with grid right edge
             const hamburgerLeft = gridRect.right - hamburgerW;
-            hamburger.style.setProperty('right', 'auto', 'important');
-            hamburger.style.setProperty('left', hamburgerLeft + 'px', 'important');
+            hamburger.style.cssText = `position: fixed !important; right: auto !important; left: ${hamburgerLeft}px !important; top: 7px !important; width: ${hamburgerW}px !important; height: 44px !important; z-index: 204 !important;`;
 
             // Position voice group just left of hamburger
             if (voiceGroup) {
                 const voiceLeft = hamburgerLeft - gap - voiceGroupW;
-                voiceGroup.style.setProperty('right', 'auto', 'important');
-                voiceGroup.style.setProperty('left', voiceLeft + 'px', 'important');
+                voiceGroup.style.cssText = `position: fixed !important; right: auto !important; left: ${voiceLeft}px !important; top: 7px !important; height: 44px !important; display: flex !important; flex-direction: row !important; gap: 6px !important; align-items: center !important; z-index: 203 !important;`;
             }
         }
 
         function resetLandscapeGridHeader() {
-            // Reset inline styles when leaving grid-mode or landscape
-            const titleDiv = document.querySelector('header > div:last-child');
             const voiceGroup = document.querySelector('header .voice-btn-group');
             const hamburger = document.querySelector('header .hamburger-btn');
-            if (titleDiv) { titleDiv.style.removeProperty('position'); titleDiv.style.removeProperty('left'); titleDiv.style.removeProperty('top'); }
-            if (voiceGroup) { voiceGroup.style.removeProperty('left'); voiceGroup.style.removeProperty('right'); }
-            if (hamburger) { hamburger.style.removeProperty('left'); hamburger.style.removeProperty('right'); }
+            if (voiceGroup) voiceGroup.style.cssText = '';
+            if (hamburger) hamburger.style.cssText = '';
         }
 
         function matchStartButtonWidth() {
