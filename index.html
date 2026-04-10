@@ -839,7 +839,7 @@
             /* ── VOICE BUTTONS: fixed, right side just left of hamburger ── */
             header .voice-btn-group {
                 position: fixed !important;
-                top: 7px !important;
+                top: 4px !important;
                 right: 58px;
                 left: auto;
                 display: flex !important;
@@ -852,7 +852,7 @@
             /* ── HAMBURGER: fixed top-right ── */
             header .hamburger-btn {
                 position: fixed !important;
-                top: 7px !important;
+                top: 4px !important;
                 right: 10px;
                 left: auto;
                 width: 44px !important;
@@ -10836,7 +10836,13 @@
             const isLandscape = window.matchMedia('(orientation: landscape)').matches;
             if (!isLandscape) return;
 
-            const grid = document.querySelector('.crowns-container');
+            // Find the currently visible crowns-container
+            const allGrids = document.querySelectorAll('.crowns-container');
+            let grid = null;
+            for (const g of allGrids) {
+                const r = g.getBoundingClientRect();
+                if (r.width > 0 && r.height > 0) { grid = g; break; }
+            }
             const header = document.querySelector('header');
             const voiceGroup = document.querySelector('header .voice-btn-group');
             const hamburger = document.querySelector('header .hamburger-btn');
@@ -10852,12 +10858,12 @@
 
             // Right-align hamburger with grid right edge
             const hamburgerLeft = gridRect.right - hamburgerW;
-            hamburger.style.cssText = `position: fixed !important; right: auto !important; left: ${hamburgerLeft}px !important; top: 7px !important; width: ${hamburgerW}px !important; height: 44px !important; z-index: 204 !important;`;
+            hamburger.style.cssText = `position: fixed !important; right: auto !important; left: ${hamburgerLeft}px !important; top: 4px !important; width: ${hamburgerW}px !important; height: 44px !important; z-index: 204 !important;`;
 
             // Position voice group just left of hamburger
             if (voiceGroup) {
                 const voiceLeft = hamburgerLeft - gap - voiceGroupW;
-                voiceGroup.style.cssText = `position: fixed !important; right: auto !important; left: ${voiceLeft}px !important; top: 7px !important; height: 44px !important; display: flex !important; flex-direction: row !important; gap: 6px !important; align-items: center !important; z-index: 203 !important;`;
+                voiceGroup.style.cssText = `position: fixed !important; right: auto !important; left: ${voiceLeft}px !important; top: 4px !important; height: 44px !important; display: flex !important; flex-direction: row !important; gap: 6px !important; align-items: center !important; z-index: 203 !important;`;
             }
         }
 
