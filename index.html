@@ -5720,6 +5720,30 @@
         body[data-theme="ios-dark"] .crowns-table td { background: #1C1C1E; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.22); }
         body[data-theme="ios-dark"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
             border-right: 2px solid #0A84FF !important;
+            background: #3A3A3C !important;
+        }
+        body[data-theme="ios-dark"] .crowns-table .total-row td.crowns-hole-label,
+        body[data-theme="ios-dark"] .crowns-table .crowns-total-row td.crowns-hole-label,
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-grand-total td.crowns-hole-label,
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-upper-total td.crowns-hole-label,
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-lower-total td.crowns-hole-label,
+        body[data-theme="ios-dark"] .crowns-table .golf-out-row td.crowns-hole-label,
+        body[data-theme="ios-dark"] .crowns-table .golf-in-row td.crowns-hole-label {
+            background: transparent !important;
+        }
+        /* Dark: blue background on Yahtzee section total rows to match header */
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-upper-total,
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-lower-total {
+            background: #0A84FF !important;
+        }
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-upper-total td,
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-lower-total td {
+            color: #FFFFFF !important;
+            background: transparent !important;
+        }
+        /* Dark: white line above Grand Total to separate from Lower Total */
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-grand-total td {
+            border-top: 3px solid #FFFFFF !important;
         }
         body[data-theme="ios-dark"] .crowns-table th.crowns-hole-label:not(.golf-info-column) {
             border-right: 2px solid #0A84FF !important;
@@ -5729,6 +5753,9 @@
         body[data-theme="ios-dark"] .crowns-table td.round-label {
             border-right: 2px solid #0A84FF !important;
         }
+        body[data-theme="ios-dark"] .crowns-table tbody tr:not(.total-row):not(.crowns-total-row) td.round-label {
+            background: #3A3A3C !important;
+        }
         /* Golf: rightmost label column gets the separator */
         body[data-theme="ios-dark"] #golfTable td.crowns-hole-label:first-child,
         body[data-theme="ios-dark"] #golfTable th.golf-info-column:has(+ .crowns-player-header) {
@@ -5736,6 +5763,10 @@
         }
         body[data-theme="ios-dark"] #golfTable thead th.golf-info-column {
             color: #FFFFFF !important;
+        }
+        /* Golf TEE column data cells — medium grey in Dark theme */
+        body[data-theme="ios-dark"] #golfTable tbody tr:not(.total-row):not(.golf-out-row):not(.golf-in-row) td.crowns-hole-label.golf-info-column {
+            background: #3A3A3C !important;
         }
         body[data-theme="ios-dark"] .score-input { background: #48484A; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.12); -webkit-text-fill-color: #FFFFFF; }
         body[data-theme="ios-dark"] .final-scores-modal { background: var(--modal-overlay-bg); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
@@ -6048,7 +6079,7 @@
                                    onpaste="setTimeout(updateScrabbleCheckButton, 10)"
                                    style="padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; width: 150px; font-size: 0.95rem; font-weight: 600;">
                             <button id="scrabbleCheckButton" onclick="checkWordFromInput()" 
-                                    style="width: 38px; height: 38px; min-height: 0; min-width: 38px; max-width: 38px; max-height: 38px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--neon-blue); color: black; font-size: 2.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; line-height: 1; padding: 0; flex-shrink: 0; box-sizing: border-box;">✓</button>
+                                    style="width: 38px; height: 38px; min-height: 0; min-width: 38px; max-width: 38px; max-height: 38px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--neon-blue); color: black; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; line-height: 1; padding: 0; flex-shrink: 0; box-sizing: border-box;">✓</button>
                         </div>
                         
                         <!-- Second row: Timer Controls with exact alignment -->
@@ -10219,7 +10250,7 @@
                 const isLight = theme === 'ios';
                 const isStainless = theme === 'stainless';
                 // Header row
-                const thBg = isDark ? '#2C2C2E' : isLight ? '#007AFF' : isStainless ? 'radial-gradient(circle at 30% 30%, #cbd5e0, #a0aec0)' : 'linear-gradient(135deg, #00f5ff, #00c4cc)';
+                const thBg = isDark ? '#0A84FF' : isLight ? '#007AFF' : isStainless ? 'radial-gradient(circle at 30% 30%, #cbd5e0, #a0aec0)' : 'linear-gradient(135deg, #00f5ff, #00c4cc)';
                 const thColor = isDark ? '#FFFFFF' : isLight ? '#FFFFFF' : isStainless ? '#2d3748' : '#000000';
                 // Data cell background — transparent for light themes, dark for dark themes
                 const cellBg = (isLight || isStainless) ? 'transparent' : '#151b3d';
@@ -19491,7 +19522,7 @@
             const isDark = theme === 'ios-dark';
             const isLight = theme === 'ios';
             const isStainless = theme === 'stainless';
-            const thHeaderBg = isDark ? '#2C2C2E' : isLight ? '#007AFF' : isStainless ? 'radial-gradient(circle at 30% 30%, #cbd5e0, #a0aec0)' : 'linear-gradient(135deg, #00f5ff, #00c4cc)';
+            const thHeaderBg = isDark ? '#0A84FF' : isLight ? '#007AFF' : isStainless ? 'radial-gradient(circle at 30% 30%, #cbd5e0, #a0aec0)' : 'linear-gradient(135deg, #00f5ff, #00c4cc)';
             const thHeaderColor = isDark ? '#FFFFFF' : isLight ? '#FFFFFF' : isStainless ? '#2d3748' : '#000000';
             const cellBg = (isLight || isStainless) ? 'transparent' : '#151b3d';
             const cellBorder = isDark ? '1px solid rgba(255,255,255,0.22)' : isLight ? '1px solid rgba(60,60,67,0.35)' : isStainless ? '1px solid rgba(0,0,0,0.15)' : '1px solid rgba(0,245,255,0.2)';
