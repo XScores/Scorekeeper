@@ -577,7 +577,6 @@
             /* Smaller instructions panel */
             #standardModeInstructions {
                 padding: 10px 15px !important;
-                font-size: 0.85rem !important;
                 margin: 5px 0 !important;
             }
             
@@ -602,7 +601,6 @@
             
             /* Optimize table layouts for landscape */
             .crowns-table, .golf-table {
-                font-size: 0.85rem !important;
             }
             
             .crowns-table th, .crowns-table td {
@@ -642,7 +640,6 @@
             
             #scrabbleButtons button, #scrabbleWordChecker button, #scrabbleGoBtn {
                 padding: 4px 8px !important;
-                font-size: 0.85rem !important;
             }
             
             /* Override for compact Go button in word checker area */
@@ -697,7 +694,9 @@
             
             #scrabbleWordInput {
                 padding: 4px 6px !important;
-                font-size: 0.85rem !important;
+                font-weight: 600 !important;
+            }
+            #scrabbleWordChecker label {
             }
             
             /* iPhone landscape: Word Check + Timer on one row */
@@ -3239,6 +3238,7 @@
             padding: 4px 8px;
             text-align: center;
             min-width: 50px;
+            font-size: 0.95rem;
         }
         .crowns-table th {
             background: linear-gradient(135deg, var(--neon-blue), #00c4cc);
@@ -3361,6 +3361,10 @@
             fill: #FFD60A;
             stroke: #FFD60A;
         }
+        body[data-theme="ios"] .crown-icon svg path {
+            fill: #FFD60A;
+            stroke: #FFD60A;
+        }
         .crowns-table th.crowns-hole-label {
             color: #000000; /* Black text for Turn labels */
             padding: 4px 6px;
@@ -3395,6 +3399,7 @@
         .yahtzee-available {
             background: rgba(0, 245, 255, 0.15) !important;
             cursor: pointer !important;
+            font-size: 0.95rem;
         }
         .yahtzee-available:hover {
             background: rgba(0, 245, 255, 0.3) !important;
@@ -3412,6 +3417,44 @@
         .section-divider {
             border-top: 2px solid var(--neon-blue);
             border-bottom: 2px solid var(--neon-blue);
+        }
+        #yahtzeeTable th,
+        #yahtzeeTable td {
+            font-size: 0.95rem;
+        }
+        #yahtzeeTable .crowns-hole-label {
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+        #dominoesTable th,
+        #dominoesTable td {
+            font-size: 0.95rem;
+        }
+        #dominoesTable .crowns-hole-label {
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+        #crownsTable th,
+        #crownsTable td {
+            font-size: 0.95rem !important;
+        }
+        #crownsTable .round-label {
+            font-size: 0.95rem !important;
+            font-weight: 800 !important;
+        }
+        #farkleTable th,
+        #farkleTable td,
+        #genericGridTable th,
+        #genericGridTable td,
+        #scrabbleTable th,
+        #scrabbleTable td {
+            font-size: 0.95rem !important;
+        }
+        #farkleTable .crowns-hole-label,
+        #genericGridTable .crowns-hole-label,
+        #scrabbleTable .crowns-hole-label {
+            font-size: 0.95rem !important;
+            font-weight: 800 !important;
         }
         .yrd-column-header {
             cursor: pointer !important;
@@ -3467,13 +3510,51 @@
             background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(255, 68, 68, 0.3));
             border-top: 3px solid var(--neon-pink);
         }
+        /* Neon: all total rows use cyan gradient with black text to match header */
+        body[data-theme="default"] .crowns-table .total-row,
+        body[data-theme="default"] .crowns-table .crowns-total-row,
+        body[data-theme="default"] .crowns-table .yahtzee-grand-total,
+        body[data-theme="default"] .crowns-table .yahtzee-upper-total,
+        body[data-theme="default"] .crowns-table .yahtzee-lower-total {
+            background: linear-gradient(135deg, var(--neon-blue), #00c4cc) !important;
+            border-top: 3px solid var(--neon-blue) !important;
+        }
+        body[data-theme="default"] .crowns-table .total-row td,
+        body[data-theme="default"] .crowns-table .crowns-total-row td,
+        body[data-theme="default"] .crowns-table .yahtzee-grand-total td,
+        body[data-theme="default"] .crowns-table .yahtzee-upper-total td,
+        body[data-theme="default"] .crowns-table .yahtzee-lower-total td,
+        body[data-theme="default"] .crowns-table .total-row td.crowns-hole-label,
+        body[data-theme="default"] .crowns-table .crowns-total-row td.crowns-hole-label,
+        body[data-theme="default"] .crowns-table .yahtzee-grand-total td.crowns-hole-label,
+        body[data-theme="default"] .crowns-table .yahtzee-upper-total td.crowns-hole-label,
+        body[data-theme="default"] .crowns-table .yahtzee-lower-total td.crowns-hole-label {
+            color: #000000 !important;
+            background: transparent !important;
+            border: 1px solid rgba(0, 0, 0, 0.4) !important;
+        }
+        /* Also apply consistent dividers on the header th */
+        body[data-theme="default"] .crowns-table th {
+            border: 1px solid rgba(0, 0, 0, 0.4) !important;
+        }
         
-        /* Add border under OUT row in golf mode */
-        .crowns-table .golf-out-row {
-            border-bottom: 3px solid var(--neon-pink);
+        /* Add border under OUT row in golf mode — on td to work with border-collapse */
+        .crowns-table .golf-out-row td {
+            border-bottom: 3px solid var(--neon-pink) !important;
+        }
+        /* Light/Dark: red line above OUT row and above+below IN row — applied to td to beat border-collapse */
+        body[data-theme="ios"] .crowns-table .golf-out-row td,
+        body[data-theme="ios-dark"] .crowns-table .golf-out-row td {
+            border-top: 3px solid var(--neon-pink) !important;
+            border-bottom: 3px solid var(--neon-pink) !important;
+        }
+        body[data-theme="ios"] .crowns-table .golf-in-row td,
+        body[data-theme="ios-dark"] .crowns-table .golf-in-row td {
+            border-top: 3px solid var(--neon-pink) !important;
+            border-bottom: 3px solid var(--neon-pink) !important;
         }
         .crowns-table .total-row td {
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             font-weight: 800;
             font-family: Outfit, sans-serif;
             text-transform: uppercase;
@@ -4329,10 +4410,22 @@
             padding: 4px 2px !important;
             white-space: nowrap;
         }
-        /* Neon: TEE/Par/HCP th headers get cyan gradient to match player name headers */
+        /* Golf label column td cells match TEE header font size and weight */
+        #golfTable td.crowns-hole-label {
+            font-size: 0.95rem !important;
+            font-weight: 800 !important;
+        }
         body[data-theme="default"] #golfTable thead th.golf-info-column {
             background: linear-gradient(135deg, var(--neon-blue), #00c4cc) !important;
             color: #000000 !important;
+        }
+        body[data-theme="ios"] #golfTable thead th.golf-info-column {
+            background: #007AFF !important;
+            color: #FFFFFF !important;
+        }
+        body[data-theme="ios-dark"] #golfTable thead th.golf-info-column {
+            background: #0A84FF !important;
+            color: #FFFFFF !important;
         }
         body[data-theme="stainless"] .golf-info-column {
             background: rgba(0, 0, 0, 0.15) !important;
@@ -4340,7 +4433,7 @@
         
         /* Light green Tee column for stainless theme */
         body[data-theme="stainless"] .crowns-table tbody tr:not(.total-row) td.crowns-hole-label.golf-info-column {
-            background: rgba(129, 199, 132, 0.4) !important;
+            background: rgba(0, 0, 0, 0.08) !important;
         }
         body[data-theme="stainless"] .crowns-table th.crowns-hole-label {
             color: #2d3748;
@@ -5204,8 +5297,8 @@
             border-color: rgba(60,60,67,0.20);
         }
         body[data-theme="ios"] .crowns-table th {
-            background: transparent;
-            color: #3C3C43;
+            background: #007AFF;
+            color: #FFFFFF;
             border: 0.5px solid rgba(60,60,67,0.45);
             border-bottom: 2px solid #007AFF;
             box-shadow: none;
@@ -5428,14 +5521,73 @@
         body[data-theme="ios"] .golf-out-row .crowns-hole-label {
             color: #FFFFFF !important;
         }
+        body[data-theme="ios"] .crowns-table .total-row,
+        body[data-theme="ios"] .crowns-table .crowns-total-row,
+        body[data-theme="ios"] .crowns-table .golf-out-row {
+            background: #007AFF !important;
+            border-top: 3px solid #005EC4 !important;
+        }
+        body[data-theme="ios"] .crowns-table .total-row td,
+        body[data-theme="ios"] .crowns-table .crowns-total-row td,
+        body[data-theme="ios"] .crowns-table .golf-out-row td {
+            color: #FFFFFF !important;
+            background: transparent !important;
+        }
+        body[data-theme="ios-dark"] .crowns-table .total-row,
+        body[data-theme="ios-dark"] .crowns-table .crowns-total-row,
+        body[data-theme="ios-dark"] .crowns-table .golf-out-row {
+            background: #0A84FF !important;
+            border-top: 3px solid #0060C0 !important;
+        }
+        body[data-theme="ios-dark"] .crowns-table .total-row td,
+        body[data-theme="ios-dark"] .crowns-table .crowns-total-row td,
+        body[data-theme="ios-dark"] .crowns-table .golf-out-row td {
+            color: #FFFFFF !important;
+            background: transparent !important;
+        }
         body[data-theme="ios"] thead .crowns-hole-label:not(.golf-info-column) {
-            color: #000000 !important;
+            color: #FFFFFF !important;
         }
         /* Light theme: remove dark label column background on all scoring grids */
+        body[data-theme="ios"] .crowns-table tbody tr:not(.total-row):not(.golf-out-row):not(.golf-in-row) td.crowns-hole-label.golf-info-column {
+            background: rgba(0, 122, 255, 0.12) !important;
+        }
         body[data-theme="ios"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
-            background: rgba(0, 0, 0, 0.06) !important;
+            background: rgba(0, 122, 255, 0.12) !important;
             color: #000000 !important;
             border-right: 2px solid #007AFF !important;
+        }
+        body[data-theme="ios"] .crowns-table tbody tr:not(.total-row):not(.crowns-total-row) td.round-label {
+            background: rgba(0, 122, 255, 0.12) !important;
+        }
+        /* Yahtzee GRAND TOTAL — blue with white text */
+        body[data-theme="ios"] .crowns-table .yahtzee-grand-total {
+            background: #007AFF !important;
+        }
+        body[data-theme="ios"] .crowns-table .yahtzee-grand-total td,
+        body[data-theme="ios"] .crowns-table .yahtzee-grand-total td.crowns-hole-label {
+            color: #FFFFFF !important;
+            background: transparent !important;
+        }
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-grand-total {
+            background: #0A84FF !important;
+        }
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-grand-total td,
+        body[data-theme="ios-dark"] .crowns-table .yahtzee-grand-total td.crowns-hole-label {
+            color: #FFFFFF !important;
+            background: transparent !important;
+        }
+        /* Scrabble/Phase10/Farkle/General/Dominoes total row label — white text */
+        body[data-theme="ios"] .crowns-table .crowns-total-row td.crowns-hole-label {
+            color: #FFFFFF !important;
+        }
+        /* Phase 10 total row — blue background */
+        body[data-theme="ios"] .crowns-table .phase10-total-row {
+            background: #007AFF !important;
+        }
+        body[data-theme="ios"] .crowns-table .phase10-total-row td {
+            color: #FFFFFF !important;
+            background: transparent !important;
         }
         body[data-theme="ios"] .crowns-table th.crowns-hole-label:not(.golf-info-column) {
             border-right: 2px solid #007AFF !important;
@@ -5564,7 +5716,7 @@
         body[data-theme="ios-dark"] .score-cell, body[data-theme="ios-dark"] td, body[data-theme="ios-dark"] .player-score { background: #1C1C1E; color: #FFFFFF; border-color: rgba(255,255,255,0.08); }
         body[data-theme="ios-dark"] th { background: #2C2C2E; color: #EBEBF5; border-color: rgba(255,255,255,0.10); }
         body[data-theme="ios-dark"] table { border-color: rgba(255,255,255,0.10); }
-        body[data-theme="ios-dark"] .crowns-table th { background: transparent; color: #EBEBF5; border: 0.5px solid rgba(255,255,255,0.30); border-bottom: 2px solid #0A84FF; box-shadow: none; position: static; z-index: auto; }
+        body[data-theme="ios-dark"] .crowns-table th { background: #0A84FF; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.30); border-bottom: 2px solid #0A84FF; box-shadow: none; position: static; z-index: auto; }
         body[data-theme="ios-dark"] .crowns-table td { background: #1C1C1E; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.22); }
         body[data-theme="ios-dark"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
             border-right: 2px solid #0A84FF !important;
@@ -5644,7 +5796,30 @@
             font-weight: 600 !important; 
             -webkit-text-fill-color: #FFFFFF !important; 
         }
-        body[data-theme="ios-dark"] .add-player-section input[type="text"]:focus {
+        /* Light theme: blue glow on focused inputs */
+        body[data-theme="ios"] input:focus,
+        body[data-theme="ios"] textarea:focus,
+        body[data-theme="ios"] select:focus,
+        body[data-theme="ios"] .crowns-score-input:focus,
+        body[data-theme="ios"] [contenteditable="true"]:focus {
+            outline: none !important;
+            border-color: #007AFF !important;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.25) !important;
+        }
+        /* Dark theme: blue glow on focused inputs */
+        body[data-theme="ios-dark"] input:focus,
+        body[data-theme="ios-dark"] textarea:focus,
+        body[data-theme="ios-dark"] select:focus,
+        body[data-theme="ios-dark"] .crowns-score-input:focus,
+        body[data-theme="ios-dark"] [contenteditable="true"]:focus {
+            outline: none !important;
+            border-color: #0A84FF !important;
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.35) !important;
+        }
+
+        /* Dark theme: blue glow on focused inputs */
+        body[data-theme="ios-dark"] input[type="text"]:focus,
+        body[data-theme="ios-dark"] input[type="number"]:focus {
             background: #48484A !important;
             color: #FFFFFF !important;
             -webkit-text-fill-color: #FFFFFF !important;
@@ -5871,7 +6046,7 @@
                                    onkeypress="if(event.key==='Enter') checkWordFromInput()"
                                    oninput="updateScrabbleCheckButton()"
                                    onpaste="setTimeout(updateScrabbleCheckButton, 10)"
-                                   style="padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; width: 150px; font-size: 0.95rem; font-weight: 700;">
+                                   style="padding: 0 12px; height: 38px; box-sizing: border-box; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--card-bg); color: var(--text-primary); font-family: Outfit, sans-serif; width: 150px; font-size: 0.95rem; font-weight: 600;">
                             <button id="scrabbleCheckButton" onclick="checkWordFromInput()" 
                                     style="width: 38px; height: 38px; min-height: 0; min-width: 38px; max-width: 38px; max-height: 38px; border-radius: 6px; border: 2px solid var(--neon-blue); background: var(--neon-blue); color: black; font-size: 2.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; line-height: 1; padding: 0; flex-shrink: 0; box-sizing: border-box;">✓</button>
                         </div>
@@ -11689,7 +11864,7 @@
             }
             
             // Back 9 IN subtotal row
-            html += '<tr class="total-row"><td class="crowns-hole-label golf-info-column">IN</td>';
+            html += '<tr class="total-row golf-in-row"><td class="crowns-hole-label golf-info-column">IN</td>';
             
             // Show course data totals if they exist
             if (hasParData) {
@@ -14229,7 +14404,7 @@
             // Show buttons when players exist
             if (buttonContainer) buttonContainer.style.display = 'block';
             
-            let html = '<thead><tr><th class="crowns-hole-label" style="min-width: 120px;">CATEGORY</th>';
+            let html = '<thead><tr><th class="crowns-hole-label" style="min-width: 120px; font-size: 0.95rem;">CATEGORY</th>';
             
             // Player headers
             players.forEach(player => {
@@ -14241,7 +14416,7 @@
             html += '</tr></thead><tbody>';
             
             // UPPER SECTION
-            html += '<tr class="section-divider"><td colspan="' + (players.length + 1) + '" style="background: #0088CC; color: white; font-weight: 800; text-align: center; padding: 8px;">UPPER SECTION</td></tr>';
+            html += '<tr class="section-divider"><td colspan="' + (players.length + 1) + '" style="background: #28A745; color: white; font-weight: 800; text-align: center; padding: 8px;">UPPER SECTION</td></tr>';
             
             const upperCategories = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
             const upperNames = ['Aces (1s)', 'Twos (2s)', 'Threes (3s)', 'Fours (4s)', 'Fives (5s)', 'Sixes (6s)'];
@@ -14258,7 +14433,7 @@
             });
             
             // Upper section total
-            html += '<tr style="background: rgba(0, 245, 255, 0.1);"><td class="crowns-hole-label" style="font-weight: 700;">TOTAL</td>';
+            html += '<tr class="yahtzee-upper-total" style="background: rgba(0, 245, 255, 0.1);"><td class="crowns-hole-label" style="font-weight: 700;">TOTAL</td>';
             players.forEach(player => {
                 const total = (yahtzeeScores[player.id].ones || 0) + 
                              (yahtzeeScores[player.id].twos || 0) + 
@@ -14318,7 +14493,7 @@
             html += '</tr>';
             
             // Lower section total
-            html += '<tr style="background: rgba(0, 245, 255, 0.1);"><td class="crowns-hole-label" style="font-weight: 700;">LOWER TOTAL</td>';
+            html += '<tr class="yahtzee-lower-total" style="background: rgba(0, 245, 255, 0.1);"><td class="crowns-hole-label" style="font-weight: 700;">LOWER TOTAL</td>';
             players.forEach(player => {
                 const total = (yahtzeeScores[player.id].threeKind || 0) + 
                              (yahtzeeScores[player.id].fourKind || 0) + 
@@ -14333,7 +14508,7 @@
             html += '</tr>';
             
             // GRAND TOTAL
-            html += '<tr style="background: rgba(255, 0, 110, 0.2);"><td class="crowns-hole-label" style="font-weight: 800; font-size: 1.2rem;">GRAND TOTAL</td>';
+            html += '<tr class="yahtzee-grand-total" style="background: rgba(255, 0, 110, 0.2);"><td class="crowns-hole-label" style="font-weight: 800; font-size: 0.95rem;">GRAND TOTAL</td>';
             players.forEach(player => {
                 const upperTotal = (yahtzeeScores[player.id].ones || 0) + 
                                   (yahtzeeScores[player.id].twos || 0) + 
@@ -14352,7 +14527,7 @@
                                   (yahtzeeScores[player.id].yahtzeeBonus || 0);
                 const grandTotal = upperTotal + lowerTotal;
                 player.score = grandTotal; // Update player's main score
-                html += `<td style="font-weight: 800; font-size: 1.2rem; color: var(--neon-blue);">${grandTotal}</td>`;
+                html += `<td style="font-weight: 800; font-size: 0.95rem; color: var(--neon-blue);">${grandTotal}</td>`;
             });
             html += '</tr>';
             
@@ -14548,7 +14723,7 @@
             
             PHASE10_PHASES.forEach(phase => {
                 html += `<tr>`;
-                html += `<td class="crowns-hole-label"><strong>Phase ${phase.num}</strong><br><span style="font-size: 0.85rem; opacity: 0.7;">${phase.name}</span></td>`;
+                html += `<td class="crowns-hole-label" style="font-size: 0.95rem; font-weight: 800;">Phase ${phase.num}<br><span style="font-size: 0.75rem; opacity: 0.7; font-weight: 600;">${phase.name}</span></td>`;
                 
                 players.forEach(player => {
                     const score = phase10Scores[player.id][phase.num] || 0;
@@ -14562,7 +14737,7 @@
             });
             
             // Total row
-            html += '<tr style="border-top: 2px solid var(--neon-blue); background: rgba(255, 0, 110, 0.2);"><td class="crowns-hole-label" style="font-weight: 800; font-size: 1.2rem;">TOTAL</td>';
+            html += '<tr class="phase10-total-row crowns-total-row" style="border-top: 2px solid var(--neon-blue); background: rgba(255, 0, 110, 0.2);"><td class="crowns-hole-label" style="font-weight: 800; font-size: 0.95rem;">TOTAL</td>';
             players.forEach(player => {
                 let total = 0;
                 PHASE10_PHASES.forEach(phase => {
