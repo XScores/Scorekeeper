@@ -15457,22 +15457,8 @@
                     }
                 });
                 
-                // Select all text when focused, or clear if it's 0
-                cell.addEventListener('focus', function() {
-                    const currentValue = this.textContent.trim();
-                    
-                    // If the cell contains only "0", clear it for easy entry
-                    if (currentValue === '0') {
-                        this.textContent = '';
-                    } else {
-                        // Otherwise, select all text
-                        const range = document.createRange();
-                        range.selectNodeContents(this);
-                        const sel = window.getSelection();
-                        sel.removeAllRanges();
-                        sel.addRange(range);
-                    }
-                });
+                // Clear on focus — global handler covers this, but belt-and-suspenders here
+                // (the global focusin handler will clear contenteditable[inputmode=numeric] cells)
                 
                 // Handle Enter key to save and move to next cell
                 cell.addEventListener('keydown', function(e) {
@@ -19461,15 +19447,23 @@
                 });
             });
 
-            // Merge in any manually-edited totalPoints from scorekeeper_wins
-            // (updateCustomGameStat saves edits there; those override the recalculated value)
+            // Merge in any manually-edited stats from scorekeeper_wins
+            // (updateCustomGameStat saves edits there; those override the recalculated values)
             const gameTypeKey = gameType.toLowerCase().replace(/\s+/g, '');
             const winsData = JSON.parse(localStorage.getItem('scorekeeper_wins') || '{}');
             if (winsData[gameTypeKey]) {
                 playerStats.forEach((stats, name) => {
                     const saved = winsData[gameTypeKey][name];
-                    if (saved && typeof saved.totalPoints === 'number') {
-                        stats.totalPoints = saved.totalPoints;
+                    if (saved) {
+                        if (typeof saved.totalPoints === 'number') {
+                            stats.totalPoints = saved.totalPoints;
+                        }
+                        if (typeof saved.played === 'number') {
+                            stats.played = saved.played;
+                        }
+                        if (typeof saved.wins === 'number') {
+                            stats.wins = saved.wins;
+                        }
                     }
                 });
             }
@@ -20227,6 +20221,32 @@
             document.getElementById('chessBlock2').classList.remove('active-player', 'out-of-time');
             document.getElementById('chessTimerStatus').textContent = 'Tap a player clock to start';
         }
+
+        // ── Clear-on-focus for ALL numeric inputs ──────────────────────────────
+        // input[type=number]: clear value on focus so the user starts fresh.
+        document.addEventListener('focusin', function(e) {
+            const el = e.target;
+            // type="number" / type="text" numeric fields
+            if ((el.tagName === 'INPUT') && (el.type === 'number' || el.inputMode === 'numeric' || el.getAttribute('inputmode') === 'numeric')) {
+                el._savedValue = el.value;
+                el.value = '';
+                // Restore if user leaves without typing anything
+                el.addEventListener('blur', function restoreIfEmpty() {
+                    if (el.value === '') el.value = el._savedValue || '';
+                    el.removeEventListener('blur', restoreIfEmpty);
+                });
+            }
+            // contenteditable divs with inputmode="numeric"
+            if (el.isContentEditable && (el.getAttribute('inputmode') === 'numeric')) {
+                el._savedText = el.textContent;
+                el.textContent = '';
+                el.addEventListener('blur', function restoreCE() {
+                    if (el.textContent.trim() === '') el.textContent = el._savedText || '';
+                    el.removeEventListener('blur', restoreCE);
+                });
+            }
+        });
+        // ──────────────────────────────────────────────────────────────────────
 
         // Initialize on startup - wrap in DOMContentLoaded to ensure DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
