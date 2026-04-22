@@ -18620,18 +18620,15 @@
 
             closeRematchModal();
 
-            // 1. Set game type
+            // 1. Set game type via selectGameType (sets currentGameType + calls changeGameType)
+            //    changeGameType bails early if players.length === 0, so we must NOT clear
+            //    the players array until after selectGameType has run.
             selectGameType(c.gameType);
 
-            // 2. Clear existing players
-            players.length = 0;
-
-            // 3. Populate player input fields with the rematch names
+            // 2. Now populate the player input fields
             const container = document.getElementById('playerInputsContainer');
-            // Build a flat list of all existing inputs first, add rows if needed
             let allInputs = Array.from(container.querySelectorAll('input[type="text"]'));
             while (allInputs.length < c.players.length) {
-                // Add a new row of 2 inputs
                 const row = document.createElement('div');
                 row.className = 'player-inputs-row';
                 for (let r = 0; r < 2; r++) {
@@ -18644,14 +18641,15 @@
                 container.appendChild(row);
                 allInputs = Array.from(container.querySelectorAll('input[type="text"]'));
             }
-
-            // Fill inputs with player names, clear any extras
             allInputs.forEach((inp, i) => {
                 inp.value = i < c.players.length ? c.players[i] : '';
             });
 
-            // 4. Immediately call doneAdding to launch the game
-            doneAdding();
+            // 3. Reset the players array so doneAdding rebuilds it cleanly from the inputs
+            players.length = 0;
+
+            // 4. Small delay so changeGameType's async/layout work finishes, then launch
+            setTimeout(() => { doneAdding(); }, 50);
         }
 
         function deleteRematchItem(idx) {
