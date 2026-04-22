@@ -18518,44 +18518,31 @@
         // Gather all scorecards across every known game type, deduplicate by
         // (gameType + sorted player list), keeping only the most-recent entry.
         function getRematchCandidates() {
-            const results = [];
-            const seen = new Set();
+            // We need per-session player groups, NOT aggregate wins-tracker data.
+            // Sources: rematch_history (written on every game end going forward)
+            // + saved scorecards (for existing history).
+            // Each unique (gameType + sorted player combo) keeps only the most recent entry.
+            const seen = new Map(); // key -> best entry
 
-            // Primary source: dedicated rematch history (written going forward)
+            const addEntry = (entry) => {
+                const existing = seen.get(entry.key);
+                if (!existing || entry.timestamp > existing.timestamp) {
+                    seen.set(entry.key, entry);
+                }
+            };
+
+            // Source 1: dedicated rematch history (written on every game completion)
             try {
                 const records = JSON.parse(localStorage.getItem('scorekeeper_rematch_history') || '[]');
                 records.forEach(r => {
-                    if (r.key && !seen.has(r.key)) {
-                        seen.add(r.key);
-                        results.push(r);
-                    }
+                    if (!r.gameType || !r.players || r.players.length === 0) return;
+                    const sorted = [...r.players].sort((a, b) => a.localeCompare(b));
+                    const key = r.gameType + '|' + sorted.join('|');
+                    addEntry({ key, gameType: r.gameType, players: r.players, date: r.date || '', timestamp: r.timestamp ? new Date(r.timestamp).getTime() : 0 });
                 });
             } catch(e) {}
 
-            // Secondary source: scorekeeper_wins_tracker — this is the data the
-            // Wins Tracker Statistics tab reads from. For each game type that has
-            // player data, synthesise one rematch entry with all those players.
-            try {
-                const winsData = JSON.parse(localStorage.getItem('scorekeeper_wins_tracker') || '{}');
-                Object.keys(winsData).forEach(gt => {
-                    const playerNames = Object.keys(winsData[gt] || {});
-                    if (playerNames.length === 0) return;
-                    const sorted = [...playerNames].sort((a, b) => a.localeCompare(b));
-                    const key = gt + '|' + sorted.join('|');
-                    if (!seen.has(key)) {
-                        seen.add(key);
-                        results.push({
-                            key: key,
-                            gameType: gt,
-                            players: playerNames,
-                            date: '',
-                            timestamp: 0
-                        });
-                    }
-                });
-            } catch(e) {}
-
-            // Tertiary fallback: scan saved scorecards
+            // Source 2: saved scorecards (each scorecard = one real game session with exact players)
             try {
                 const knownTypes = Object.keys(GAME_DISPLAY_NAMES);
                 knownTypes.forEach(gt => {
@@ -18565,20 +18552,12 @@
                         const sorted = [...sc.players].sort((a, b) => a.localeCompare(b));
                         const key = gt + '|' + sorted.join('|');
                         const ts = sc.timestamp ? new Date(sc.timestamp).getTime() : 0;
-                        if (!seen.has(key)) {
-                            seen.add(key);
-                            results.push({ gameType: gt, players: sc.players, date: sc.date || '', timestamp: ts, key: key });
-                        }
+                        addEntry({ key, gameType: gt, players: sc.players, date: sc.date || '', timestamp: ts });
                     });
                 });
             } catch(e) {}
 
-            // Sort: entries with a real timestamp first (newest first), then the
-            // wins-tracker entries (timestamp 0) at the bottom sorted by game name
-            return results.sort((a, b) => {
-                if (a.timestamp !== b.timestamp) return b.timestamp - a.timestamp;
-                return a.gameType.localeCompare(b.gameType);
-            });
+            return Array.from(seen.values()).sort((a, b) => b.timestamp - a.timestamp);
         }
 
         function openRematchModal() {
@@ -18620,35 +18599,30 @@
 
             closeRematchModal();
 
-            // 1. Set game type via selectGameType (sets currentGameType + calls changeGameType)
-            //    changeGameType bails early if players.length === 0, so we must NOT clear
-            //    the players array until after selectGameType has run.
+            // 1. Set game type (must happen before clearing players — changeGameType
+            //    returns early if players.length === 0 which is fine at this point)
             selectGameType(c.gameType);
 
-            // 2. Now populate the player input fields
+            // 2. Rebuild the player inputs container from scratch with exactly the
+            //    right number of fields — one per player, one per row.
             const container = document.getElementById('playerInputsContainer');
-            let allInputs = Array.from(container.querySelectorAll('input[type="text"]'));
-            while (allInputs.length < c.players.length) {
+            container.innerHTML = ''; // clear existing rows
+            c.players.forEach((name, i) => {
                 const row = document.createElement('div');
                 row.className = 'player-inputs-row';
-                for (let r = 0; r < 2; r++) {
-                    const inp = document.createElement('input');
-                    inp.type = 'text';
-                    inp.maxLength = 20;
-                    inp.placeholder = `Player ${allInputs.length + 1 + r}`;
-                    row.appendChild(inp);
-                }
+                const inp = document.createElement('input');
+                inp.type = 'text';
+                inp.maxLength = 20;
+                inp.placeholder = `Player ${i + 1}`;
+                inp.value = name;
+                row.appendChild(inp);
                 container.appendChild(row);
-                allInputs = Array.from(container.querySelectorAll('input[type="text"]'));
-            }
-            allInputs.forEach((inp, i) => {
-                inp.value = i < c.players.length ? c.players[i] : '';
             });
 
-            // 3. Reset the players array so doneAdding rebuilds it cleanly from the inputs
+            // 3. Clear the players array so doneAdding rebuilds it fresh from the inputs
             players.length = 0;
 
-            // 4. Small delay so changeGameType's async/layout work finishes, then launch
+            // 4. Short delay so changeGameType layout work finishes, then launch
             setTimeout(() => { doneAdding(); }, 50);
         }
 
