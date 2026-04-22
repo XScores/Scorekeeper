@@ -7654,6 +7654,9 @@
             
             // Save to localStorage
             localStorage.setItem(storageKey, JSON.stringify(savedScorecards));
+
+            // Save a rematch record
+            saveRematchRecord(gameType, scorecard.players);
             
             // Game type name mapping
             const gameNames = {
@@ -10095,6 +10098,9 @@
             
             // Save updated data
             localStorage.setItem('scorekeeper_wins_tracker', JSON.stringify(winsData));
+
+            // Save a rematch record so the Rematch button can show this game
+            saveRematchRecord(gameType, playerScores.map(ps => ps.player.name));
         }
         
         function toggleWinsTrackerDropdown() {
@@ -18473,6 +18479,30 @@
             }
         }
         // ── REMATCH ────────────────────────────────────────────────────────────
+        // saveRematchRecord: called on every game completion (via trackGameResults
+        // and saveGameScorecard). Stores a deduplicated list of recent game combos.
+        function saveRematchRecord(gameType, playerNames) {
+            if (!gameType || !playerNames || playerNames.length === 0) return;
+            try {
+                const records = JSON.parse(localStorage.getItem('scorekeeper_rematch_history') || '[]');
+                const sorted = [...playerNames].sort((a, b) => a.localeCompare(b));
+                const key = gameType + '|' + sorted.join('|');
+                // Remove any existing entry with same key so we can re-insert at front
+                const filtered = records.filter(r => r.key !== key);
+                filtered.unshift({
+                    key: key,
+                    gameType: gameType,
+                    players: playerNames,
+                    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                    timestamp: new Date().toISOString()
+                });
+                // Keep max 100 entries
+                localStorage.setItem('scorekeeper_rematch_history', JSON.stringify(filtered.slice(0, 100)));
+            } catch(e) {
+                console.error('saveRematchRecord error:', e);
+            }
+        }
+
         const GAME_DISPLAY_NAMES = {
             '5crowns':  '5 Crowns',
             'golf':     'Golf',
@@ -18488,9 +18518,15 @@
         // Gather all scorecards across every known game type, deduplicate by
         // (gameType + sorted player list), keeping only the most-recent entry.
         function getRematchCandidates() {
-            const knownTypes = Object.keys(GAME_DISPLAY_NAMES);
-            const seen = new Map(); // key → {gameType, players, date, timestamp}
+            // Primary source: dedicated rematch history written on every game completion
+            try {
+                const records = JSON.parse(localStorage.getItem('scorekeeper_rematch_history') || '[]');
+                if (records.length > 0) return records;
+            } catch(e) {}
 
+            // Fallback: scan scorecards for users who have history pre-dating rematch feature
+            const knownTypes = Object.keys(GAME_DISPLAY_NAMES);
+            const seen = new Map();
             knownTypes.forEach(gt => {
                 const scorecards = window.loadGameScorecards(gt) || [];
                 scorecards.forEach(sc => {
@@ -18499,18 +18535,10 @@
                     const key = gt + '|' + sorted.join('|');
                     const ts = sc.timestamp ? new Date(sc.timestamp).getTime() : 0;
                     if (!seen.has(key) || ts > seen.get(key).timestamp) {
-                        seen.set(key, {
-                            gameType: gt,
-                            players: sc.players,   // original order from that game
-                            date: sc.date || '',
-                            timestamp: ts,
-                            key: key
-                        });
+                        seen.set(key, { gameType: gt, players: sc.players, date: sc.date || '', timestamp: ts, key: key });
                     }
                 });
             });
-
-            // Sort newest first
             return Array.from(seen.values()).sort((a, b) => b.timestamp - a.timestamp);
         }
 
