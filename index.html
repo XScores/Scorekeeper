@@ -2690,7 +2690,8 @@
             box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
         }
         .add-more-btn,
-        .done-adding-btn {
+        .done-adding-btn,
+        .rematch-btn {
             flex: 1;
             padding: 8px 20px;
             border: 2px solid;
@@ -2709,19 +2710,98 @@
             border-color: var(--neon-blue);
             box-shadow: 0 4px 15px rgba(0, 245, 255, 0.4);
         }
+        .rematch-btn {
+            background: linear-gradient(135deg, #ff6b35, #ff9a3c);
+            border-color: #ff6b35;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
         .done-adding-btn {
             background: linear-gradient(135deg, var(--neon-blue), #00c4cc);
             border-color: var(--neon-blue);
             box-shadow: 0 4px 15px rgba(0, 245, 255, 0.4);
         }
         .add-more-btn:hover,
+        .rematch-btn:hover,
         .done-adding-btn:hover {
             transform: translateY(-2px);
         }
         .add-more-btn:active,
+        .rematch-btn:active,
         .done-adding-btn:active {
             transform: translateY(0);
         }
+        /* Rematch Modal */
+        #rematchModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        #rematchModal.show {
+            display: flex;
+        }
+        #rematchModalInner {
+            background: var(--card-bg, #0d1b3e);
+            border-radius: 20px 20px 0 0;
+            padding: 20px 16px 30px 16px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        body[data-theme="ios"] #rematchModalInner,
+        body[data-theme="stainless"] #rematchModalInner {
+            background: #f2f2f7;
+        }
+        body[data-theme="ios-dark"] #rematchModalInner {
+            background: #1c1c1e;
+        }
+        #rematchList {
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .rematch-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(0,245,255,0.18);
+            border-radius: 12px;
+            padding: 13px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        body[data-theme="ios"] .rematch-item,
+        body[data-theme="stainless"] .rematch-item {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        body[data-theme="ios-dark"] .rematch-item {
+            background: #2c2c2e;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        .rematch-item:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,245,255,0.15); }
+        .rematch-item-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+        .rematch-item-game { font-weight: 800; font-size: 1rem; color: var(--text-primary, #fff); }
+        body[data-theme="ios"] .rematch-item-game,
+        body[data-theme="stainless"] .rematch-item-game { color: #000; }
+        body[data-theme="ios-dark"] .rematch-item-game { color: #fff; }
+        .rematch-item-players { font-size: 0.88rem; font-weight: 600; color: var(--text-dim, #a8b5d1); }
+        body[data-theme="ios"] .rematch-item-players,
+        body[data-theme="stainless"] .rematch-item-players { color: #555; }
+        body[data-theme="ios-dark"] .rematch-item-players { color: #ababab; }
+        .rematch-item-date { font-size: 0.8rem; color: var(--text-dim, #a8b5d1); margin-top: 1px; }
+        body[data-theme="ios"] .rematch-item-date,
+        body[data-theme="stainless"] .rematch-item-date { color: #888; }
+        body[data-theme="ios-dark"] .rematch-item-date { color: #888; }
         @media (max-width: 320px) {
             /* Only stack vertically on iPhone SE and smaller screens */
             .player-inputs-row {
@@ -5985,7 +6065,8 @@
             </div>
             <div class="player-buttons-row">
                 <button class="add-more-btn" onclick="addMorePlayerFields()">Add More Players</button>
-                <button class="done-adding-btn" onclick="doneAdding()">Done Adding Player Names</button>
+                <button class="rematch-btn" onclick="openRematchModal()">Rematch</button>
+                <button class="done-adding-btn" onclick="doneAdding()">Start Game</button>
             </div>
         </div>
         <div id="scorekeeperTab" class="tab-content active">
@@ -18391,6 +18472,152 @@
                 }
             }
         }
+        // ── REMATCH ────────────────────────────────────────────────────────────
+        const GAME_DISPLAY_NAMES = {
+            '5crowns':  '5 Crowns',
+            'golf':     'Golf',
+            'scrabble': 'Scrabble',
+            'yahtzee':  'Yahtzee',
+            'phase10':  'Phase 10',
+            'farkle':   'Farkle',
+            'darts':    'Darts',
+            'dominoes': 'Dominoes',
+            'general':  'General'
+        };
+
+        // Gather all scorecards across every known game type, deduplicate by
+        // (gameType + sorted player list), keeping only the most-recent entry.
+        function getRematchCandidates() {
+            const knownTypes = Object.keys(GAME_DISPLAY_NAMES);
+            const seen = new Map(); // key → {gameType, players, date, timestamp}
+
+            knownTypes.forEach(gt => {
+                const scorecards = window.loadGameScorecards(gt) || [];
+                scorecards.forEach(sc => {
+                    if (!sc.players || sc.players.length === 0) return;
+                    const sorted = [...sc.players].sort((a, b) => a.localeCompare(b));
+                    const key = gt + '|' + sorted.join('|');
+                    const ts = sc.timestamp ? new Date(sc.timestamp).getTime() : 0;
+                    if (!seen.has(key) || ts > seen.get(key).timestamp) {
+                        seen.set(key, {
+                            gameType: gt,
+                            players: sc.players,   // original order from that game
+                            date: sc.date || '',
+                            timestamp: ts,
+                            key: key
+                        });
+                    }
+                });
+            });
+
+            // Sort newest first
+            return Array.from(seen.values()).sort((a, b) => b.timestamp - a.timestamp);
+        }
+
+        function openRematchModal() {
+            const candidates = getRematchCandidates();
+            const list = document.getElementById('rematchList');
+
+            if (candidates.length === 0) {
+                list.innerHTML = '<div style="text-align:center;padding:30px 10px;color:var(--text-dim);font-family:Outfit,sans-serif;">No previous games found.<br>Finish a game first!</div>';
+            } else {
+                list.innerHTML = candidates.map((c, i) => {
+                    const gameName = GAME_DISPLAY_NAMES[c.gameType] || c.gameType;
+                    const playerList = c.players.map(p => `<span>${escapeHtml(p)}</span>`).join(' · ');
+                    return `
+                        <div class="rematch-item" onclick="launchRematch(${i})">
+                            <div class="rematch-item-info">
+                                <div class="rematch-item-game">${escapeHtml(gameName)}</div>
+                                <div class="rematch-item-players">${playerList}</div>
+                                <div class="rematch-item-date">${escapeHtml(c.date)}</div>
+                            </div>
+                            <button class="delete-btn" onclick="event.stopPropagation(); deleteRematchItem(${i})"
+                                style="width:36px;height:36px;min-height:0;font-size:1.1rem;flex-shrink:0;">✕</button>
+                        </div>`;
+                }).join('');
+            }
+
+            // Store candidates on the modal so launchRematch/deleteRematchItem can use them
+            document.getElementById('rematchModal')._candidates = candidates;
+            document.getElementById('rematchModal').classList.add('show');
+        }
+
+        function closeRematchModal() {
+            document.getElementById('rematchModal').classList.remove('show');
+        }
+
+        function launchRematch(idx) {
+            const candidates = document.getElementById('rematchModal')._candidates || [];
+            const c = candidates[idx];
+            if (!c) return;
+
+            closeRematchModal();
+
+            // 1. Set game type
+            selectGameType(c.gameType);
+
+            // 2. Clear existing players
+            players.length = 0;
+
+            // 3. Populate player input fields with the rematch names
+            const container = document.getElementById('playerInputsContainer');
+            // Build a flat list of all existing inputs first, add rows if needed
+            let allInputs = Array.from(container.querySelectorAll('input[type="text"]'));
+            while (allInputs.length < c.players.length) {
+                // Add a new row of 2 inputs
+                const row = document.createElement('div');
+                row.className = 'player-inputs-row';
+                for (let r = 0; r < 2; r++) {
+                    const inp = document.createElement('input');
+                    inp.type = 'text';
+                    inp.maxLength = 20;
+                    inp.placeholder = `Player ${allInputs.length + 1 + r}`;
+                    row.appendChild(inp);
+                }
+                container.appendChild(row);
+                allInputs = Array.from(container.querySelectorAll('input[type="text"]'));
+            }
+
+            // Fill inputs with player names, clear any extras
+            allInputs.forEach((inp, i) => {
+                inp.value = i < c.players.length ? c.players[i] : '';
+            });
+
+            // 4. Immediately call doneAdding to launch the game
+            doneAdding();
+        }
+
+        function deleteRematchItem(idx) {
+            // We can't delete from the deduped in-memory list without deleting real scorecards,
+            // so just re-render the list with that item removed visually (until page reload).
+            const modal = document.getElementById('rematchModal');
+            const candidates = modal._candidates || [];
+            candidates.splice(idx, 1);
+            modal._candidates = candidates;
+
+            // Re-render
+            const list = document.getElementById('rematchList');
+            if (candidates.length === 0) {
+                list.innerHTML = '<div style="text-align:center;padding:30px 10px;color:var(--text-dim);font-family:Outfit,sans-serif;">No previous games found.</div>';
+            } else {
+                list.innerHTML = candidates.map((c, i) => {
+                    const gameName = GAME_DISPLAY_NAMES[c.gameType] || c.gameType;
+                    const playerList = c.players.map(p => `<span>${escapeHtml(p)}</span>`).join(' · ');
+                    return `
+                        <div class="rematch-item" onclick="launchRematch(${i})">
+                            <div class="rematch-item-info">
+                                <div class="rematch-item-game">${escapeHtml(gameName)}</div>
+                                <div class="rematch-item-players">${playerList}</div>
+                                <div class="rematch-item-date">${escapeHtml(c.date)}</div>
+                            </div>
+                            <button class="delete-btn" onclick="event.stopPropagation(); deleteRematchItem(${i})"
+                                style="width:36px;height:36px;min-height:0;font-size:1.1rem;flex-shrink:0;">✕</button>
+                        </div>`;
+                }).join('');
+            }
+        }
+        // ── END REMATCH ────────────────────────────────────────────────────────
+
         function addMorePlayerFields() {
             const container = document.getElementById('playerInputsContainer');
             
@@ -18481,11 +18708,16 @@
             // Clear saved player inputs since we're done adding
             sessionStorage.removeItem('scorekeeper_player_inputs');
             
-            // If no players at all, exit early
+            // Validate: a game type must be selected (dropdown still shows default)
+            const selectedLabel = document.getElementById('selectedGameType')?.textContent?.trim();
+            if (selectedLabel === 'Select a Game' || selectedLabel === '') {
+                customAlert('Please choose a game type before starting.', '⚠️ No Game Selected');
+                return;
+            }
+
+            // Validate: at least one player must be present
             if (players.length === 0) {
-                speak('No players added yet.');
-                showVoiceFeedback('No players added', '');
-                setTimeout(hideVoiceFeedback, 2000);
+                customAlert('Please add at least one player before starting.', '⚠️ No Players Added');
                 return;
             }
             
@@ -20480,6 +20712,16 @@
             <div id="finalScoresWinner" class="final-scores-winner"></div>
             <ol id="finalScoresList" class="final-scores-list"></ol>
             <button class="final-scores-ok-btn" onclick="closeFinalScoresModal()">OK</button>
+        </div>
+    </div>
+    <!-- Rematch Modal -->
+    <div id="rematchModal" onclick="closeRematchModal()">
+        <div id="rematchModalInner" onclick="event.stopPropagation()">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="font-family: Outfit, sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--text-primary);">🔁 Rematch</div>
+                <button onclick="closeRematchModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-dim); padding: 0 4px; line-height: 1;">✕</button>
+            </div>
+            <div id="rematchList"></div>
         </div>
     </div>
     <!-- Custom Alert Modal -->
