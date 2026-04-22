@@ -18518,28 +18518,67 @@
         // Gather all scorecards across every known game type, deduplicate by
         // (gameType + sorted player list), keeping only the most-recent entry.
         function getRematchCandidates() {
-            // Primary source: dedicated rematch history written on every game completion
+            const results = [];
+            const seen = new Set();
+
+            // Primary source: dedicated rematch history (written going forward)
             try {
                 const records = JSON.parse(localStorage.getItem('scorekeeper_rematch_history') || '[]');
-                if (records.length > 0) return records;
-            } catch(e) {}
-
-            // Fallback: scan scorecards for users who have history pre-dating rematch feature
-            const knownTypes = Object.keys(GAME_DISPLAY_NAMES);
-            const seen = new Map();
-            knownTypes.forEach(gt => {
-                const scorecards = window.loadGameScorecards(gt) || [];
-                scorecards.forEach(sc => {
-                    if (!sc.players || sc.players.length === 0) return;
-                    const sorted = [...sc.players].sort((a, b) => a.localeCompare(b));
-                    const key = gt + '|' + sorted.join('|');
-                    const ts = sc.timestamp ? new Date(sc.timestamp).getTime() : 0;
-                    if (!seen.has(key) || ts > seen.get(key).timestamp) {
-                        seen.set(key, { gameType: gt, players: sc.players, date: sc.date || '', timestamp: ts, key: key });
+                records.forEach(r => {
+                    if (r.key && !seen.has(r.key)) {
+                        seen.add(r.key);
+                        results.push(r);
                     }
                 });
+            } catch(e) {}
+
+            // Secondary source: scorekeeper_wins_tracker — this is the data the
+            // Wins Tracker Statistics tab reads from. For each game type that has
+            // player data, synthesise one rematch entry with all those players.
+            try {
+                const winsData = JSON.parse(localStorage.getItem('scorekeeper_wins_tracker') || '{}');
+                Object.keys(winsData).forEach(gt => {
+                    const playerNames = Object.keys(winsData[gt] || {});
+                    if (playerNames.length === 0) return;
+                    const sorted = [...playerNames].sort((a, b) => a.localeCompare(b));
+                    const key = gt + '|' + sorted.join('|');
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        results.push({
+                            key: key,
+                            gameType: gt,
+                            players: playerNames,
+                            date: '',
+                            timestamp: 0
+                        });
+                    }
+                });
+            } catch(e) {}
+
+            // Tertiary fallback: scan saved scorecards
+            try {
+                const knownTypes = Object.keys(GAME_DISPLAY_NAMES);
+                knownTypes.forEach(gt => {
+                    const scorecards = window.loadGameScorecards(gt) || [];
+                    scorecards.forEach(sc => {
+                        if (!sc.players || sc.players.length === 0) return;
+                        const sorted = [...sc.players].sort((a, b) => a.localeCompare(b));
+                        const key = gt + '|' + sorted.join('|');
+                        const ts = sc.timestamp ? new Date(sc.timestamp).getTime() : 0;
+                        if (!seen.has(key)) {
+                            seen.add(key);
+                            results.push({ gameType: gt, players: sc.players, date: sc.date || '', timestamp: ts, key: key });
+                        }
+                    });
+                });
+            } catch(e) {}
+
+            // Sort: entries with a real timestamp first (newest first), then the
+            // wins-tracker entries (timestamp 0) at the bottom sorted by game name
+            return results.sort((a, b) => {
+                if (a.timestamp !== b.timestamp) return b.timestamp - a.timestamp;
+                return a.gameType.localeCompare(b.gameType);
             });
-            return Array.from(seen.values()).sort((a, b) => b.timestamp - a.timestamp);
         }
 
         function openRematchModal() {
