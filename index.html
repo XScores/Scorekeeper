@@ -149,7 +149,7 @@
         body[data-theme="stainless"] .crowns-table td {
             background: rgba(226, 232, 240, 0.5);
             color: #2d3748;
-            border: 1px solid rgba(160, 174, 192, 0.3);
+            border: 1px solid rgba(100, 120, 150, 0.35);
         }
         
         body[data-theme="stainless"] .crowns-table .round-label {
@@ -5388,7 +5388,7 @@
         body[data-theme="ios"] .crowns-table td {
             background: #FFFFFF;
             color: #000000;
-            border: 0.5px solid rgba(60,60,67,0.35);
+            border: 1px solid rgba(60,60,67,0.2);
         }
 
         /* Score input inline cells */
@@ -5797,7 +5797,7 @@
         body[data-theme="ios-dark"] th { background: #2C2C2E; color: #EBEBF5; border-color: rgba(255,255,255,0.10); }
         body[data-theme="ios-dark"] table { border-color: rgba(255,255,255,0.10); }
         body[data-theme="ios-dark"] .crowns-table th { background: #0A84FF; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.30); border-bottom: 2px solid #0A84FF; box-shadow: none; position: static; z-index: auto; }
-        body[data-theme="ios-dark"] .crowns-table td { background: #1C1C1E; color: #FFFFFF; border: 0.5px solid rgba(255,255,255,0.22); }
+        body[data-theme="ios-dark"] .crowns-table td { background: #1C1C1E; color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2); }
         body[data-theme="ios-dark"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
             border-right: 2px solid #0A84FF !important;
             background: #3A3A3C !important;
@@ -6081,7 +6081,7 @@
                     
                     <div style="text-indent: -20px; padding-left: 20px;"><strong>1.</strong> To use manual controls, select a game from the dropdown list.</div>
                     <div style="text-indent: -20px; padding-left: 20px;"><strong>2.</strong> Add Player names.</div>
-                    <div style="text-indent: -20px; padding-left: 20px;"><strong>3.</strong> Click the "Done adding Player Names" button, and the game will start.</div>
+                    <div style="text-indent: -20px; padding-left: 20px;"><strong>3.</strong> Click the "Start Game" button and have fun!</div>
                 </div>
                 
                 <!-- Start Button directly under instructions -->
@@ -15983,10 +15983,12 @@
                 return;
             }
             
-            // "Done Adding Player Names" button
+            // "Done Adding Player Names" / "Start Game" button
             if (transcript === 'done adding player names' || 
                 transcript === 'done adding players' ||
-                transcript === 'done adding names') {
+                transcript === 'done adding names' ||
+                transcript === 'start game' ||
+                transcript === 'start the game') {
                 doneAdding();
                 return;
             }
