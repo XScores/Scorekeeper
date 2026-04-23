@@ -1101,6 +1101,11 @@
             animation: slideUp 0.4s ease-out;
         }
         
+        /* Score Flipper: taller modal to fit extra Game Name field without scrolling */
+        #gameCompletionModal.flipper-mode .final-scores-content {
+            max-height: 96vh;
+        }
+
         /* Stainless theme modal content - metallic steel look */
         body[data-theme="stainless"] .final-scores-content {
             background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e0 100%);
@@ -5981,6 +5986,7 @@
             padding: 16px 8px 24px;
             gap: 20px;
             box-sizing: border-box;
+            position: relative;
         }
         #scoreFlipper.active { display: flex; }
 
@@ -6004,14 +6010,19 @@
         .flipper-team-label {
             font-family: Outfit, sans-serif;
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--text-primary);
+            color: #ffffff;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.4);
+            position: absolute;
+            top: 14px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            pointer-events: none;
+            z-index: 1;
         }
-
-        body[data-theme="ios"] .flipper-team-label,
-        body[data-theme="stainless"] .flipper-team-label { color: #1a1a2e; }
 
         .flipper-card {
             width: 100%;
@@ -6097,25 +6108,45 @@
         .flipper-controls {
             display: flex;
             flex-direction: row;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 6px;
+            flex-wrap: nowrap;
             justify-content: center;
+            width: 100%;
         }
 
         .flipper-btn {
             font-family: Outfit, sans-serif;
             font-weight: 700;
-            font-size: 0.85rem;
-            padding: 8px 20px;
+            font-size: 0.78rem;
+            padding: 8px 10px;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s ease;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             border: none;
+            white-space: nowrap;
+            flex: 1;
         }
         .flipper-btn:active { transform: scale(0.95); }
 
         /* Neon (default) */
+        .flipper-btn-home {
+            background: rgba(255,255,255,0.12);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+        body[data-theme="ios"] .flipper-btn-home {
+            background: #8E8E93;
+            color: #FFFFFF;
+            -webkit-text-fill-color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        body[data-theme="ios-dark"] .flipper-btn-home {
+            background: #636366;
+            color: #FFFFFF;
+            -webkit-text-fill-color: #FFFFFF;
+            box-shadow: none;
+        }
         .flipper-btn-undo {
             background: linear-gradient(135deg, var(--neon-blue), #00c4cc);
             color: #000;
@@ -6156,6 +6187,7 @@
         }
 
         /* Grey (stainless) */
+        body[data-theme="stainless"] .flipper-btn-home,
         body[data-theme="stainless"] .flipper-btn-undo,
         body[data-theme="stainless"] .flipper-btn-reset,
         body[data-theme="stainless"] .flipper-btn-endgame {
@@ -6163,13 +6195,13 @@
             color: #2d3748;
             border: 1px solid rgba(255,255,255,0.5);
             border-radius: 12px;
-            padding: 12px 16px;
             box-shadow:
                 inset 0 1px 2px rgba(255,255,255,0.8),
                 inset 0 -1px 2px rgba(0,0,0,0.25),
                 0 2px 4px rgba(0,0,0,0.3),
                 0 1px 0 rgba(255,255,255,0.5);
         }
+        body[data-theme="stainless"] .flipper-btn-home:hover,
         body[data-theme="stainless"] .flipper-btn-undo:hover,
         body[data-theme="stainless"] .flipper-btn-reset:hover,
         body[data-theme="stainless"] .flipper-btn-endgame:hover {
@@ -6180,48 +6212,100 @@
                 0 4px 8px rgba(0,0,0,0.4);
         }
 
+        /* ── Score Flipper landscape: iPhone (max-height 600px) ── */
         @media screen and (orientation: landscape) and (max-height: 600px) {
             #scoreFlipper {
                 flex-direction: row;
-                padding: 6px 8px 8px;
+                padding: 4px 8px 4px;
                 gap: 8px;
-                align-items: center;
+                align-items: stretch;
             }
             .flipper-teams {
                 gap: 6px;
                 flex: 1;
-                height: 76vh;
+                /* Fill from below the fixed 50px header to bottom, minus flipper padding */
+                height: calc(100vh - 58px);
+                height: calc(100dvh - 58px);
+                align-items: stretch;
             }
             .flipper-card {
                 max-height: none;
                 aspect-ratio: unset;
-                height: 76vh;
+                height: 100%;
                 flex: 1;
             }
-            .flipper-score { font-size: clamp(4rem, 18vh, 10rem); }
+            .flipper-score { font-size: clamp(3.5rem, 16vh, 9rem); }
             .flipper-controls {
                 flex-direction: column;
                 align-self: center;
                 gap: 8px;
                 flex-shrink: 0;
             }
-            .flipper-divider { padding-bottom: 0; }
-            /* 4-player landscape: two rows stacked, cards shorter */
+            .flipper-divider { padding-bottom: 0; align-self: center; }
+
+            /* 4-player: two rows, each takes roughly half the height */
             #scoreFlipper.four-player {
                 flex-wrap: wrap;
+                align-content: stretch;
             }
             #scoreFlipper.four-player .flipper-teams,
             #scoreFlipper.four-player #flipperRow2 {
-                height: 36vh;
+                height: calc((100vh - 66px) / 2);
+                height: calc((100dvh - 66px) / 2);
                 flex: none;
-                width: calc(100% - 90px);
+                width: calc(100% - 96px);
             }
-            #scoreFlipper.four-player .flipper-card {
-                height: 36vh;
+            #scoreFlipper.four-player .flipper-card { height: 100%; }
+            #scoreFlipper.four-player .flipper-score { font-size: clamp(2rem, 9vh, 5rem); }
+            #scoreFlipper.four-player .flipper-controls {
+                position: absolute;
+                right: 8px;
+                top: 50%;
+                transform: translateY(-50%);
             }
-            #scoreFlipper.four-player .flipper-score {
-                font-size: clamp(2.5rem, 10vh, 6rem);
+        }
+
+        /* ── Score Flipper landscape: iPad and wider (min-width 768px) ── */
+        @media screen and (orientation: landscape) and (min-width: 768px) {
+            #scoreFlipper {
+                flex-direction: row;
+                padding: 6px 12px 6px;
+                gap: 12px;
+                align-items: stretch;
             }
+            .flipper-teams {
+                gap: 10px;
+                flex: 1;
+                height: calc(100vh - 70px);
+                height: calc(100dvh - 70px);
+                align-items: stretch;
+            }
+            .flipper-card {
+                max-height: none;
+                aspect-ratio: unset;
+                height: 100%;
+                flex: 1;
+            }
+            .flipper-score { font-size: clamp(5rem, 20vh, 14rem); }
+            .flipper-controls {
+                flex-direction: column;
+                align-self: center;
+                gap: 12px;
+                flex-shrink: 0;
+            }
+            .flipper-btn { padding: 10px 12px; font-size: 0.9rem; }
+            .flipper-divider { padding-bottom: 0; font-size: 2.5rem; align-self: center; }
+
+            /* 4-player iPad landscape */
+            #scoreFlipper.four-player .flipper-teams,
+            #scoreFlipper.four-player #flipperRow2 {
+                height: calc((100vh - 80px) / 2);
+                height: calc((100dvh - 80px) / 2);
+                flex: none;
+                width: calc(100% - 110px);
+            }
+            #scoreFlipper.four-player .flipper-card { height: 100%; }
+            #scoreFlipper.four-player .flipper-score { font-size: clamp(3rem, 11vh, 7rem); }
         }
         .flipper-btn-endgame {
             background: linear-gradient(135deg, #d4af37, #f0c940);
@@ -6243,115 +6327,45 @@
 
 
         /* Score Flipper End Game Modal */
-        #flipperEndGameModal {
-            display: none;
-            position: fixed;
+        /* Score Flipper card edit overlay */
+        .flipper-card-edit {
+            position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 10000;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-        }
-        #flipperEndGameModal.show { display: flex; }
-        #flipperEndGameInner {
-            background: var(--card-bg, #0d1b3e);
-            border-radius: 20px;
-            padding: 24px 20px;
-            width: 100%;
-            max-width: 420px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        body[data-theme="ios"] #flipperEndGameInner,
-        body[data-theme="stainless"] #flipperEndGameInner { background: #f2f2f7; }
-        body[data-theme="ios-dark"] #flipperEndGameInner { background: #1c1c1e; }
-        #flipperEndGameInner .final-scores-title { margin-bottom: 0; }
-        .flipper-eg-scores {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .flipper-eg-score-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-family: Outfit, sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #fff;
-        }
-        .flipper-eg-score-row.winner-row {
-            box-shadow: 0 0 0 2px #d4af37;
-        }
-        .flipper-eg-winner-badge {
-            font-size: 0.75rem;
-            font-weight: 800;
-            background: #d4af37;
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .flipper-eg-input {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.08);
-            color: var(--text-primary);
-            font-family: Outfit, sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            box-sizing: border-box;
-        }
-        body[data-theme="ios"] .flipper-eg-input,
-        body[data-theme="stainless"] .flipper-eg-input {
-            background: #fff;
-            border: 1px solid rgba(0,0,0,0.15);
-            color: #000;
-        }
-        body[data-theme="ios-dark"] .flipper-eg-input {
-            background: #2c2c2e;
-            border: 1px solid rgba(255,255,255,0.12);
-            color: #fff;
-        }
-        .flipper-eg-input::placeholder { opacity: 0.5; }
-        .flipper-eg-buttons {
-            display: flex;
+            background: rgba(0,0,0,0.55);
+            border-radius: 11px;
             gap: 10px;
+            z-index: 10;
         }
-        .flipper-eg-btn {
-            flex: 1;
-            padding: 11px;
-            border-radius: 12px;
-            border: none;
+        .flipper-edit-input {
+            width: 70%;
+            text-align: center;
             font-family: Outfit, sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
+            font-weight: 900;
+            font-size: clamp(2rem, 10vw, 4rem);
+            background: rgba(0,0,0,0.85) !important;
+            border: 2px solid rgba(255,255,255,0.8) !important;
+            border-radius: 10px;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            padding: 6px 10px;
+            outline: none;
+            box-shadow: none !important;
+            -moz-appearance: textfield;
         }
-        .flipper-eg-btn-cancel {
-            background: rgba(255,255,255,0.1);
-            color: var(--text-primary);
-            border: 1px solid rgba(255,255,255,0.2);
+        .flipper-edit-input::-webkit-outer-spin-button,
+        .flipper-edit-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .flipper-edit-hint {
+            font-family: Outfit, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        body[data-theme="ios"] .flipper-eg-btn-cancel,
-        body[data-theme="stainless"] .flipper-eg-btn-cancel {
-            background: rgba(0,0,0,0.07);
-            color: #333;
-            border: 1px solid rgba(0,0,0,0.15);
-        }
-        .flipper-eg-btn-save {
-            background: linear-gradient(135deg, #d4af37, #f0c940);
-            color: #000;
-        }
-        body[data-theme="ios"] .flipper-eg-btn-save { background: #FF9500; color: #fff; -webkit-text-fill-color: #fff; }
-        body[data-theme="ios-dark"] .flipper-eg-btn-save { background: #FF9F0A; color: #000; -webkit-text-fill-color: #000; }
         /* ── END SCORE FLIPPER ─────────────────────────────────────────────────── */
     </style>
 </head>
@@ -6480,9 +6494,9 @@
                     <!-- Game management controls -->
                     <div id="crownsButtons" style="display: none; margin-top: 20px;">
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
-                            <button class="btn-secondary" onclick="resetScores()">Reset Scores</button>
-                            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
                 </div>
@@ -6510,9 +6524,9 @@
                     <!-- Game management controls -->
                     <div id="golfButtons" style="display: none; margin-top: 20px;">
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
-                            <button class="btn-secondary" onclick="resetScores()">Reset Scores</button>
-                            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
                 </div>
@@ -6524,9 +6538,9 @@
                     <div id="dominoesButtons" style="display: none; margin-top: 20px;">
                         <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
-                            <button class="btn-secondary" onclick="resetScores()">Reset Scores</button>
-                            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
                 </div>
@@ -6592,9 +6606,9 @@
                         </div>
                         <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
-                            <button class="btn-secondary" onclick="resetScores()">Reset Scores</button>
-                            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
                 </div>
@@ -6606,9 +6620,9 @@
                     <div id="yahtzeeButtons" style="display: none; margin-top: 20px;">
                         <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
-                            <button class="btn-secondary" onclick="resetScores()">Reset Scores</button>
-                            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
                 </div>
@@ -6620,9 +6634,9 @@
                     <div id="phase10Buttons" style="display: none; margin-top: 20px;">
                         <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
-                            <button class="btn-secondary" onclick="resetScores()">Reset Scores</button>
-                            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
                 </div>
@@ -6637,9 +6651,9 @@
                     <div id="genericGridGameButtons" style="display: none; margin-top: 10px;">
                         <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
-                            <button class="btn-secondary" onclick="resetScores()">Reset Scores</button>
-                            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
                 </div>
@@ -6677,9 +6691,9 @@
                     <!-- Game management controls -->
                     <div id="dartsButtons" style="display: none; margin-top: 10px;">
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
-                            <button class="btn-secondary" onclick="resetScores()">Reset Scores</button>
-                            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
                 </div>
@@ -6689,21 +6703,21 @@
             <div id="scoreFlipper">
                 <div class="flipper-teams">
                     <div class="flipper-team">
-                        <div class="flipper-team-label" id="flipperRedLabel">Red</div>
-                        <div class="flipper-card flipper-card-red" onclick="flipperIncrement('red')" ontouchstart="">
+                        <div class="flipper-card flipper-card-red" id="flipperCard-red" onpointerdown="flipperPointerDown(event,'red')" onpointerup="flipperPointerUp(event,'red')" onpointerleave="flipperPointerCancel()" onpointercancel="flipperPointerCancel()">
                             <div class="flipper-ring">
                                 <span></span><span></span><span></span>
                             </div>
+                            <div class="flipper-team-label" id="flipperRedLabel">Red</div>
                             <div class="flipper-score" id="flipperRedScore">0</div>
                         </div>
                     </div>
                     <div class="flipper-divider">:</div>
                     <div class="flipper-team">
-                        <div class="flipper-team-label" id="flipperBlueLabel">Blue</div>
-                        <div class="flipper-card flipper-card-blue" onclick="flipperIncrement('blue')" ontouchstart="">
+                        <div class="flipper-card flipper-card-blue" id="flipperCard-blue" onpointerdown="flipperPointerDown(event,'blue')" onpointerup="flipperPointerUp(event,'blue')" onpointerleave="flipperPointerCancel()" onpointercancel="flipperPointerCancel()">
                             <div class="flipper-ring">
                                 <span></span><span></span><span></span>
                             </div>
+                            <div class="flipper-team-label" id="flipperBlueLabel">Blue</div>
                             <div class="flipper-score" id="flipperBlueScore">0</div>
                         </div>
                     </div>
@@ -6711,29 +6725,30 @@
                 <!-- Second row: Green & Orange (shown only with 4 players) -->
                 <div class="flipper-teams" id="flipperRow2">
                     <div class="flipper-team">
-                        <div class="flipper-team-label" id="flipperGreenLabel">Green</div>
-                        <div class="flipper-card flipper-card-green" onclick="flipperIncrement('green')" ontouchstart="">
+                        <div class="flipper-card flipper-card-green" id="flipperCard-green" onpointerdown="flipperPointerDown(event,'green')" onpointerup="flipperPointerUp(event,'green')" onpointerleave="flipperPointerCancel()" onpointercancel="flipperPointerCancel()">
                             <div class="flipper-ring">
                                 <span></span><span></span><span></span>
                             </div>
+                            <div class="flipper-team-label" id="flipperGreenLabel">Green</div>
                             <div class="flipper-score" id="flipperGreenScore">0</div>
                         </div>
                     </div>
                     <div class="flipper-divider">:</div>
                     <div class="flipper-team">
-                        <div class="flipper-team-label" id="flipperOrangeLabel">Orange</div>
-                        <div class="flipper-card flipper-card-orange" onclick="flipperIncrement('orange')" ontouchstart="">
+                        <div class="flipper-card flipper-card-orange" id="flipperCard-orange" onpointerdown="flipperPointerDown(event,'orange')" onpointerup="flipperPointerUp(event,'orange')" onpointerleave="flipperPointerCancel()" onpointercancel="flipperPointerCancel()">
                             <div class="flipper-ring">
                                 <span></span><span></span><span></span>
                             </div>
+                            <div class="flipper-team-label" id="flipperOrangeLabel">Orange</div>
                             <div class="flipper-score" id="flipperOrangeScore">0</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="flipper-controls">
-                    <button class="flipper-btn flipper-btn-undo" onclick="flipperUndo()">↩ Undo</button>
-                    <button class="flipper-btn flipper-btn-reset" onclick="flipperReset()">Reset Scores</button>
+                    <button class="flipper-btn flipper-btn-home" onclick="goHome()">Home</button>
+                    <button class="flipper-btn flipper-btn-reset" onclick="flipperReset()">Reset</button>
+                    <button class="flipper-btn flipper-btn-undo" onclick="flipperUndo()">Undo</button>
                     <button class="flipper-btn flipper-btn-endgame" onclick="flipperEndGame()">End Game</button>
                 </div>
             </div>
@@ -7121,7 +7136,8 @@
                     'farkle': 'Farkle',
                     'darts': 'Darts',
                     'scrabble': 'Scrabble',
-                    'yahtzee': 'Yahtzee'
+                    'yahtzee': 'Yahtzee',
+                    'scoreflipper': 'Score Flipper'
                 };
                 
                 const gameName = gameNames[gameType] || gameType;
@@ -9476,6 +9492,17 @@
             gameInProgress = false;
             currentGameType = 'general';
             document.body.classList.remove('grid-mode');
+            resetLandscapeGridHeader();
+
+            // Move game-type-row back to its original position (after tab-navigation-container)
+            // — it gets relocated into the tab bar when a game starts in grid mode
+            const gameTypeRow = document.querySelector('.game-type-row');
+            const tabNavContainer = document.querySelector('.tab-navigation-container');
+            if (gameTypeRow && tabNavContainer && gameTypeRow.parentElement === tabNavContainer) {
+                tabNavContainer.parentElement.insertBefore(gameTypeRow, tabNavContainer.nextSibling);
+            }
+            // Ensure the game-type-row is visible
+            if (gameTypeRow) gameTypeRow.style.display = 'flex';
 
             // Reset the game type dropdown label
             const selectedSpan = document.getElementById('selectedGameType');
@@ -20023,9 +20050,11 @@
             // Hide all other game modes
             hideAllGameModes();
 
-            // Hide add-player section — Score Flipper doesn't use players
+            // Hide add-player section and game type row — Score Flipper doesn't use them
             const addPlayerSection = document.getElementById('addPlayerSection');
             if (addPlayerSection) addPlayerSection.style.display = 'none';
+            const gameTypeRow = document.querySelector('.game-type-row');
+            if (gameTypeRow) gameTypeRow.style.display = 'none';
 
             // Show Score Flipper
             if (flipper) flipper.classList.add('active');
@@ -20080,11 +20109,11 @@
             flipperScores = { red: 0, blue: 0, green: 0, orange: 0 };
             flipperUpdateDisplay();
         }
-        function flipperEndGame() {
-            // Build the active teams list sorted by score descending
+        async function flipperEndGame() {
+            // Build teams sorted by score descending
             const teams = [
-                { key: 'red',    name: flipperTeamNames.red,    score: flipperScores.red,    color: '#e8352a' },
-                { key: 'blue',   name: flipperTeamNames.blue,   score: flipperScores.blue,   color: '#1a6fd8' },
+                { key: 'red',    name: flipperTeamNames.red,    score: flipperScores.red    || 0, color: '#e8352a' },
+                { key: 'blue',   name: flipperTeamNames.blue,   score: flipperScores.blue   || 0, color: '#1a6fd8' },
             ];
             if (flipperFourPlayer) {
                 teams.push({ key: 'green',  name: flipperTeamNames.green,  score: flipperScores.green  || 0, color: '#22a84a' });
@@ -20095,79 +20124,167 @@
             const maxScore = teams[0].score;
             const winners = teams.filter(t => t.score === maxScore);
 
-            // Render score rows
-            const scoresEl = document.getElementById('flipperEgScores');
-            scoresEl.innerHTML = teams.map(t => {
-                const isWinner = t.score === maxScore;
-                return `<div class="flipper-eg-score-row${isWinner ? ' winner-row' : ''}" style="background:${t.color};">
-                    <span>${escapeHtml(t.name)}</span>
-                    <span style="display:flex;align-items:center;gap:8px;">
-                        <strong style="font-size:1.3rem;">${t.score}</strong>
-                        ${isWinner ? '<span class="flipper-eg-winner-badge">🏆 Winner</span>' : ''}
-                    </span>
-                </div>`;
-            }).join('');
+            // Build message in same format as handleUniversalGameCompletion
+            const winnerNames = winners.map(w => escapeHtml(w.name)).join(' & ');
+            const winnerText = winners.length > 1
+                ? `🎉 ${winnerNames} tied with ${maxScore} point${maxScore !== 1 ? 's' : ''}!`
+                : `🎉 ${winnerNames} is the Supreme Champion with ${maxScore} point${maxScore !== 1 ? 's' : ''}!`;
 
-            // Pre-fill game name from last used or blank
-            const nameInput = document.getElementById('flipperEgGameName');
-            nameInput.value = '';
+            const scoresHTML = teams.map((t, i) => `<div style="
+                    padding: 12px 16px; margin: 0;
+                    background: rgba(255,255,255,0.18); border-radius: 12px;
+                    font-family: Outfit, sans-serif; font-size: 1.05rem; font-weight: 600;
+                    color: var(--text-primary);
+                    border-left: 4px solid ${i === 0 ? '#d4af37' : t.color};
+                    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2); text-align: left;
+                ">${i + 1}. ${escapeHtml(t.name)}: ${t.score} point${t.score !== 1 ? 's' : ''}</div>`).join('');
 
-            document.getElementById('flipperEndGameModal').classList.add('show');
-            setTimeout(() => nameInput.focus(), 100);
-        }
+            const message = `
+                <div style="font-family:Outfit,sans-serif;font-weight:900;font-size:1rem;
+                    text-align:center;color:#2d3748;-webkit-text-fill-color:#2d3748;
+                    padding:14px 18px;background:linear-gradient(135deg,#f9e784,#f4c842,#e6a817);
+                    border-radius:14px;border:2px solid #d4af37;
+                    box-shadow:0 4px 12px rgba(212,175,55,0.35),inset 0 1px 0 rgba(255,255,255,0.5);
+                    text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;line-height:1.4;
+                ">${winnerText}</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">${scoresHTML}</div>`;
 
-        function closeFliperEndGameModal() {
-            document.getElementById('flipperEndGameModal').classList.remove('show');
-        }
+            // Inject Game Name field above the Notes section in the shared modal
+            const notesSection = document.getElementById('gameCompletionNotesSection');
+            const gameNameSection = document.createElement('div');
+            gameNameSection.id = 'flipperGameNameSection';
+            gameNameSection.style.cssText = 'margin-bottom: 12px;';
+            gameNameSection.innerHTML = `
+                <label style="display:block;margin-bottom:8px;font-weight:700;color:var(--text-primary);">Game Name:</label>
+                <input type="text" id="flipperEgGameName" class="custom-prompt-input"
+                    placeholder="e.g. Pool, Soccer, Hockey…" maxlength="40"
+                    style="margin-top:0;">`;
+            notesSection.parentNode.insertBefore(gameNameSection, notesSection);
 
-        async function flipperSaveGame() {
-            const gameTypeRaw = document.getElementById('flipperEgGameName').value.trim();
-            if (!gameTypeRaw) {
-                document.getElementById('flipperEgGameName').focus();
-                document.getElementById('flipperEgGameName').style.borderColor = '#ff6b6b';
-                setTimeout(() => { document.getElementById('flipperEgGameName').style.borderColor = ''; }, 1500);
-                return;
-            }
+            // Use the standard game completion modal — add class to allow extra height
+            const completionModal = document.getElementById('gameCompletionModal');
+            if (completionModal) completionModal.classList.add('flipper-mode');
 
-            const gameType = normalizeGameType ? normalizeGameType(gameTypeRaw) : gameTypeRaw;
+            const result = await showGameCompletionModal('scoreflipper', message,
+                { name: winners[0].name, total: maxScore },
+                teams.map(t => ({ name: t.name, total: t.score }))
+            );
 
-            // Build teams list sorted by score desc
-            const teams = [
-                { key: 'red',    name: flipperTeamNames.red,    score: flipperScores.red    || 0 },
-                { key: 'blue',   name: flipperTeamNames.blue,   score: flipperScores.blue   || 0 },
-            ];
-            if (flipperFourPlayer) {
-                teams.push({ key: 'green',  name: flipperTeamNames.green,  score: flipperScores.green  || 0 });
-                teams.push({ key: 'orange', name: flipperTeamNames.orange, score: flipperScores.orange || 0 });
-            }
-            teams.sort((a, b) => b.score - a.score);
+            // Clean up injected game name field and flipper-mode class
+            const injected = document.getElementById('flipperGameNameSection');
+            if (injected) injected.remove();
+            if (completionModal) completionModal.classList.remove('flipper-mode');
 
-            const maxScore = teams[0].score;
+            if (result.action !== 'save') return;
+
+            const gameTypeRaw = (document.getElementById('flipperEgGameName')?.value ||
+                                 result._flipperGameName || '').trim();
+            const gameType = gameTypeRaw ? (normalizeGameType ? normalizeGameType(gameTypeRaw) : gameTypeRaw) : 'Score Flipper';
+
             const winner = teams[0].name;
             const today = new Date().toISOString().split('T')[0];
 
-            const customGame = {
-                gameType: gameType,
-                date: today,
+            saveCustomGameRecord({
+                gameType, date: today,
                 players: teams.map(t => ({ name: t.name, score: t.score })),
-                winner: winner,
-                timestamp: Date.now()
-            };
-
-            saveCustomGameRecord(customGame);
-
-            // Update wins tracking
-            teams.forEach(t => {
-                updatePlayerWins(t.name, gameType.toLowerCase().replace(/\s+/g, ''), t.name === winner);
+                winner, timestamp: Date.now()
             });
 
-            // Save rematch record
-            saveRematchRecord(gameType, teams.map(t => t.name));
+            if (result.saveWinLoss) {
+                teams.forEach((t, i) => updatePlayerWins(t.name, gameType.toLowerCase().replace(/\s+/g,''), i === 0));
+            }
 
-            closeFliperEndGameModal();
-            await customAlert(`${gameType} saved!\n\nWinner: ${winner}`, '✅ Game Saved');
+            saveRematchRecord(gameType, teams.map(t => t.name));
+            await customAlert(`${gameType} saved!\n\nWinner: ${winner}`, '\u2705 Game Saved');
         }
 
+        function closeFliperEndGameModal() {
+            // Legacy — modal now handled by resolveGameCompletion
+            const injected = document.getElementById('flipperGameNameSection');
+            if (injected) injected.remove();
+        }
+
+
+        // ── Score Flipper long-press to edit ───────────────────────────────────────
+        let _flipperPressTimer = null;
+        let _flipperLongPressed = false;
+        const FLIPPER_LONG_PRESS_MS = 500;
+
+        function flipperPointerDown(e, team) {
+            _flipperLongPressed = false;
+            _flipperPressTimer = setTimeout(() => {
+                _flipperLongPressed = true;
+                flipperOpenEdit(team);
+            }, FLIPPER_LONG_PRESS_MS);
+        }
+
+        function flipperPointerUp(e, team) {
+            clearTimeout(_flipperPressTimer);
+            if (!_flipperLongPressed) {
+                flipperIncrement(team);
+            }
+            _flipperLongPressed = false;
+        }
+
+        function flipperPointerCancel() {
+            clearTimeout(_flipperPressTimer);
+            _flipperLongPressed = false;
+        }
+
+        function flipperOpenEdit(team) {
+            const card = document.getElementById('flipperCard-' + team);
+            if (!card || card.querySelector('.flipper-card-edit')) return;
+
+            // Light haptic if available
+            if (navigator.vibrate) navigator.vibrate(40);
+
+            const overlay = document.createElement('div');
+            overlay.className = 'flipper-card-edit';
+
+            const hint = document.createElement('div');
+            hint.className = 'flipper-edit-hint';
+            hint.textContent = 'Edit Score';
+
+            const input = document.createElement('input');
+            input.className = 'flipper-edit-input';
+            input.type = 'number';
+            input.inputMode = 'numeric';
+            input.pattern = '[0-9]*';
+            input.value = flipperScores[team] || 0;
+            input.min = 0;
+
+            overlay.appendChild(hint);
+            overlay.appendChild(input);
+            card.appendChild(overlay);
+
+            // Select all on focus
+            setTimeout(() => {
+                input.focus();
+                input.select();
+            }, 50);
+
+            const commit = () => {
+                const val = parseInt(input.value, 10);
+                if (!isNaN(val) && val >= 0) {
+                    flipperHistory.push({ ...flipperScores });
+                    if (flipperHistory.length > 50) flipperHistory.shift();
+                    flipperScores[team] = val;
+                    flipperUpdateDisplay();
+                }
+                overlay.remove();
+            };
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); commit(); }
+                if (e.key === 'Escape') overlay.remove();
+            });
+
+            input.addEventListener('blur', commit);
+
+            // Prevent the overlay tap from bubbling to the card
+            overlay.addEventListener('pointerdown', (e) => e.stopPropagation());
+        }
+        // ── End Score Flipper long-press ────────────────────────────────────────────
         // ── END SCORE FLIPPER ──────────────────────────────────────────────────────
 
         function openCustomGameTrackingModal() {
@@ -21646,17 +21763,7 @@
         </div>
     </div>
     <!-- Score Flipper End Game Modal -->
-    <div id="flipperEndGameModal">
-        <div id="flipperEndGameInner">
-            <div class="final-scores-title">Game Over</div>
-            <div class="flipper-eg-scores" id="flipperEgScores"></div>
-            <input class="flipper-eg-input" id="flipperEgGameName" type="text" placeholder="Game name (e.g. Pool, Soccer, Hockey…)" maxlength="40">
-            <div class="flipper-eg-buttons">
-                <button class="flipper-eg-btn flipper-eg-btn-cancel" onclick="closeFliperEndGameModal()">Cancel</button>
-                <button class="flipper-eg-btn flipper-eg-btn-save" onclick="flipperSaveGame()">Save Game</button>
-            </div>
-        </div>
-    </div>
+    <!-- Flipper End Game Modal: uses shared #gameCompletionModal via showGameCompletionModal() -->
 
     <!-- Rematch Modal -->
     <div id="rematchModal" onclick="closeRematchModal()">
