@@ -7505,6 +7505,10 @@
                 const result = await showGameCompletionModal(gameType, message, winnerData, finalScores);
                 
                 if (result.action === 'save') {
+                    // Always record in rematch history whenever the user taps Save
+                    const playerNames = finalScores.map(ps => ps.name || ps.player?.name).filter(Boolean);
+                    saveRematchRecord(gameType, playerNames);
+
                     // Handle saving wins/losses
                     if (result.saveWinLoss) {
                         finalScores.forEach((playerScore, index) => {
@@ -7516,9 +7520,6 @@
                                 updatePlayerWins(playerName, gameType, isWinner);
                             }
                         });
-                        // Always record this game in rematch history when wins are saved
-                        const playerNames = finalScores.map(ps => ps.name || ps.player?.name).filter(Boolean);
-                        saveRematchRecord(gameType, playerNames);
                     }
                     
                     // Handle saving full scorecard (to be implemented per game type)
@@ -9627,6 +9628,9 @@
                 const result = await showGolfScorecardSaveModal(message);
                 
                 if (result.action === 'save') {
+                    // Always record in rematch history whenever the user taps Save
+                    saveRematchRecord(currentGameType, players.map(p => p.name));
+
                     // Track wins if checkbox checked (only for golf since other games track automatically)
                     if (result.saveWinLoss) {
                         trackGameResults(currentGameType, playerScores, winners);
