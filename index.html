@@ -7516,6 +7516,9 @@
                                 updatePlayerWins(playerName, gameType, isWinner);
                             }
                         });
+                        // Always record this game in rematch history when wins are saved
+                        const playerNames = finalScores.map(ps => ps.name || ps.player?.name).filter(Boolean);
+                        saveRematchRecord(gameType, playerNames);
                     }
                     
                     // Handle saving full scorecard (to be implemented per game type)
@@ -9714,6 +9717,9 @@
             
             // Save
             localStorage.setItem('scorekeeper_golf_scorecards', JSON.stringify(savedScorecards));
+
+            // Record in rematch history
+            saveRematchRecord('golf', players.map(p => p.name));
             
             await customAlert(`Scorecard saved successfully to the Options Menu!\n\nCourse: ${scorecard.course}\nDate: ${dateStr}\nWinner: ${scorecard.finalScores[0].name} (${scorecard.finalScores[0].total})`, '💾 Scorecard saved');
             console.log('Saved scorecard:', scorecard);
@@ -18487,6 +18493,18 @@
                 const records = JSON.parse(localStorage.getItem('scorekeeper_rematch_history') || '[]');
                 const sorted = [...playerNames].sort((a, b) => a.localeCompare(b));
                 const key = gameType + '|' + sorted.join('|');
+
+                // If user previously deleted this combo, un-delete it now that they
+                // have played the game again — they clearly want it back
+                try {
+                    const deletedKeys = JSON.parse(localStorage.getItem('scorekeeper_rematch_deleted') || '[]');
+                    const idx = deletedKeys.indexOf(key);
+                    if (idx !== -1) {
+                        deletedKeys.splice(idx, 1);
+                        localStorage.setItem('scorekeeper_rematch_deleted', JSON.stringify(deletedKeys));
+                    }
+                } catch(e2) {}
+
                 // Remove any existing entry with same key so we can re-insert at front
                 const filtered = records.filter(r => r.key !== key);
                 filtered.unshift({
@@ -18518,13 +18536,15 @@
         // Gather all scorecards across every known game type, deduplicate by
         // (gameType + sorted player list), keeping only the most-recent entry.
         function getRematchCandidates() {
-            // We need per-session player groups, NOT aggregate wins-tracker data.
-            // Sources: rematch_history (written on every game end going forward)
-            // + saved scorecards (for existing history).
-            // Each unique (gameType + sorted player combo) keeps only the most recent entry.
-            const seen = new Map(); // key -> best entry
+            // Load the set of keys the user has explicitly deleted
+            let deletedKeys = [];
+            try {
+                deletedKeys = JSON.parse(localStorage.getItem('scorekeeper_rematch_deleted') || '[]');
+            } catch(e) {}
 
+            const seen = new Map(); // key -> best entry
             const addEntry = (entry) => {
+                if (deletedKeys.includes(entry.key)) return; // respect deletions
                 const existing = seen.get(entry.key);
                 if (!existing || entry.timestamp > existing.timestamp) {
                     seen.set(entry.key, entry);
@@ -18542,7 +18562,7 @@
                 });
             } catch(e) {}
 
-            // Source 2: saved scorecards (each scorecard = one real game session with exact players)
+            // Source 2: saved scorecards (each = one real game session with exact players)
             try {
                 const knownTypes = Object.keys(GAME_DISPLAY_NAMES);
                 knownTypes.forEach(gt => {
@@ -18554,6 +18574,20 @@
                         const ts = sc.timestamp ? new Date(sc.timestamp).getTime() : 0;
                         addEntry({ key, gameType: gt, players: sc.players, date: sc.date || '', timestamp: ts });
                     });
+                });
+            } catch(e) {}
+
+            // Source 3: manually-entered custom game records
+            try {
+                const customGames = JSON.parse(localStorage.getItem('scorekeeper_custom_games') || '[]');
+                customGames.forEach(cg => {
+                    if (!cg.players || cg.players.length === 0 || !cg.gameType) return;
+                    const playerNames = cg.players.map(p => typeof p === 'string' ? p : p.name).filter(Boolean);
+                    if (playerNames.length === 0) return;
+                    const sorted = [...playerNames].sort((a, b) => a.localeCompare(b));
+                    const key = cg.gameType + '|' + sorted.join('|');
+                    const ts = cg.timestamp ? (typeof cg.timestamp === 'number' ? cg.timestamp : new Date(cg.timestamp).getTime()) : 0;
+                    addEntry({ key, gameType: cg.gameType, players: playerNames, date: cg.date || '', timestamp: ts });
                 });
             } catch(e) {}
 
@@ -18599,14 +18633,22 @@
 
             closeRematchModal();
 
-            // 1. Set game type (must happen before clearing players — changeGameType
-            //    returns early if players.length === 0 which is fine at this point)
+            // Reset state flags so we arrive at a clean home-screen state
+            isDoneAdding = false;
+            players.length = 0;
+            gameInProgress = false;
+            document.body.classList.remove('grid-mode');
+
+            // Ensure the add-player section is visible
+            const addPlayerSection = document.getElementById('addPlayerSection');
+            if (addPlayerSection) addPlayerSection.style.display = 'flex';
+
+            // 1. Set game type — now safe because players.length === 0 and isDoneAdding === false
             selectGameType(c.gameType);
 
-            // 2. Rebuild the player inputs container from scratch with exactly the
-            //    right number of fields — one per player, one per row.
+            // 2. Rebuild the player inputs container from scratch — one input per player
             const container = document.getElementById('playerInputsContainer');
-            container.innerHTML = ''; // clear existing rows
+            container.innerHTML = '';
             c.players.forEach((name, i) => {
                 const row = document.createElement('div');
                 row.className = 'player-inputs-row';
@@ -18619,20 +18661,37 @@
                 container.appendChild(row);
             });
 
-            // 3. Clear the players array so doneAdding rebuilds it fresh from the inputs
-            players.length = 0;
-
-            // 4. Short delay so changeGameType layout work finishes, then launch
-            setTimeout(() => { doneAdding(); }, 50);
+            // 3. Short delay so changeGameType layout settles, then launch
+            setTimeout(() => { doneAdding(); }, 100);
         }
 
         function deleteRematchItem(idx) {
-            // We can't delete from the deduped in-memory list without deleting real scorecards,
-            // so just re-render the list with that item removed visually (until page reload).
             const modal = document.getElementById('rematchModal');
             const candidates = modal._candidates || [];
-            candidates.splice(idx, 1);
+            const deleted = candidates.splice(idx, 1)[0];
             modal._candidates = candidates;
+
+            // Persist the deletion to localStorage so it doesn't reappear
+            if (deleted && deleted.key) {
+                try {
+                    const records = JSON.parse(localStorage.getItem('scorekeeper_rematch_history') || '[]');
+                    const filtered = records.filter(r => {
+                        const sorted = [...(r.players || [])].sort((a,b) => a.localeCompare(b));
+                        const key = r.gameType + '|' + sorted.join('|');
+                        return key !== deleted.key;
+                    });
+                    localStorage.setItem('scorekeeper_rematch_history', JSON.stringify(filtered));
+                } catch(e) {}
+
+                // Also track deleted keys so scorecard-sourced entries stay gone
+                try {
+                    const deletedKeys = JSON.parse(localStorage.getItem('scorekeeper_rematch_deleted') || '[]');
+                    if (!deletedKeys.includes(deleted.key)) {
+                        deletedKeys.push(deleted.key);
+                        localStorage.setItem('scorekeeper_rematch_deleted', JSON.stringify(deletedKeys));
+                    }
+                } catch(e) {}
+            }
 
             // Re-render
             const list = document.getElementById('rematchList');
@@ -19496,6 +19555,9 @@
             });
             localStorage.setItem('scorekeeper_wins', JSON.stringify(winsData));
             
+            // Record in rematch history
+            saveRematchRecord(gameType, players.map(p => p.name));
+
             // Show success message and close modal
             await customAlert(`${gameType} game saved successfully!\n\nWinner: ${winner}`, '✅ Game Saved');
             closeCustomGameTrackingModal();
