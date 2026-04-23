@@ -6058,6 +6058,10 @@
             background: linear-gradient(160deg, #e87c1a, #c45f00);
             border: 3px solid rgba(255,255,255,0.18);
         }
+        /* Cards wrapper — column in portrait, used in 4-player landscape */
+        .flipper-cards-wrapper {
+            display: contents; /* transparent in normal flow */
+        }
         /* Second row hidden until 4 players */
         #flipperRow2 { display: none; width: 100%; }
         #flipperRow2.active { display: flex; }
@@ -6251,25 +6255,37 @@
             }
             .flipper-divider { padding-bottom: 0; align-self: center; }
 
-            /* 4-player: two rows, each takes roughly half the height */
+            /* 4-player: two card rows stack vertically on the left,
+               controls column sits on the right in normal flow */
             #scoreFlipper.four-player {
-                flex-wrap: wrap;
-                align-content: stretch;
+                flex-wrap: nowrap;
+                flex-direction: row;
+                align-items: stretch;
+            }
+            /* Wrapper for the two card rows */
+            #scoreFlipper.four-player .flipper-cards-wrapper {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                gap: 6px;
+                min-width: 0;
             }
             #scoreFlipper.four-player .flipper-teams,
             #scoreFlipper.four-player #flipperRow2 {
-                height: calc((100vh - 66px) / 2);
-                height: calc((100dvh - 66px) / 2);
+                height: calc((100vh - 74px) / 2);
+                height: calc((100dvh - 74px) / 2);
                 flex: none;
-                width: calc(100% - 96px);
+                width: 100%;
             }
             #scoreFlipper.four-player .flipper-card { height: 100%; }
             #scoreFlipper.four-player .flipper-score { font-size: clamp(2rem, 9vh, 5rem); }
             #scoreFlipper.four-player .flipper-controls {
-                position: absolute;
-                right: 8px;
-                top: 50%;
-                transform: translateY(-50%);
+                position: static;
+                transform: none;
+                flex-direction: column;
+                align-self: center;
+                flex-shrink: 0;
+                width: 80px;
             }
         }
 
@@ -6312,15 +6328,35 @@
             .flipper-divider { padding-bottom: 0; font-size: 2.5rem; align-self: center; }
 
             /* 4-player iPad landscape */
+            #scoreFlipper.four-player {
+                flex-wrap: nowrap;
+                flex-direction: row;
+                align-items: stretch;
+            }
+            #scoreFlipper.four-player .flipper-cards-wrapper {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                gap: 8px;
+                min-width: 0;
+            }
             #scoreFlipper.four-player .flipper-teams,
             #scoreFlipper.four-player #flipperRow2 {
-                height: calc((100vh - 80px) / 2);
-                height: calc((100dvh - 80px) / 2);
+                height: calc((100vh - 82px) / 2);
+                height: calc((100dvh - 82px) / 2);
                 flex: none;
-                width: calc(100% - 110px);
+                width: 100%;
             }
             #scoreFlipper.four-player .flipper-card { height: 100%; }
             #scoreFlipper.four-player .flipper-score { font-size: clamp(3rem, 11vh, 7rem); }
+            #scoreFlipper.four-player .flipper-controls {
+                position: static;
+                transform: none;
+                flex-direction: column;
+                align-self: center;
+                flex-shrink: 0;
+                width: 100px;
+            }
         }
         .flipper-btn-endgame {
             background: linear-gradient(135deg, #d4af37, #f0c940);
@@ -6716,6 +6752,7 @@
 
             <!-- Score Flipper -->
             <div id="scoreFlipper">
+                <div class="flipper-cards-wrapper">
                 <div class="flipper-teams">
                     <div class="flipper-team">
                         <div class="flipper-card flipper-card-red" id="flipperCard-red" onpointerdown="flipperPointerDown(event,'red')" onpointerup="flipperPointerUp(event,'red')" onpointerleave="flipperPointerCancel()" onpointercancel="flipperPointerCancel()">
@@ -6759,6 +6796,7 @@
                         </div>
                     </div>
                 </div>
+                </div><!-- /.flipper-cards-wrapper -->
 
                 <div class="flipper-controls">
                     <button class="flipper-btn flipper-btn-home" onclick="goHome()">Home</button>
