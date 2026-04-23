@@ -18672,6 +18672,12 @@
 
             closeRematchModal();
 
+            // Custom game types (not in GAME_DISPLAY_NAMES) open their Statistics modal
+            if (!GAME_DISPLAY_NAMES[c.gameType]) {
+                openCustomGameStatistics(c.gameType);
+                return;
+            }
+
             // Reset state flags so we arrive at a clean home-screen state
             isDoneAdding = false;
             players.length = 0;
