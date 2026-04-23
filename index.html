@@ -5970,6 +5970,389 @@
         body[data-theme="ios-dark"] .chess-player-time { color: #FFD60A; }
         body[data-theme="ios-dark"] .chess-player-block.active-player .chess-player-time { color: #FFD60A; }
 
+
+        /* ── SCORE FLIPPER ─────────────────────────────────────────────────────── */
+        #scoreFlipper {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px 8px 24px;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+        #scoreFlipper.active { display: flex; }
+
+        .flipper-teams {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .flipper-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .flipper-team-label {
+            font-family: Outfit, sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+        }
+
+        body[data-theme="ios"] .flipper-team-label,
+        body[data-theme="stainless"] .flipper-team-label { color: #1a1a2e; }
+
+        .flipper-card {
+            width: 100%;
+            aspect-ratio: 3/4;
+            max-height: 38vw;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+            transition: transform 0.08s ease, box-shadow 0.15s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+            overflow: visible;
+        }
+        .flipper-card:active { transform: scale(0.96); }
+
+        .flipper-card-red {
+            background: linear-gradient(160deg, #e8352a, #c0201a);
+            border: 3px solid rgba(255,255,255,0.18);
+        }
+        .flipper-card-blue {
+            background: linear-gradient(160deg, #1a6fd8, #1254b0);
+            border: 3px solid rgba(255,255,255,0.18);
+        }
+        .flipper-card-green {
+            background: linear-gradient(160deg, #22a84a, #188038);
+            border: 3px solid rgba(255,255,255,0.18);
+        }
+        .flipper-card-orange {
+            background: linear-gradient(160deg, #e87c1a, #c45f00);
+            border: 3px solid rgba(255,255,255,0.18);
+        }
+        /* Second row hidden until 4 players */
+        #flipperRow2 { display: none; width: 100%; }
+        #flipperRow2.active { display: flex; }
+        /* 4-player: cards slightly smaller in portrait */
+        #scoreFlipper.four-player .flipper-card {
+            max-height: 28vw;
+        }
+
+        .flipper-score {
+            font-family: Outfit, sans-serif;
+            font-weight: 900;
+            font-size: clamp(3.5rem, 14vw, 8rem);
+            color: #ffffff;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.4);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .flipper-ring {
+            position: absolute;
+            top: -14px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 12px;
+            pointer-events: none;
+        }
+        .flipper-ring span {
+            display: block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #888;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 1px 2px rgba(255,255,255,0.3);
+        }
+
+        .flipper-divider {
+            font-family: Outfit, sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: var(--text-dim, #a8b5d1);
+            align-self: center;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .flipper-controls {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .flipper-btn {
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+        .flipper-btn:active { transform: scale(0.95); }
+
+        /* Neon (default) */
+        .flipper-btn-undo {
+            background: linear-gradient(135deg, var(--neon-blue), #00c4cc);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0,245,255,0.4);
+        }
+        .flipper-btn-reset {
+            background: linear-gradient(135deg, #ff6b35, #ff9a3c);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255,107,53,0.4);
+        }
+
+        /* Light (ios) */
+        body[data-theme="ios"] .flipper-btn-undo {
+            background: #007AFF;
+            color: #FFFFFF;
+            -webkit-text-fill-color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(0,122,255,0.35);
+        }
+        body[data-theme="ios"] .flipper-btn-reset {
+            background: #FF3B30;
+            color: #FFFFFF;
+            -webkit-text-fill-color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(255,59,48,0.35);
+        }
+
+        /* Dark (ios-dark) */
+        body[data-theme="ios-dark"] .flipper-btn-undo {
+            background: #0A84FF;
+            color: #FFFFFF;
+            -webkit-text-fill-color: #FFFFFF;
+            box-shadow: none;
+        }
+        body[data-theme="ios-dark"] .flipper-btn-reset {
+            background: #FF453A;
+            color: #FFFFFF;
+            -webkit-text-fill-color: #FFFFFF;
+            box-shadow: none;
+        }
+
+        /* Grey (stainless) */
+        body[data-theme="stainless"] .flipper-btn-undo,
+        body[data-theme="stainless"] .flipper-btn-reset,
+        body[data-theme="stainless"] .flipper-btn-endgame {
+            background: radial-gradient(circle at 30% 30%, #e2e8f0, #b0b8c0);
+            color: #2d3748;
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow:
+                inset 0 1px 2px rgba(255,255,255,0.8),
+                inset 0 -1px 2px rgba(0,0,0,0.25),
+                0 2px 4px rgba(0,0,0,0.3),
+                0 1px 0 rgba(255,255,255,0.5);
+        }
+        body[data-theme="stainless"] .flipper-btn-undo:hover,
+        body[data-theme="stainless"] .flipper-btn-reset:hover,
+        body[data-theme="stainless"] .flipper-btn-endgame:hover {
+            background: radial-gradient(circle at 30% 30%, #f7fafc, #cbd5e0);
+            box-shadow:
+                inset 0 1px 2px rgba(255,255,255,0.9),
+                inset 0 -1px 2px rgba(0,0,0,0.2),
+                0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            #scoreFlipper {
+                flex-direction: row;
+                padding: 6px 8px 8px;
+                gap: 8px;
+                align-items: center;
+            }
+            .flipper-teams {
+                gap: 6px;
+                flex: 1;
+                height: 76vh;
+            }
+            .flipper-card {
+                max-height: none;
+                aspect-ratio: unset;
+                height: 76vh;
+                flex: 1;
+            }
+            .flipper-score { font-size: clamp(4rem, 18vh, 10rem); }
+            .flipper-controls {
+                flex-direction: column;
+                align-self: center;
+                gap: 8px;
+                flex-shrink: 0;
+            }
+            .flipper-divider { padding-bottom: 0; }
+            /* 4-player landscape: two rows stacked, cards shorter */
+            #scoreFlipper.four-player {
+                flex-wrap: wrap;
+            }
+            #scoreFlipper.four-player .flipper-teams,
+            #scoreFlipper.four-player #flipperRow2 {
+                height: 36vh;
+                flex: none;
+                width: calc(100% - 90px);
+            }
+            #scoreFlipper.four-player .flipper-card {
+                height: 36vh;
+            }
+            #scoreFlipper.four-player .flipper-score {
+                font-size: clamp(2.5rem, 10vh, 6rem);
+            }
+        }
+        .flipper-btn-endgame {
+            background: linear-gradient(135deg, #d4af37, #f0c940);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+        }
+        body[data-theme="ios"] .flipper-btn-endgame {
+            background: #FF9500;
+            color: #FFFFFF;
+            -webkit-text-fill-color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(255,149,0,0.35);
+        }
+        body[data-theme="ios-dark"] .flipper-btn-endgame {
+            background: #FF9F0A;
+            color: #000;
+            -webkit-text-fill-color: #000;
+            box-shadow: none;
+        }
+
+
+        /* Score Flipper End Game Modal */
+        #flipperEndGameModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #flipperEndGameModal.show { display: flex; }
+        #flipperEndGameInner {
+            background: var(--card-bg, #0d1b3e);
+            border-radius: 20px;
+            padding: 24px 20px;
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        body[data-theme="ios"] #flipperEndGameInner,
+        body[data-theme="stainless"] #flipperEndGameInner { background: #f2f2f7; }
+        body[data-theme="ios-dark"] #flipperEndGameInner { background: #1c1c1e; }
+        #flipperEndGameInner .final-scores-title { margin-bottom: 0; }
+        .flipper-eg-scores {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .flipper-eg-score-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+        }
+        .flipper-eg-score-row.winner-row {
+            box-shadow: 0 0 0 2px #d4af37;
+        }
+        .flipper-eg-winner-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            background: #d4af37;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .flipper-eg-input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            font-family: Outfit, sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            box-sizing: border-box;
+        }
+        body[data-theme="ios"] .flipper-eg-input,
+        body[data-theme="stainless"] .flipper-eg-input {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.15);
+            color: #000;
+        }
+        body[data-theme="ios-dark"] .flipper-eg-input {
+            background: #2c2c2e;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #fff;
+        }
+        .flipper-eg-input::placeholder { opacity: 0.5; }
+        .flipper-eg-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .flipper-eg-btn {
+            flex: 1;
+            padding: 11px;
+            border-radius: 12px;
+            border: none;
+            font-family: Outfit, sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        .flipper-eg-btn-cancel {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        body[data-theme="ios"] .flipper-eg-btn-cancel,
+        body[data-theme="stainless"] .flipper-eg-btn-cancel {
+            background: rgba(0,0,0,0.07);
+            color: #333;
+            border: 1px solid rgba(0,0,0,0.15);
+        }
+        .flipper-eg-btn-save {
+            background: linear-gradient(135deg, #d4af37, #f0c940);
+            color: #000;
+        }
+        body[data-theme="ios"] .flipper-eg-btn-save { background: #FF9500; color: #fff; -webkit-text-fill-color: #fff; }
+        body[data-theme="ios-dark"] .flipper-eg-btn-save { background: #FF9F0A; color: #000; -webkit-text-fill-color: #000; }
+        /* ── END SCORE FLIPPER ─────────────────────────────────────────────────── */
     </style>
 </head>
 <body data-theme="stainless">
@@ -6006,7 +6389,7 @@
                             title="Switch game type">🎯</button>
                 </div>
                 <div>
-                    <h1 style="margin: 0;">ScoreKeeper</h1>
+                    <h1 style="margin: 0; cursor: pointer;" onclick="goHome()" title="Return to home screen">ScoreKeeper</h1>
                     <div class="subtitle" style="margin-top: -5px;">Track • Compete • Win</div>
                 </div>
             </div>
@@ -6036,6 +6419,7 @@
                     <div class="dropdown-list-item-game" data-value="scrabble" onclick="selectGameType('scrabble')">Scrabble</div>
                     <div class="dropdown-list-item-game" data-value="yahtzee" onclick="selectGameType('yahtzee')">Yahtzee</div>
                     <div class="dropdown-list-item-game" data-value="custom" onclick="openCustomGameTrackingModal()" style="border-top: 2px solid var(--neon-blue); margin-top: 8px; padding-top: 12px;">Custom Game Tracking</div>
+                    <div class="dropdown-list-item-game" data-value="scoreflipper" onclick="openScoreFlipper()" style="border-top: 1px solid rgba(0,245,255,0.2); margin-top: 4px; padding-top: 10px;">🎯 Score Flipper</div>
                 </div>
             </div>
             <!-- Hidden select for backwards compatibility -->
@@ -6300,6 +6684,60 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Score Flipper -->
+            <div id="scoreFlipper">
+                <div class="flipper-teams">
+                    <div class="flipper-team">
+                        <div class="flipper-team-label" id="flipperRedLabel">Red</div>
+                        <div class="flipper-card flipper-card-red" onclick="flipperIncrement('red')" ontouchstart="">
+                            <div class="flipper-ring">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="flipper-score" id="flipperRedScore">0</div>
+                        </div>
+                    </div>
+                    <div class="flipper-divider">:</div>
+                    <div class="flipper-team">
+                        <div class="flipper-team-label" id="flipperBlueLabel">Blue</div>
+                        <div class="flipper-card flipper-card-blue" onclick="flipperIncrement('blue')" ontouchstart="">
+                            <div class="flipper-ring">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="flipper-score" id="flipperBlueScore">0</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Second row: Green & Orange (shown only with 4 players) -->
+                <div class="flipper-teams" id="flipperRow2">
+                    <div class="flipper-team">
+                        <div class="flipper-team-label" id="flipperGreenLabel">Green</div>
+                        <div class="flipper-card flipper-card-green" onclick="flipperIncrement('green')" ontouchstart="">
+                            <div class="flipper-ring">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="flipper-score" id="flipperGreenScore">0</div>
+                        </div>
+                    </div>
+                    <div class="flipper-divider">:</div>
+                    <div class="flipper-team">
+                        <div class="flipper-team-label" id="flipperOrangeLabel">Orange</div>
+                        <div class="flipper-card flipper-card-orange" onclick="flipperIncrement('orange')" ontouchstart="">
+                            <div class="flipper-ring">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="flipper-score" id="flipperOrangeScore">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flipper-controls">
+                    <button class="flipper-btn flipper-btn-undo" onclick="flipperUndo()">↩ Undo</button>
+                    <button class="flipper-btn flipper-btn-reset" onclick="flipperReset()">Reset Scores</button>
+                    <button class="flipper-btn flipper-btn-endgame" onclick="flipperEndGame()">End Game</button>
+                </div>
+            </div>
+
             <div id="winnerModal" class="modal">
                 <div class="modal-content">
                     <h2 id="winnerText">Winner!</h2>
@@ -9030,6 +9468,42 @@
                 }
             }
         }
+        function goHome() {
+            // Reset all state and return to the home/setup screen
+            hideAllGameModes();
+            players.length = 0;
+            isDoneAdding = false;
+            gameInProgress = false;
+            currentGameType = 'general';
+            document.body.classList.remove('grid-mode');
+
+            // Reset the game type dropdown label
+            const selectedSpan = document.getElementById('selectedGameType');
+            if (selectedSpan) selectedSpan.textContent = 'Select a Game';
+
+            // Show add-player section and standard mode
+            const addPlayerSection = document.getElementById('addPlayerSection');
+            const standardMode = document.getElementById('standardMode');
+            if (addPlayerSection) addPlayerSection.style.display = 'flex';
+            if (standardMode) standardMode.style.display = 'block';
+
+            // Rebuild default player inputs (2 rows of 2, matching the initial home screen)
+            const container = document.getElementById('playerInputsContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div class="player-inputs-row">
+                        <input type="text" id="playerNameInput1" placeholder="Player 1" maxlength="20">
+                        <input type="text" id="playerNameInput2" placeholder="Player 2" maxlength="20">
+                    </div>
+                    <div class="player-inputs-row">
+                        <input type="text" id="playerNameInput3" placeholder="Player 3" maxlength="20">
+                        <input type="text" id="playerNameInput4" placeholder="Player 4" maxlength="20">
+                    </div>`;
+            }
+
+            updateStandardModeDisplay();
+        }
+
         function startNewGame() {
             console.log('startNewGame called');
             
@@ -12671,8 +13145,9 @@
         }
         
         function toggleTargetDropdown() {
-            // If not in grid mode, just use the normal game type dropdown
-            if (!document.body.classList.contains('grid-mode')) {
+            // Score Flipper mode: show the floating picker (no grid-mode class present)
+            // Regular home screen (no game active): use normal dropdown
+            if (!document.body.classList.contains('grid-mode') && currentGameType !== 'scoreflipper') {
                 toggleGameTypeDropdown();
                 return;
             }
@@ -12695,6 +13170,8 @@
                 { value: 'phase10',  label: 'Phase 10' },
                 { value: 'scrabble', label: 'Scrabble' },
                 { value: 'yahtzee',  label: 'Yahtzee' },
+                { value: 'custom',        label: 'Custom Game Tracking', separator: true },
+                { value: 'scoreflipper',  label: '🎯 Score Flipper' },
             ];
 
             picker = document.createElement('div');
@@ -12712,7 +13189,7 @@
                 overflow: hidden;
             `;
 
-            gameTypes.forEach(({ value, label }) => {
+            gameTypes.forEach(({ value, label, separator }) => {
                 const item = document.createElement('div');
                 const isActive = value === currentGameType;
                 item.textContent = label;
@@ -12726,12 +13203,19 @@
                     background: ${isActive ? 'rgba(0,245,255,0.1)' : 'transparent'};
                     border-left: ${isActive ? '3px solid var(--neon-blue, #00f5ff)' : '3px solid transparent'};
                     transition: background 0.15s ease;
+                    ${separator ? 'border-top: 1px solid rgba(0,245,255,0.2); margin-top: 4px; padding-top: 14px;' : ''}
                 `;
                 item.onmouseover = () => { if (!isActive) item.style.background = 'rgba(0,245,255,0.05)'; };
                 item.onmouseout  = () => { if (!isActive) item.style.background = 'transparent'; };
                 item.onclick = () => {
                     picker.remove();
-                    selectGameType(value);
+                    if (value === 'custom') {
+                        openCustomGameTrackingModal();
+                    } else if (value === 'scoreflipper') {
+                        openScoreFlipper();
+                    } else {
+                        selectGameType(value);
+                    }
                 };
                 picker.appendChild(item);
             });
@@ -15793,6 +16277,98 @@
             // Preprocess to fix common misrecognitions
             const transcript = preprocessTranscript(originalTranscript);
             
+            // ── Score Flipper voice commands ─────────────────────────────────────
+            if (currentGameType === 'scoreflipper') {
+                // Undo
+                if (transcript === 'undo' || transcript === 'undo that' || transcript === 'undo last' || transcript === 'take that back') {
+                    flipperUndo();
+                    showVoiceFeedback('Undo', '↩');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+                // Reset
+                if (transcript === 'reset' || transcript === 'reset scores' || transcript === 'new game') {
+                    flipperReset();
+                    showVoiceFeedback('Reset', '🔄');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+                // Match against either the default names (red/blue) OR the custom team names
+                const t = transcript.toLowerCase();
+                const redName  = flipperTeamNames.red.toLowerCase();
+                const blueName = flipperTeamNames.blue.toLowerCase();
+                const numWords = 'one|two|three|four|five|six|seven|eight|nine|ten';
+                const plusRegex = (name) => new RegExp('^' + name + '\\s+(?:plus\\s+)?(\\d+|' + numWords + ')$', 'i');
+
+                // "[name] plus [number]"
+                let m = t.match(plusRegex(redName)) || t.match(plusRegex('red'));
+                if (m) {
+                    const amount = convertWordToNumber(m[1]) || parseInt(m[1]) || 1;
+                    flipperIncrement('red', amount);
+                    showVoiceFeedback(`${flipperTeamNames.red} +${amount}`, '🔴');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+                m = t.match(plusRegex(blueName)) || t.match(plusRegex('blue'));
+                if (m) {
+                    const amount = convertWordToNumber(m[1]) || parseInt(m[1]) || 1;
+                    flipperIncrement('blue', amount);
+                    showVoiceFeedback(`${flipperTeamNames.blue} +${amount}`, '🔵');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+                // "[name] plus [number]" for green & orange
+                const greenName  = flipperTeamNames.green.toLowerCase();
+                const orangeName = flipperTeamNames.orange.toLowerCase();
+                m = t.match(plusRegex(greenName)) || t.match(plusRegex('green'));
+                if (m && flipperFourPlayer) {
+                    const amount = convertWordToNumber(m[1]) || parseInt(m[1]) || 1;
+                    flipperIncrement('green', amount);
+                    showVoiceFeedback(`${flipperTeamNames.green} +${amount}`, '🟢');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+                m = t.match(plusRegex(orangeName)) || t.match(plusRegex('orange'));
+                if (m && flipperFourPlayer) {
+                    const amount = convertWordToNumber(m[1]) || parseInt(m[1]) || 1;
+                    flipperIncrement('orange', amount);
+                    showVoiceFeedback(`${flipperTeamNames.orange} +${amount}`, '🟠');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+
+                // "[name]" alone or with goal/score/point = +1
+                const redAlone    = [redName,    'red',    redName    + ' goal', redName    + ' score', redName    + ' point', 'red goal',    'red score',    'red point'];
+                const blueAlone   = [blueName,   'blue',   blueName   + ' goal', blueName   + ' score', blueName   + ' point', 'blue goal',   'blue score',   'blue point'];
+                const greenAlone  = [greenName,  'green',  greenName  + ' goal', greenName  + ' score', greenName  + ' point', 'green goal',  'green score',  'green point'];
+                const orangeAlone = [orangeName, 'orange', orangeName + ' goal', orangeName + ' score', orangeName + ' point', 'orange goal', 'orange score', 'orange point'];
+                if (redAlone.includes(t)) {
+                    flipperIncrement('red', 1);
+                    showVoiceFeedback(`${flipperTeamNames.red} +1`, '🔴');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+                if (blueAlone.includes(t)) {
+                    flipperIncrement('blue', 1);
+                    showVoiceFeedback(`${flipperTeamNames.blue} +1`, '🔵');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+                if (greenAlone.includes(t) && flipperFourPlayer) {
+                    flipperIncrement('green', 1);
+                    showVoiceFeedback(`${flipperTeamNames.green} +1`, '🟢');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+                if (orangeAlone.includes(t) && flipperFourPlayer) {
+                    flipperIncrement('orange', 1);
+                    showVoiceFeedback(`${flipperTeamNames.orange} +1`, '🟠');
+                    setTimeout(hideVoiceFeedback, 1500);
+                    return;
+                }
+            }
+            // ── End Score Flipper voice commands ──────────────────────────────────
+
             // Check for multi-score input (e.g., "Guy 20 Jonathan 5 Jeff 75")
             // This needs to be checked early before single-score processing
             if (gameInProgress && players.length > 0) {
@@ -17914,6 +18490,10 @@
             if (phase10Buttons) phase10Buttons.style.display = 'none';
             if (genericGridButtons) genericGridButtons.style.display = 'none';
             if (genericGridGameButtons) genericGridGameButtons.style.display = 'none';
+
+            // Hide Score Flipper
+            const scoreFlipper = document.getElementById('scoreFlipper');
+            if (scoreFlipper) scoreFlipper.classList.remove('active');
         }
 
         function selectDartsPlayer(playerId) {
@@ -19396,6 +19976,200 @@
         
         // ===== CUSTOM GAME TRACKING FUNCTIONS =====
         
+        // ── SCORE FLIPPER ──────────────────────────────────────────────────────────
+        let flipperScores = { red: 0, blue: 0 };
+        let flipperHistory = []; // stack of {red, blue} snapshots for undo
+
+        let flipperTeamNames = { red: 'Red', blue: 'Blue', green: 'Green', orange: 'Orange' };
+        let flipperFourPlayer = false;
+
+        function openScoreFlipper() {
+            // Close the game type dropdown
+            const dropdown = document.getElementById('gameTypeDropdown');
+            const dropdownList = document.getElementById('gameTypeDropdownList');
+            if (dropdown) dropdown.classList.remove('open');
+            if (dropdownList) dropdownList.classList.remove('open');
+
+            // Update the dropdown label
+            const selectedSpan = document.getElementById('selectedGameType');
+            if (selectedSpan) selectedSpan.textContent = 'Score Flipper';
+
+            // Read player name inputs — use them instead of colour defaults if provided
+            const allInputs = Array.from(document.querySelectorAll('#playerInputsContainer input[type="text"]'))
+                .map(i => i.value.trim()).filter(Boolean);
+            flipperTeamNames.red    = allInputs[0] || 'Red';
+            flipperTeamNames.blue   = allInputs[1] || 'Blue';
+            flipperTeamNames.green  = allInputs[2] || 'Green';
+            flipperTeamNames.orange = allInputs[3] || 'Orange';
+            flipperFourPlayer = allInputs.length >= 3; // 3 or 4 names triggers second row
+
+            // Update card labels
+            document.getElementById('flipperRedLabel').textContent    = flipperTeamNames.red;
+            document.getElementById('flipperBlueLabel').textContent   = flipperTeamNames.blue;
+            document.getElementById('flipperGreenLabel').textContent  = flipperTeamNames.green;
+            document.getElementById('flipperOrangeLabel').textContent = flipperTeamNames.orange;
+
+            // Show/hide second row and apply 4-player class
+            const row2   = document.getElementById('flipperRow2');
+            const flipper = document.getElementById('scoreFlipper');
+            if (flipperFourPlayer) {
+                if (row2)    row2.classList.add('active');
+                if (flipper) flipper.classList.add('four-player');
+            } else {
+                if (row2)    row2.classList.remove('active');
+                if (flipper) flipper.classList.remove('four-player');
+            }
+
+            // Hide all other game modes
+            hideAllGameModes();
+
+            // Hide add-player section — Score Flipper doesn't use players
+            const addPlayerSection = document.getElementById('addPlayerSection');
+            if (addPlayerSection) addPlayerSection.style.display = 'none';
+
+            // Show Score Flipper
+            if (flipper) flipper.classList.add('active');
+
+            // Reset scores
+            flipperScores = { red: 0, blue: 0, green: 0, orange: 0 };
+            flipperHistory = [];
+            flipperUpdateDisplay();
+
+            currentGameType = 'scoreflipper';
+        }
+
+        function closeScoreFlipper() {
+            const flipper = document.getElementById('scoreFlipper');
+            if (flipper) flipper.classList.remove('active');
+        }
+
+        function flipperUpdateDisplay() {
+            const el = (id) => document.getElementById(id);
+            if (el('flipperRedScore'))    el('flipperRedScore').textContent    = flipperScores.red;
+            if (el('flipperBlueScore'))   el('flipperBlueScore').textContent   = flipperScores.blue;
+            if (el('flipperGreenScore'))  el('flipperGreenScore').textContent  = flipperScores.green  || 0;
+            if (el('flipperOrangeScore')) el('flipperOrangeScore').textContent = flipperScores.orange || 0;
+        }
+
+        function flipperIncrement(team, amount = 1) {
+            // Save snapshot for undo
+            flipperHistory.push({ ...flipperScores });
+            if (flipperHistory.length > 50) flipperHistory.shift();
+            if (flipperScores[team] === undefined) flipperScores[team] = 0;
+            flipperScores[team] = Math.max(0, flipperScores[team] + amount);
+            flipperUpdateDisplay();
+
+            // Animate the tapped card
+            const classMap = { red: 'flipper-card-red', blue: 'flipper-card-blue', green: 'flipper-card-green', orange: 'flipper-card-orange' };
+            const target = document.querySelector('.' + (classMap[team] || ''));
+            if (target) {
+                target.style.transform = 'scale(0.94)';
+                setTimeout(() => { target.style.transform = ''; }, 120);
+            }
+        }
+
+        function flipperUndo() {
+            if (flipperHistory.length === 0) return;
+            const prev = flipperHistory.pop();
+            flipperScores = { ...prev };
+            flipperUpdateDisplay();
+        }
+
+        function flipperReset() {
+            flipperHistory.push({ ...flipperScores });
+            flipperScores = { red: 0, blue: 0, green: 0, orange: 0 };
+            flipperUpdateDisplay();
+        }
+        function flipperEndGame() {
+            // Build the active teams list sorted by score descending
+            const teams = [
+                { key: 'red',    name: flipperTeamNames.red,    score: flipperScores.red,    color: '#e8352a' },
+                { key: 'blue',   name: flipperTeamNames.blue,   score: flipperScores.blue,   color: '#1a6fd8' },
+            ];
+            if (flipperFourPlayer) {
+                teams.push({ key: 'green',  name: flipperTeamNames.green,  score: flipperScores.green  || 0, color: '#22a84a' });
+                teams.push({ key: 'orange', name: flipperTeamNames.orange, score: flipperScores.orange || 0, color: '#e87c1a' });
+            }
+            teams.sort((a, b) => b.score - a.score);
+
+            const maxScore = teams[0].score;
+            const winners = teams.filter(t => t.score === maxScore);
+
+            // Render score rows
+            const scoresEl = document.getElementById('flipperEgScores');
+            scoresEl.innerHTML = teams.map(t => {
+                const isWinner = t.score === maxScore;
+                return `<div class="flipper-eg-score-row${isWinner ? ' winner-row' : ''}" style="background:${t.color};">
+                    <span>${escapeHtml(t.name)}</span>
+                    <span style="display:flex;align-items:center;gap:8px;">
+                        <strong style="font-size:1.3rem;">${t.score}</strong>
+                        ${isWinner ? '<span class="flipper-eg-winner-badge">🏆 Winner</span>' : ''}
+                    </span>
+                </div>`;
+            }).join('');
+
+            // Pre-fill game name from last used or blank
+            const nameInput = document.getElementById('flipperEgGameName');
+            nameInput.value = '';
+
+            document.getElementById('flipperEndGameModal').classList.add('show');
+            setTimeout(() => nameInput.focus(), 100);
+        }
+
+        function closeFliperEndGameModal() {
+            document.getElementById('flipperEndGameModal').classList.remove('show');
+        }
+
+        async function flipperSaveGame() {
+            const gameTypeRaw = document.getElementById('flipperEgGameName').value.trim();
+            if (!gameTypeRaw) {
+                document.getElementById('flipperEgGameName').focus();
+                document.getElementById('flipperEgGameName').style.borderColor = '#ff6b6b';
+                setTimeout(() => { document.getElementById('flipperEgGameName').style.borderColor = ''; }, 1500);
+                return;
+            }
+
+            const gameType = normalizeGameType ? normalizeGameType(gameTypeRaw) : gameTypeRaw;
+
+            // Build teams list sorted by score desc
+            const teams = [
+                { key: 'red',    name: flipperTeamNames.red,    score: flipperScores.red    || 0 },
+                { key: 'blue',   name: flipperTeamNames.blue,   score: flipperScores.blue   || 0 },
+            ];
+            if (flipperFourPlayer) {
+                teams.push({ key: 'green',  name: flipperTeamNames.green,  score: flipperScores.green  || 0 });
+                teams.push({ key: 'orange', name: flipperTeamNames.orange, score: flipperScores.orange || 0 });
+            }
+            teams.sort((a, b) => b.score - a.score);
+
+            const maxScore = teams[0].score;
+            const winner = teams[0].name;
+            const today = new Date().toISOString().split('T')[0];
+
+            const customGame = {
+                gameType: gameType,
+                date: today,
+                players: teams.map(t => ({ name: t.name, score: t.score })),
+                winner: winner,
+                timestamp: Date.now()
+            };
+
+            saveCustomGameRecord(customGame);
+
+            // Update wins tracking
+            teams.forEach(t => {
+                updatePlayerWins(t.name, gameType.toLowerCase().replace(/\s+/g, ''), t.name === winner);
+            });
+
+            // Save rematch record
+            saveRematchRecord(gameType, teams.map(t => t.name));
+
+            closeFliperEndGameModal();
+            await customAlert(`${gameType} saved!\n\nWinner: ${winner}`, '✅ Game Saved');
+        }
+
+        // ── END SCORE FLIPPER ──────────────────────────────────────────────────────
+
         function openCustomGameTrackingModal() {
             // Close main page game type dropdown
             const gameTypeDropdown = document.getElementById('gameTypeDropdown');
@@ -19696,16 +20470,25 @@
             gameTypes.forEach(gameType => {
                 const pluralGames = gameType.count === 1 ? 'game' : 'games';
                 
+                // Detect theme for correct text colours (WCAG compliant)
+                const theme = document.body.getAttribute('data-theme') || 'default';
+                const isLight = theme === 'ios' || theme === 'stainless';
+                const titleColor  = isLight ? '#1a1a2e' : '#ffffff';
+                const subColor    = isLight ? '#555555' : 'rgba(255,255,255,0.65)';
+                const arrowColor  = isLight ? '#555555' : 'rgba(255,255,255,0.75)';
+
+                const borderColor = isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.12)';
+
                 html += `
                     <div onclick="openCustomGameStatistics('${escapeHtml(gameType.name)}')" 
-                         style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 18px; border-left: 4px solid var(--neon-blue); cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: space-between; align-items: center;"
+                         style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 18px; border-left: 4px solid var(--neon-blue); border-top: 1px solid ${borderColor}; border-right: 1px solid ${borderColor}; border-bottom: 1px solid ${borderColor}; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: space-between; align-items: center;"
                          onmouseover="this.style.background='rgba(255,255,255,0.1)'"
                          onmouseout="this.style.background='rgba(255,255,255,0.05)'">
                         <div>
-                            <div style="font-weight: 700; color: #000000; font-size: 1.2rem; margin-bottom: 5px;">${escapeHtml(gameType.name)}</div>
-                            <div style="font-size: 0.85rem; color: #666666;">${gameType.count} ${pluralGames} tracked</div>
+                            <div style="font-weight: 700; color: ${titleColor}; font-size: 1.2rem; margin-bottom: 5px;">${escapeHtml(gameType.name)}</div>
+                            <div style="font-size: 0.85rem; color: ${subColor};">${gameType.count} ${pluralGames} tracked</div>
                         </div>
-                        <div style="color: #666666; font-size: 1.2rem;">▶</div>
+                        <div style="color: ${arrowColor}; font-size: 1.2rem;">▶</div>
                     </div>
                 `;
             });
@@ -20862,6 +21645,19 @@
             <button class="final-scores-ok-btn" onclick="closeFinalScoresModal()">OK</button>
         </div>
     </div>
+    <!-- Score Flipper End Game Modal -->
+    <div id="flipperEndGameModal">
+        <div id="flipperEndGameInner">
+            <div class="final-scores-title">Game Over</div>
+            <div class="flipper-eg-scores" id="flipperEgScores"></div>
+            <input class="flipper-eg-input" id="flipperEgGameName" type="text" placeholder="Game name (e.g. Pool, Soccer, Hockey…)" maxlength="40">
+            <div class="flipper-eg-buttons">
+                <button class="flipper-eg-btn flipper-eg-btn-cancel" onclick="closeFliperEndGameModal()">Cancel</button>
+                <button class="flipper-eg-btn flipper-eg-btn-save" onclick="flipperSaveGame()">Save Game</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Rematch Modal -->
     <div id="rematchModal" onclick="closeRematchModal()">
         <div id="rematchModalInner" onclick="event.stopPropagation()">
