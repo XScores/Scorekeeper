@@ -18488,34 +18488,60 @@
         // saveRematchRecord: called on every game completion (via trackGameResults
         // and saveGameScorecard). Stores a deduplicated list of recent game combos.
         function saveRematchRecord(gameType, playerNames) {
-            if (!gameType || !playerNames || playerNames.length === 0) return;
+            // Sanitise inputs
+            if (!gameType) return;
+            if (!Array.isArray(playerNames)) return;
+            const cleanNames = playerNames.map(n => (n || '').trim()).filter(Boolean);
+            if (cleanNames.length === 0) return;
+
+            console.log('💾 saveRematchRecord:', gameType, cleanNames);
+
             try {
-                const records = JSON.parse(localStorage.getItem('scorekeeper_rematch_history') || '[]');
-                const sorted = [...playerNames].sort((a, b) => a.localeCompare(b));
+                // Read existing history — guard against corrupt data
+                let records = [];
+                try {
+                    const raw = localStorage.getItem('scorekeeper_rematch_history');
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        if (Array.isArray(parsed)) records = parsed;
+                    }
+                } catch(e2) { records = []; }
+
+                const sorted = [...cleanNames].sort((a, b) => a.localeCompare(b));
                 const key = gameType + '|' + sorted.join('|');
 
-                // If user previously deleted this combo, un-delete it now that they
-                // have played the game again — they clearly want it back
+                // Un-delete this combo if the user plays it again
                 try {
-                    const deletedKeys = JSON.parse(localStorage.getItem('scorekeeper_rematch_deleted') || '[]');
-                    const idx = deletedKeys.indexOf(key);
-                    if (idx !== -1) {
-                        deletedKeys.splice(idx, 1);
-                        localStorage.setItem('scorekeeper_rematch_deleted', JSON.stringify(deletedKeys));
+                    const raw = localStorage.getItem('scorekeeper_rematch_deleted');
+                    if (raw) {
+                        const deletedKeys = JSON.parse(raw);
+                        if (Array.isArray(deletedKeys)) {
+                            const idx = deletedKeys.indexOf(key);
+                            if (idx !== -1) {
+                                deletedKeys.splice(idx, 1);
+                                localStorage.setItem('scorekeeper_rematch_deleted', JSON.stringify(deletedKeys));
+                            }
+                        }
                     }
                 } catch(e2) {}
 
-                // Remove any existing entry with same key so we can re-insert at front
-                const filtered = records.filter(r => r.key !== key);
+                // Remove existing entry for same combo, re-insert at front with fresh date
+                const filtered = records.filter(r => {
+                    if (!r || !r.gameType || !Array.isArray(r.players)) return false;
+                    const rSorted = [...r.players].sort((a, b) => a.localeCompare(b));
+                    const rKey = r.gameType + '|' + rSorted.join('|');
+                    return rKey !== key;
+                });
                 filtered.unshift({
-                    key: key,
-                    gameType: gameType,
-                    players: playerNames,
+                    key,
+                    gameType,
+                    players: cleanNames,
                     date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                     timestamp: new Date().toISOString()
                 });
-                // Keep max 100 entries
+
                 localStorage.setItem('scorekeeper_rematch_history', JSON.stringify(filtered.slice(0, 100)));
+                console.log('✅ Rematch history saved, total entries:', filtered.length);
             } catch(e) {
                 console.error('saveRematchRecord error:', e);
             }
@@ -18536,60 +18562,69 @@
         // Gather all scorecards across every known game type, deduplicate by
         // (gameType + sorted player list), keeping only the most-recent entry.
         function getRematchCandidates() {
-            // Load the set of keys the user has explicitly deleted
+            // Helper: compute canonical key from gameType + player list
+            const makeKey = (gameType, playerNames) =>
+                gameType + '|' + [...playerNames].sort((a, b) => a.localeCompare(b)).join('|');
+
+            // Load deleted keys — guard against corrupt data
             let deletedKeys = [];
             try {
-                deletedKeys = JSON.parse(localStorage.getItem('scorekeeper_rematch_deleted') || '[]');
+                const raw = localStorage.getItem('scorekeeper_rematch_deleted');
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed)) deletedKeys = parsed;
+                }
             } catch(e) {}
 
-            const seen = new Map(); // key -> best entry
-            const addEntry = (entry) => {
-                if (deletedKeys.includes(entry.key)) return; // respect deletions
-                const existing = seen.get(entry.key);
-                if (!existing || entry.timestamp > existing.timestamp) {
-                    seen.set(entry.key, entry);
+            const seen = new Map(); // canonical key -> best entry
+            const addEntry = (gameType, playerNames, date, timestamp) => {
+                if (!gameType || !playerNames || playerNames.length === 0) return;
+                const cleanNames = playerNames.map(n => (n || '').trim()).filter(Boolean);
+                if (cleanNames.length === 0) return;
+                const key = makeKey(gameType, cleanNames);
+                if (deletedKeys.includes(key)) return;
+                const existing = seen.get(key);
+                if (!existing || timestamp > existing.timestamp) {
+                    seen.set(key, { key, gameType, players: cleanNames, date: date || '', timestamp });
                 }
             };
 
             // Source 1: dedicated rematch history (written on every game completion)
             try {
                 const records = JSON.parse(localStorage.getItem('scorekeeper_rematch_history') || '[]');
-                records.forEach(r => {
-                    if (!r.gameType || !r.players || r.players.length === 0) return;
-                    const sorted = [...r.players].sort((a, b) => a.localeCompare(b));
-                    const key = r.gameType + '|' + sorted.join('|');
-                    addEntry({ key, gameType: r.gameType, players: r.players, date: r.date || '', timestamp: r.timestamp ? new Date(r.timestamp).getTime() : 0 });
-                });
-            } catch(e) {}
+                if (Array.isArray(records)) {
+                    records.forEach(r => {
+                        if (!r || !r.gameType || !Array.isArray(r.players)) return;
+                        const ts = r.timestamp ? new Date(r.timestamp).getTime() : 0;
+                        addEntry(r.gameType, r.players, r.date, isNaN(ts) ? 0 : ts);
+                    });
+                }
+            } catch(e) { console.error('Rematch Source 1 error:', e); }
 
             // Source 2: saved scorecards (each = one real game session with exact players)
             try {
-                const knownTypes = Object.keys(GAME_DISPLAY_NAMES);
-                knownTypes.forEach(gt => {
+                Object.keys(GAME_DISPLAY_NAMES).forEach(gt => {
                     const scorecards = window.loadGameScorecards(gt) || [];
                     scorecards.forEach(sc => {
-                        if (!sc.players || sc.players.length === 0) return;
-                        const sorted = [...sc.players].sort((a, b) => a.localeCompare(b));
-                        const key = gt + '|' + sorted.join('|');
+                        if (!sc || !Array.isArray(sc.players)) return;
                         const ts = sc.timestamp ? new Date(sc.timestamp).getTime() : 0;
-                        addEntry({ key, gameType: gt, players: sc.players, date: sc.date || '', timestamp: ts });
+                        addEntry(gt, sc.players, sc.date, isNaN(ts) ? 0 : ts);
                     });
                 });
-            } catch(e) {}
+            } catch(e) { console.error('Rematch Source 2 error:', e); }
 
             // Source 3: manually-entered custom game records
             try {
                 const customGames = JSON.parse(localStorage.getItem('scorekeeper_custom_games') || '[]');
-                customGames.forEach(cg => {
-                    if (!cg.players || cg.players.length === 0 || !cg.gameType) return;
-                    const playerNames = cg.players.map(p => typeof p === 'string' ? p : p.name).filter(Boolean);
-                    if (playerNames.length === 0) return;
-                    const sorted = [...playerNames].sort((a, b) => a.localeCompare(b));
-                    const key = cg.gameType + '|' + sorted.join('|');
-                    const ts = cg.timestamp ? (typeof cg.timestamp === 'number' ? cg.timestamp : new Date(cg.timestamp).getTime()) : 0;
-                    addEntry({ key, gameType: cg.gameType, players: playerNames, date: cg.date || '', timestamp: ts });
-                });
-            } catch(e) {}
+                if (Array.isArray(customGames)) {
+                    customGames.forEach(cg => {
+                        if (!cg || !cg.gameType || !Array.isArray(cg.players)) return;
+                        const playerNames = cg.players.map(p => typeof p === 'string' ? p : p.name).filter(Boolean);
+                        const ts = cg.timestamp ? (typeof cg.timestamp === 'number' ? cg.timestamp : new Date(cg.timestamp).getTime()) : 0;
+                        addEntry(cg.gameType, playerNames, cg.date, isNaN(ts) ? 0 : ts);
+                    });
+                }
+            } catch(e) { console.error('Rematch Source 3 error:', e); }
 
             return Array.from(seen.values()).sort((a, b) => b.timestamp - a.timestamp);
         }
@@ -20818,9 +20853,9 @@
     <!-- Rematch Modal -->
     <div id="rematchModal" onclick="closeRematchModal()">
         <div id="rematchModalInner" onclick="event.stopPropagation()">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div style="font-family: Outfit, sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--text-primary);">🔁 Rematch</div>
-                <button onclick="closeRematchModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-dim); padding: 0 4px; line-height: 1;">✕</button>
+            <div style="position: relative;">
+                <div class="final-scores-title">Rematch</div>
+                <button onclick="closeRematchModal()" style="position: absolute; top: -6px; right: 0; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-dim); padding: 0 4px; line-height: 1;">✕</button>
             </div>
             <div id="rematchList"></div>
         </div>
