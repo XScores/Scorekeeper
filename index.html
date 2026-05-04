@@ -22085,13 +22085,15 @@
             document.querySelectorAll('.die-scene.farkle-selectable').forEach(el => {
                 el.classList.remove('farkle-selectable');
                 el.onclick = null;
-                if (el._farkleHandler) {
+                if (el._farkleTouchStart) {
                     el.removeEventListener('touchstart', el._farkleTouchStart);
-                    el.removeEventListener('touchend', el._farkleHandler);
-                    el.removeEventListener('click', el._farkleHandler);
-                    el._farkleHandler = null;
                     el._farkleTouchStart = null;
                 }
+                if (el._farkleClickHandler) {
+                    el.removeEventListener('click', el._farkleClickHandler);
+                    el._farkleClickHandler = null;
+                }
+                el._farkleHandler = null;
             });
 
             totalBar.style.display = 'none';
@@ -22175,13 +22177,15 @@
                 el.classList.remove('farkle-selectable');
                 el.onclick = null;
                 // Remove any previous farkle touch listener
-                if (el._farkleHandler) {
+                if (el._farkleTouchStart) {
                     el.removeEventListener('touchstart', el._farkleTouchStart);
-                    el.removeEventListener('touchend', el._farkleHandler);
-                    el.removeEventListener('click', el._farkleHandler);
-                    el._farkleHandler = null;
                     el._farkleTouchStart = null;
                 }
+                if (el._farkleClickHandler) {
+                    el.removeEventListener('click', el._farkleClickHandler);
+                    el._farkleClickHandler = null;
+                }
+                el._farkleHandler = null;
 
                 if (idx < lockedBefore) {
                     // Previously locked — leave as-is
@@ -22191,26 +22195,16 @@
                         // Scoring die — white and clickable
                         el.classList.add('farkle-selectable');
 
-                        // Robust iOS tap: track touchstart position, confirm on touchend
-                        let touchStartX, touchStartY;
                         const onTouchStart = (e) => {
-                            touchStartX = e.touches[0].clientX;
-                            touchStartY = e.touches[0].clientY;
-                        };
-                        const onTouchEnd = (e) => {
-                            const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
-                            const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
-                            if (dx < 10 && dy < 10) { // confirmed tap, not scroll
-                                e.preventDefault();
-                                e.stopPropagation();
-                                farkleToggleLock(idx);
-                            }
+                            e.preventDefault(); // prevents scroll and 300ms click delay
+                            e.stopPropagation();
+                            farkleToggleLock(idx);
                         };
                         el._farkleTouchStart = onTouchStart;
-                        el._farkleHandler = onTouchEnd;
-                        el.addEventListener('touchstart', onTouchStart, { passive: true });
-                        el.addEventListener('touchend', onTouchEnd, { passive: false });
-                        el.addEventListener('click', onTouchEnd); // fallback for desktop
+                        el._farkleHandler = null;
+                        el._farkleClickHandler = () => farkleToggleLock(idx);
+                        el.addEventListener('touchstart', onTouchStart, { passive: false });
+                        el.addEventListener('click', el._farkleClickHandler); // desktop fallback
                     } else {
                         // Non-scoring die — dim it
                         el.style.filter = 'grayscale(30%) brightness(0.75)';
@@ -22374,13 +22368,15 @@
                     el.style.filter = 'grayscale(30%) brightness(0.75)';
                     el.style.opacity = '1';
                     el.onclick = null;
-                    if (el._farkleHandler) {
+                    if (el._farkleTouchStart) {
                         el.removeEventListener('touchstart', el._farkleTouchStart);
-                        el.removeEventListener('touchend', el._farkleHandler);
-                        el.removeEventListener('click', el._farkleHandler);
-                        el._farkleHandler = null;
                         el._farkleTouchStart = null;
                     }
+                    if (el._farkleClickHandler) {
+                        el.removeEventListener('click', el._farkleClickHandler);
+                        el._farkleClickHandler = null;
+                    }
+                    el._farkleHandler = null;
                 }
             });
 
