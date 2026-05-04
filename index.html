@@ -4999,6 +4999,7 @@
         }
         .die-scene, .die-canvas-wrap { position: relative; cursor: default; }
         .die-scene.farkle-selectable, .die-canvas-wrap.farkle-selectable { cursor: pointer; }
+        .die-scene.farkle-selectable, .die-canvas-wrap.farkle-selectable { cursor: pointer; }
         .die-scene.farkle-selectable:hover { outline: 2px solid rgba(0,245,255,0.5); outline-offset: 2px; border-radius: 10px; }
         .farkle-message {
             font-family: Outfit, sans-serif;
@@ -22078,6 +22079,11 @@
             document.querySelectorAll('.die-scene.farkle-selectable').forEach(el => {
                 el.classList.remove('farkle-selectable');
                 el.onclick = null;
+                if (el._farkleHandler) {
+                    el.removeEventListener('touchend', el._farkleHandler);
+                    el.removeEventListener('click', el._farkleHandler);
+                    el._farkleHandler = null;
+                }
             });
 
             totalBar.style.display = 'none';
@@ -22160,6 +22166,12 @@
                 el.style.opacity = '1';
                 el.classList.remove('farkle-selectable');
                 el.onclick = null;
+                // Remove any previous farkle touch listener
+                if (el._farkleHandler) {
+                    el.removeEventListener('touchend', el._farkleHandler);
+                    el.removeEventListener('click', el._farkleHandler);
+                    el._farkleHandler = null;
+                }
 
                 if (idx < lockedBefore) {
                     // Previously locked — leave as-is
@@ -22168,7 +22180,10 @@
                     if (allNewScore || scoringPosSet.has(newPos)) {
                         // Scoring die — white and clickable
                         el.classList.add('farkle-selectable');
-                        el.onclick = () => farkleToggleLock(idx);
+                        const handler = (e) => { e.preventDefault(); e.stopPropagation(); farkleToggleLock(idx); };
+                        el._farkleHandler = handler;
+                        el.addEventListener('touchend', handler, { passive: false });
+                        el.addEventListener('click', handler);
                     } else {
                         // Non-scoring die — dim it
                         el.style.filter = 'grayscale(30%) brightness(0.75)';
@@ -22325,7 +22340,16 @@
             // Dim all dice
             // Dim all dice on Farkle — nothing scores
             farkleDiceElements.forEach(el => {
-                if (el) { el.style.filter = 'grayscale(30%) brightness(0.75)'; el.style.opacity = '1'; el.onclick = null; }
+                if (el) {
+                    el.style.filter = 'grayscale(30%) brightness(0.75)';
+                    el.style.opacity = '1';
+                    el.onclick = null;
+                    if (el._farkleHandler) {
+                        el.removeEventListener('touchend', el._farkleHandler);
+                        el.removeEventListener('click', el._farkleHandler);
+                        el._farkleHandler = null;
+                    }
+                }
             });
 
             // Disable roll — only option is End Turn (which banks 0)
