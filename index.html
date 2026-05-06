@@ -41,7 +41,7 @@
             --dark-bg: linear-gradient(180deg, #d0d5db 0%, #9ca3af 50%, #b0b8c0 100%);
             --card-bg: #e2e8f0;
             --text-primary: #2d3748;
-            --text-dim: #718096;
+            --text-dim: #4a5568;
             --modal-overlay-bg: rgba(0, 0, 0, 0.6);
         }
         
@@ -157,6 +157,7 @@
         }
         body[data-theme="stainless"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
             background: rgba(0, 0, 0, 0.15) !important;
+            border-bottom: 1px solid rgba(80, 100, 130, 0.55) !important;
         }
         
         body[data-theme="stainless"] .card,
@@ -369,7 +370,7 @@
                 max-width: 80px !important;
             }
             
-            /* Farkle/General: Turn column */
+            /* Farkel/General: Turn column */
             #genericGridTable .crowns-hole-label {
                 min-width: 35px !important;
                 width: auto !important;
@@ -995,7 +996,7 @@
                 white-space: nowrap !important;
                 padding: 6px 10px !important;
             }
-            /* General/Farkle: "Turn N", "TOTAL" */
+            /* General/Farkel: "Turn N", "TOTAL" */
             #genericGridTable .crowns-hole-label {
                 width: 1% !important;
                 min-width: 0 !important;
@@ -3468,7 +3469,7 @@
         .crowns-table td.crowns-hole-label {
             padding: 6px 6px;
         }
-        /* Make Turn column in Farkle/General match Crown column in 5 Crowns */
+        /* Make Turn column in Farkel/General match Crown column in 5 Crowns */
         .crowns-table td.crowns-hole-label:not(.golf-info-column) {
             background: rgba(0, 0, 0, 0.5);
             color: var(--text-primary);
@@ -3547,6 +3548,7 @@
         #scrabbleTable .crowns-hole-label {
             font-size: 0.95rem !important;
             font-weight: 800 !important;
+            border-bottom: 1px solid rgba(150, 150, 150, 0.5) !important;
         }
         .yrd-column-header {
             cursor: pointer !important;
@@ -5025,7 +5027,219 @@
             text-align: center;
             padding: 8px 0 4px;
         }
-        /* ── FARKLE MODIFIERS PANEL ───────────────────────────────── */
+        /* ── SPICY FARKEL DICE ──────────────────────────────────────── */
+        .die-face.spicy {
+            background: #1a2535 !important;
+            border-color: #2a3545 !important;
+        }
+        .die-face.spicy .pip { background: #ffffff; }
+        .die-face.spicy .pip.red-pip { background: #e53935; }
+
+        /* ── YAHTZEE DICE ROLLER ──────────────────────────────────── */
+        .yahtzee-suggestion-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 12px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: background 0.15s;
+            font-family: Outfit, sans-serif;
+        }
+        .yahtzee-suggestion-row:hover { background: rgba(0,245,255,0.12); }
+        .yahtzee-suggestion-row.zero-score { opacity: 0.5; }
+        .yahtzee-suggestion-name { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+        .yahtzee-suggestion-pts  { font-size: 0.95rem; font-weight: 800; color: var(--neon-blue); }
+        .yahtzee-suggestion-row.best-score { background: rgba(0,200,100,0.12); border: 1px solid rgba(0,200,100,0.3); }
+        .yahtzee-suggestion-row.best-score .yahtzee-suggestion-pts { color: #43a047; }
+        body[data-theme="stainless"] .yahtzee-suggestion-row { background: rgba(0,0,0,0.05); }
+        body[data-theme="stainless"] .yahtzee-suggestion-row:hover { background: rgba(0,0,0,0.12); }
+        body[data-theme="stainless"] .yahtzee-suggestion-pts { color: #1976d2; }
+        body[data-theme="ios"] .yahtzee-suggestion-row { background: rgba(0,0,0,0.04); }
+        body[data-theme="ios"] .yahtzee-suggestion-pts { color: #007aff; }
+
+        /* ── SCRABBLE RULES MODAL ─────────────────────────────────── */
+        .scrabble-tile {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px; height: 36px;
+            background: #f5e6c0;
+            border: 2px solid #c8a96e;
+            border-radius: 5px;
+            font-family: Outfit, sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            color: #3a2a0a;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+        }
+        .scrabble-tile sup {
+            position: absolute;
+            bottom: 2px;
+            right: 3px;
+            font-size: 0.5rem;
+            font-weight: 700;
+            color: #7a5c2a;
+        }
+        .scrabble-tile-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .scrabble-tile-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+        .scrabble-tile-info {
+            flex: 1;
+        }
+        .scrabble-tile-label {
+            font-family: Outfit, sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .scrabble-tile-detail {
+            font-family: Outfit, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-top: 2px;
+        }
+        .scrabble-square {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px; height: 36px;
+            border-radius: 5px;
+            font-family: Outfit, sans-serif;
+            font-size: 0.55rem;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.1;
+            flex-shrink: 0;
+        }
+        .sq-tws { background: #e63946; color: #fff; }
+        .sq-dws { background: #f4a261; color: #fff; }
+        .sq-tls { background: #457b9d; color: #fff; }
+        .sq-dls { background: #a8dadc; color: #1d3557; }
+        .sq-start { background: #e63946; color: #fff; font-size: 0.8rem; }
+        .scrabble-rules-section { margin-bottom: 18px; }
+        .scrabble-rules-section h3 {
+            font-family: Outfit, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-primary);
+            margin: 0 0 10px;
+        }
+        .scrabble-rules-objective {
+            font-family: Outfit, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.55;
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+        }
+        .scrabble-rule-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-family: Outfit, sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-primary);
+        }
+        body[data-theme="stainless"] .scrabble-rule-row,
+        body[data-theme="stainless"] .scrabble-tile-row,
+        body[data-theme="stainless"] .scrabble-rules-objective { background: rgba(0,0,0,0.04); }
+        body[data-theme="ios"] .scrabble-rule-row,
+        body[data-theme="ios"] .scrabble-tile-row,
+        body[data-theme="ios"] .scrabble-rules-objective { background: rgba(0,0,0,0.03); }
+        .farkle-rules-section {
+            margin-bottom: 18px;
+        }
+        .farkle-rules-section h3 {
+            font-family: Outfit, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-primary);
+            margin: 0 0 10px;
+        }
+        .farkle-rule-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+        .farkle-rule-dice {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .farkle-rule-info {
+            flex: 1;
+        }
+        .farkle-rule-combo {
+            font-family: Outfit, sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+        .farkle-rule-score {
+            font-family: Outfit, sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--neon-blue);
+        }
+        .farkle-rule-note {
+            font-family: Outfit, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+        .farkle-rules-objective {
+            font-family: Outfit, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.55;
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+        }
+        body[data-theme="stainless"] .farkle-rule-row { background: rgba(0,0,0,0.04); }
+        body[data-theme="stainless"] .farkle-rules-objective { background: rgba(0,0,0,0.04); }
+        body[data-theme="stainless"] .farkle-rule-score { color: #1976d2; }
+        body[data-theme="ios"] .farkle-rule-row { background: rgba(0,0,0,0.03); }
+        body[data-theme="ios"] .farkle-rules-objective { background: rgba(0,0,0,0.03); }
+        body[data-theme="ios"] .farkle-rule-score { color: #007aff; }
+        body[data-theme="ios-dark"] .farkle-rule-score { color: #0a84ff; }
         .farkle-modifiers-panel {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.12);
@@ -5108,10 +5322,17 @@
         body[data-theme="stainless"] .die-face.f-top    { background: #ffffff; }
         body[data-theme="stainless"] .die-face.f-bottom { background: #ffffff; }
         body[data-theme="stainless"] .die-face .pip { background: #2d3748; }
+        /* Spicy dice override stainless theme — keep dark face and coloured pips */
+        body[data-theme="stainless"] .die-face.spicy { background: #1a2535 !important; border-color: #2a3545 !important; }
+        body[data-theme="stainless"] .die-face.spicy .pip { background: #ffffff !important; }
+        body[data-theme="stainless"] .die-face.spicy .pip.red-pip { background: #e53935 !important; }
         body[data-theme="stainless"] .die-cube.numeral .die-face { border-color: #64b5f6; background: #1565c0; }
         body[data-theme="stainless"] .die-cube.numeral .die-face .face-num { color: #ffffff; }
         body[data-theme="ios"] .die-face { background: #ffffff; border-color: #d1d1d6; }
         body[data-theme="ios"] .die-face .pip { background: #1c1c1e; }
+        body[data-theme="ios"] .die-face.spicy { background: #1a2535 !important; border-color: #2a3545 !important; }
+        body[data-theme="ios"] .die-face.spicy .pip { background: #ffffff !important; }
+        body[data-theme="ios"] .die-face.spicy .pip.red-pip { background: #e53935 !important; }
         body[data-theme="ios"] .die-cube.numeral .die-face { background: #1976d2; border-color: #64b5f6; }
         body[data-theme="ios"] .die-cube.numeral .die-face .face-num { color: #ffffff; }
         /* ── RANDOM NUMBER GENERATOR ──────────────────────────────── */
@@ -6233,7 +6454,7 @@
             color: #FFFFFF !important;
             background: transparent !important;
         }
-        /* Scrabble/Phase10/Farkle/General/Dominoes total row label — white text */
+        /* Scrabble/Phase10/Farkel/General/Dominoes total row label — white text */
         body[data-theme="ios"] .crowns-table .crowns-total-row td.crowns-hole-label {
             color: #FFFFFF !important;
         }
@@ -7048,7 +7269,7 @@
                     <div class="dropdown-list-item-game" data-value="5crowns" onclick="selectGameType('5crowns')">5 Crowns</div>
                     <div class="dropdown-list-item-game" data-value="darts" onclick="selectGameType('darts')">Darts</div>
                     <div class="dropdown-list-item-game" data-value="dominoes" onclick="selectGameType('dominoes')">Dominoes</div>
-                    <div class="dropdown-list-item-game" data-value="farkle" onclick="selectGameType('farkle')">Farkle</div>
+                    <div class="dropdown-list-item-game" data-value="farkle" onclick="selectGameType('farkle')">Farkel</div>
                     <div class="dropdown-list-item-game" data-value="general" onclick="selectGameType('general')">General</div>
                     <div class="dropdown-list-item-game" data-value="golf" onclick="selectGameType('golf')">Golf</div>
                     <div class="dropdown-list-item-game" data-value="phase10" onclick="selectGameType('phase10')">Phase 10</div>
@@ -7063,7 +7284,7 @@
                 <option value="5crowns">5 Crowns</option>
                 <option value="darts">Darts</option>
                 <option value="dominoes">Dominoes</option>
-                <option value="farkle">Farkle</option>
+                <option value="farkle">Farkel</option>
                 <option value="general">General</option>
                 <option value="golf">Golf</option>
                 <option value="phase10">Phase 10</option>
@@ -7116,6 +7337,9 @@
                     <!-- Game management controls -->
                     <div id="crownsButtons" style="display: none; margin-top: 20px;">
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="openCrownsRules()">📋 5 Crowns Rules</button>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
                             <button class="btn-secondary" onclick="goHome()">Home</button>
                             <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
@@ -7158,8 +7382,10 @@
                     <table class="crowns-table" id="dominoesTable"></table>
                     
                     <div id="dominoesButtons" style="display: none; margin-top: 20px;">
-                        <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="openDominoesRules()">📋 Dominoes Rules</button>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
                             <button class="btn-secondary" onclick="goHome()">Home</button>
                             <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
@@ -7223,8 +7449,8 @@
                     <div id="scrabbleButtons" style="display: none; margin-top: 20px;">
                         <!-- Main game controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                            <button id="addScrabbleRowBtn" class="btn-secondary" onclick="addScrabbleRow()">Add New Scoring Row</button>
                             <button id="scrabbleFinalBtn" class="btn-secondary" onclick="scrabbleFinalAdjustments()">Final Scoring Adjustments</button>
+                            <button class="btn-secondary" onclick="openScrabbleRules()">📋 Scrabble Rules</button>
                         </div>
                         <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
@@ -7240,8 +7466,11 @@
                     <table class="crowns-table" id="yahtzeeTable"></table>
                     
                     <div id="yahtzeeButtons" style="display: none; margin-top: 20px;">
-                        <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button id="yahtzeeRollDiceBtn" class="btn-secondary" onclick="openYahtzeeDiceRoller()" style="display:none;">🎲 Roll Dice</button>
+                            <button class="btn-secondary" onclick="openYahtzeeRules()">📋 Yahtzee Rules</button>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
                             <button class="btn-secondary" onclick="goHome()">Home</button>
                             <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
@@ -7254,8 +7483,10 @@
                     <table class="crowns-table" id="phase10Table"></table>
                     
                     <div id="phase10Buttons" style="display: none; margin-top: 20px;">
-                        <!-- Game management controls -->
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="openPhase10Rules()">📋 Phase 10 Rules</button>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
                             <button class="btn-secondary" onclick="goHome()">Home</button>
                             <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
@@ -7265,24 +7496,35 @@
             </div>
             <div id="genericGridMode" class="crowns-mode">
                 <div class="crowns-container">
-                    <!-- Farkle Modifiers — above the grid, only shown for Farkle game type -->
+                    <!-- Farkel Modifiers — above the grid, only shown for Farkel game type -->
                     <div id="farkleModifiers" style="display:none; margin-bottom:12px;">
                         <div class="farkle-modifiers-panel">
                             <div class="farkle-mod-row">
+                                <span class="farkle-mod-label" style="color:#000000;">Variant:</span>
+                                <label class="farkle-mod-check">
+                                    <input type="radio" name="farkleVariant" id="farkleVariantRegular" value="regular" checked onchange="updateFarkelModifiers()">
+                                    <span>Regular</span>
+                                </label>
+                                <label class="farkle-mod-check">
+                                    <input type="radio" name="farkleVariant" id="farkleVariantSpicy" value="spicy" onchange="updateFarkelModifiers()">
+                                    <span>🌶️ Spicy</span>
+                                </label>
+                            </div>
+                            <div class="farkle-mod-row">
                                 <span class="farkle-mod-label" style="color:#000000;">Winning Score:</span>
                                 <label class="farkle-mod-check">
-                                    <input type="radio" name="farkleWinScore" id="farkleWin5k" value="5000" checked onchange="updateFarkleModifiers()">
+                                    <input type="radio" name="farkleWinScore" id="farkleWin5k" value="5000" checked onchange="updateFarkelModifiers()">
                                     <span>5,000</span>
                                 </label>
                                 <label class="farkle-mod-check">
-                                    <input type="radio" name="farkleWinScore" id="farkleWin10k" value="10000" onchange="updateFarkleModifiers()">
+                                    <input type="radio" name="farkleWinScore" id="farkleWin10k" value="10000" onchange="updateFarkelModifiers()">
                                     <span>10,000</span>
                                 </label>
                             </div>
                             <div class="farkle-mod-row">
                                 <label class="farkle-mod-check">
-                                    <input type="checkbox" id="farkleTriplePenalty" checked onchange="updateFarkleModifiers()">
-                                    <span>3 Farkles in a row = −1,000 pts</span>
+                                    <input type="checkbox" id="farkleTriplePenalty" checked onchange="updateFarkelModifiers()">
+                                    <span>3 Farkels in a row = −1,000 pts</span>
                                 </label>
                             </div>
                         </div>
@@ -7291,8 +7533,8 @@
                     <table class="crowns-table" id="genericGridTable"></table>
 
                     <div id="genericGridButtons" style="display: none; margin-top: 14px; gap: 10px; display: flex;">
-                        <button id="farkleRollDiceBtn" class="btn-secondary" onclick="openFarkleDiceRoller()" style="display:none;">🎲 Roll Dice</button>
-                        <button id="addGenericRowBtn" class="btn-secondary" onclick="addGenericRow()">Add Row</button>
+                        <button id="farkleRollDiceBtn" class="btn-secondary" onclick="openFarkelDiceRoller()" style="display:none;">🎲 Roll Dice</button>
+                        <button id="addGenericRowBtn" class="btn-secondary" onclick="openFarkelRules()">📋 Farkel Rules</button>
                     </div>
                     
                     <div id="genericGridGameButtons" style="display: none; margin-top: 10px;">
@@ -7338,6 +7580,9 @@
                     <!-- Game management controls -->
                     <div id="dartsButtons" style="display: none; margin-top: 10px;">
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="openDartsRules()">📋 Darts Rules</button>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
                             <button class="btn-secondary" onclick="goHome()">Home</button>
                             <button class="btn-secondary" onclick="resetScores()">Reset</button>
                             <button class="btn-secondary" onclick="endGame()">End Game</button>
@@ -7469,7 +7714,7 @@
                 <div class="custom-dropdown-list" id="winsTrackerDropdownList">
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('5crowns')">5 Crowns</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('darts')">Darts</div>
-                    <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('farkle')">Farkle</div>
+                    <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('farkle')">Farkel</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('general')">General</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('golf')">Golf</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('phase10')">Phase 10</div>
@@ -7527,7 +7772,7 @@
                 </div>
                 <div class="voice-help-content" id="voiceHelpContent">
                     <ul>
-                        <li><strong>🎮 Game Selection:</strong> "Golf" • "5 Crowns" • "Farkle" • "Darts - 501" • "Scrabble" • "General"</li>
+                        <li><strong>🎮 Game Selection:</strong> "Golf" • "5 Crowns" • "Farkel" • "Darts - 501" • "Scrabble" • "General"</li>
                         <li><strong>👥 Add Multiple Players:</strong> "Add players" → Say names → "Done" when finished</li>
                         <li><strong>➕ Add Single Player:</strong> "Add Sarah" • "Add Guy and Emma"</li>
                         <li><strong>🎯 Add Points (Name First):</strong> "Emma 5" • "Jonathan 20" • "Guy, 5"</li>
@@ -7631,6 +7876,105 @@
                     <button id="diceEndTurnBtn" class="dice-back-btn" onclick="farkleBankScore()" style="display:none;">✅ End Turn</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Yahtzee Dice Roller Modal -->
+    <div id="yahtzeeDiceModal" class="timer-modal" style="display:none;">
+        <div class="timer-modal-content" style="max-width:420px;padding:20px 18px 24px;">
+            <button class="timer-modal-close" onclick="closeYahtzeeDiceRoller()">✕</button>
+            <div id="yahtzeeDiceStatusBar" class="farkle-status-bar" style="margin-bottom:4px;"></div>
+            <div id="yahtzeeDiceRollsLeft" style="font-family:Outfit,sans-serif;font-size:0.85rem;font-weight:700;text-align:center;color:#ff6d00;margin-bottom:10px;"></div>
+            <div id="yahtzeeDiceGrid" class="dice-results-grid six-dice" style="margin-bottom:10px;"></div>
+            <div id="yahtzeeDiceTotalBar" class="dice-total-bar" style="margin-bottom:10px;display:none;"></div>
+
+            <!-- Score suggestions -->
+            <div id="yahtzeeSuggestions" style="display:none;">
+                <div style="font-family:Outfit,sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-primary);opacity:0.65;margin-bottom:8px;">⬇️ Tap to score &amp; end turn:</div>
+                <div id="yahtzeeSuggestionsList" style="display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;"></div>
+            </div>
+
+            <div class="dice-result-actions" style="margin-top:12px;">
+                <button id="yahtzeeRollBtn" class="dice-roll-btn">🎲 Roll 5 Dice</button>
+                <button id="yahtzeeZeroBtn" class="dice-back-btn" onclick="yahtzeeScoreZero()" style="display:none;">Score 0</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5 Crowns Rules Modal -->
+    <div id="crownsRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeCrownsRules()">
+        <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:20px 18px 14px;flex-shrink:0;">
+                <button class="timer-modal-close" onclick="closeCrownsRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">👑 5 Crowns Rules</div>
+            </div>
+            <div id="crownsRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
+        </div>
+    </div>
+
+    <!-- Darts Rules Modal -->
+    <div id="dartsRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeDartsRules()">
+        <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:20px 18px 14px;flex-shrink:0;">
+                <button class="timer-modal-close" onclick="closeDartsRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🎯 Darts Rules</div>
+            </div>
+            <div id="dartsRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
+        </div>
+    </div>
+
+    <!-- Dominoes Rules Modal -->
+    <div id="dominoesRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeDominoesRules()">
+        <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:20px 18px 14px;flex-shrink:0;">
+                <button class="timer-modal-close" onclick="closeDominoesRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🁣 Dominoes Rules</div>
+            </div>
+            <div id="dominoesRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
+        </div>
+    </div>
+
+    <!-- Phase 10 Rules Modal -->
+    <div id="phase10RulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closePhase10Rules()">
+        <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:20px 18px 14px;flex-shrink:0;">
+                <button class="timer-modal-close" onclick="closePhase10Rules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🃏 Phase 10 Rules</div>
+            </div>
+            <div id="phase10RulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
+        </div>
+    </div>
+
+    <!-- Yahtzee Rules Modal -->
+    <div id="yahtzeeRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeYahtzeeRules()">
+        <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:20px 18px 14px;flex-shrink:0;">
+                <button class="timer-modal-close" onclick="closeYahtzeeRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🎲 Yahtzee Rules</div>
+            </div>
+            <div id="yahtzeeRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
+        </div>
+    </div>
+
+    <!-- Scrabble Rules Modal -->
+    <div id="scrabbleRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeScrabbleRules()">
+        <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:20px 18px 14px;flex-shrink:0;">
+                <button class="timer-modal-close" onclick="closeScrabbleRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🔤 Scrabble Rules</div>
+            </div>
+            <div id="scrabbleRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
+        </div>
+    </div>
+
+    <!-- Farkel Rules Modal -->
+    <div id="farkleRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeFarkelRules()">
+        <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:20px 18px 14px;flex-shrink:0;">
+                <button class="timer-modal-close" onclick="closeFarkelRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🎲 Farkel Rules</div>
+            </div>
+            <div id="farkleRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
         </div>
     </div>
 
@@ -7909,7 +8253,7 @@
                     'golf': 'Golf',
                     '5crowns': '5 Crowns',
                     'phase10': 'Phase 10',
-                    'farkle': 'Farkle',
+                    'farkle': 'Farkel',
                     'darts': 'Darts',
                     'scrabble': 'Scrabble',
                     'yahtzee': 'Yahtzee',
@@ -8580,7 +8924,7 @@
                     'golf': 'Golf',
                     '5crowns': '5 Crowns',
                     'phase10': 'Phase 10',
-                    'farkle': 'Farkle',
+                    'farkle': 'Farkel',
                     'darts': 'Darts',
                     'scrabble': 'Scrabble',
                     'yahtzee': 'Yahtzee'
@@ -8898,7 +9242,7 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkle',
+                'farkle': 'Farkel',
                 'darts': 'Darts',
                 'scrabble': 'Scrabble',
                 'yahtzee': 'Yahtzee'
@@ -9050,7 +9394,7 @@
                 'darts': 'Darts',
                 'yahtzee': 'Yahtzee',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkle',
+                'farkle': 'Farkel',
                 'general': 'General'
             };
             if (modalTitle) {
@@ -9381,7 +9725,7 @@
                     `;
                 }
             } else if (gameType === 'farkle') {
-                // Show detailed turn-by-turn scoring for Farkle in grid format
+                // Show detailed turn-by-turn scoring for Farkel in grid format
                 if (scorecard.scores && Object.keys(scorecard.scores).length > 0) {
                     html += `
                         <div style="margin-bottom: 15px;">
@@ -9416,7 +9760,7 @@
                         }
                     });
                     
-                    // Farkle turns
+                    // Farkel turns
                     for (let turn = 1; turn <= maxTurns; turn++) {
                         html += `<tr>`;
                         html += `<td style="text-align: center; background: rgba(128,128,128,0.3); font-weight: 700; width: 40px;">${turn}</td>`;
@@ -9667,7 +10011,7 @@
                 `;
             }
             
-            // Show final scores (but not for Golf, Farkle, General, or Yahtzee - they show detailed grids instead)
+            // Show final scores (but not for Golf, Farkel, General, or Yahtzee - they show detailed grids instead)
             if (!['golf', 'farkle', 'general', 'yahtzee'].includes(gameType)) {
                 // Sort scores from best to worst based on game type
                 const isLowerScoreWins = ['5crowns', 'golf', 'phase10'].includes(gameType);
@@ -10195,7 +10539,7 @@
             }
             
             // Speak the prompt
-            const promptText = 'Welcome Player One! What game are we playing today? Say Golf, 5 Crowns, Phase 10, Farkle, Darts, Scrabble, Yahtzee, or General.';
+            const promptText = 'Welcome Player One! What game are we playing today? Say Golf, 5 Crowns, Phase 10, Farkel, Darts, Scrabble, Yahtzee, or General.';
             
             console.log('About to speak prompt:', promptText);
             console.log('isSpeakerMuted before speak call:', isSpeakerMuted);
@@ -10338,7 +10682,7 @@
                     currentGolfHole = {};
                     renderGolfTable();
                 } else if (currentGameType === 'farkle' || scoringMode === 'generic') {
-                    // Reset generic grid scores for Farkle and other generic grid games
+                    // Reset generic grid scores for Farkel and other generic grid games
                     genericGridScores = {};
                     currentGenericTurn = {};
                     players.forEach(player => {
@@ -10593,6 +10937,7 @@
                 saveScrabbleData();
                 renderScrabbleTable();
             } else if (currentGameType === 'yahtzee') {
+                yahtzeeCurrentPlayerIndex = 0;
                 players.forEach(player => {
                     YAHTZEE_CATEGORIES.forEach(cat => {
                         if (yahtzeeScores[player.id]) {
@@ -10794,7 +11139,7 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkle',
+                'farkle': 'Farkel',
                 'darts': 'Darts',
                 'dominoes': 'Dominoes',
                 'scrabble': 'Scrabble',
@@ -11436,7 +11781,7 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkle',
+                'farkle': 'Farkel',
                 'darts': 'Darts',
                 'scrabble': 'Scrabble',
                 'yahtzee': 'Yahtzee'
@@ -11471,7 +11816,7 @@
                 { id: 'darts', name: 'Darts' },
                 { id: 'yahtzee', name: 'Yahtzee' },
                 { id: 'phase10', name: 'Phase 10' },
-                { id: 'farkle', name: 'Farkle' },
+                { id: 'farkle', name: 'Farkel' },
                 { id: 'general', name: 'General' }
             ];
             
@@ -11511,7 +11856,7 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkle',
+                'farkle': 'Farkel',
                 'darts': 'Darts',
                 'scrabble': 'Scrabble',
                 'yahtzee': 'Yahtzee'
@@ -13968,7 +14313,7 @@
                 { value: '5crowns',  label: '5 Crowns' },
                 { value: 'darts',    label: 'Darts' },
                 { value: 'dominoes', label: 'Dominoes' },
-                { value: 'farkle',   label: 'Farkle' },
+                { value: 'farkle',   label: 'Farkel' },
                 { value: 'general',  label: 'General' },
                 { value: 'golf',     label: 'Golf' },
                 { value: 'phase10',  label: 'Phase 10' },
@@ -14069,7 +14414,7 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkle',
+                'farkle': 'Farkel',
                 'darts': 'Darts',
                 'dominoes': 'Dominoes',
                 'scrabble': 'Scrabble',
@@ -14643,6 +14988,16 @@
                 const newScore = parseInt(input.value) || 0;
                 scrabbleScores[playerId][turn] = newScore;
                 
+                // Auto-add a new row if this was the last scoring turn
+                if (turn === SCRABBLE_TURNS[SCRABBLE_TURNS.length - 1]) {
+                    scrabbleMaxTurn++;
+                    const newTurn = scrabbleMaxTurn.toString();
+                    SCRABBLE_TURNS.push(newTurn);
+                    players.forEach(p => {
+                        if (scrabbleScores[p.id]) scrabbleScores[p.id][newTurn] = 0;
+                    });
+                }
+
                 // If unplayed tiles changed, recalculate opponents' tiles distribution
                 if (turn === 'unplayed') {
                     console.log('Unplayed tiles changed - recalculating distribution');
@@ -15819,6 +16174,8 @@
             }
             // Show buttons when players exist
             if (buttonContainer) buttonContainer.style.display = 'block';
+            const rollDiceBtn = document.getElementById('yahtzeeRollDiceBtn');
+            if (rollDiceBtn) rollDiceBtn.style.display = '';
             
             let html = '<thead><tr><th class="crowns-hole-label" style="min-width: 120px; font-size: 0.95rem;">CATEGORY</th>';
             
@@ -16293,7 +16650,7 @@
                 phase10Completed = JSON.parse(savedCompleted);
             }
         }
-        // ===== GENERIC GRID FUNCTIONS (for General/Darts/Farkle) =====
+        // ===== GENERIC GRID FUNCTIONS (for General/Darts/Farkel) =====
         
         function initializeGenericGridScores() {
             // Only initialize if genericGridScores doesn't exist
@@ -16341,10 +16698,10 @@
                 if (gameButtonContainer) gameButtonContainer.style.display = 'none';
                 return;
             }
-            // Show buttons when players exist
-            if (buttonContainer) buttonContainer.style.display = 'flex';
+            // Show buttons only for Farkel
+            if (buttonContainer) buttonContainer.style.display = currentGameType === 'farkle' ? 'flex' : 'none';
             if (gameButtonContainer) gameButtonContainer.style.display = 'block';
-            // Show Roll Dice button only for Farkle
+            // Show Roll Dice button only for Farkel
             const rollDiceBtn = document.getElementById('farkleRollDiceBtn');
             if (rollDiceBtn) rollDiceBtn.style.display = currentGameType === 'farkle' ? '' : 'none';
             const modPanel = document.getElementById('farkleModifiers');
@@ -16369,11 +16726,11 @@
                 
                 players.forEach(player => {
                     const raw = genericGridScores[player.id][turn];
-                    const isFarkle = raw === 'F';
-                    const score = isFarkle ? 0 : (raw || 0);
+                    const isFarkel = raw === 'F';
+                    const score = isFarkel ? 0 : (raw || 0);
                     const isCurrentTurn = currentGenericTurn[player.id] === index;
                     const cellClass = isCurrentTurn ? 'current-turn-cell' : '';
-                    const style = isFarkle
+                    const style = isFarkel
                         ? 'cursor:pointer;color:#e53935;font-weight:800;background:rgba(255,0,110,0.18);'
                         : 'cursor:pointer;';
                     html += `<td class="${cellClass}" onclick="editGenericGridScore(${player.id}, '${turn}')" style="${style}">${score}</td>`;
@@ -16391,7 +16748,7 @@
                     total += v === 'F' ? 0 : (v || 0);
                 });
                 player.score = total; // Update player's main score
-                // In Farkle: green = current leader above winning score; red bg = was leading but now beaten
+                // In Farkel: green = current leader above winning score; red bg = was leading but now beaten
                 let totalStyle = 'font-weight:800;';
                 if (currentGameType === 'farkle') {
                     // Find the highest total among all players
@@ -17433,7 +17790,7 @@
                     addGenericRow();
                     return;
                 } else {
-                    showVoiceFeedback('Only available in Scrabble, General, Darts, or Farkle modes', '');
+                    showVoiceFeedback('Only available in Scrabble, General, Darts, or Farkel modes', '');
                     setTimeout(hideVoiceFeedback, 2000);
                     return;
                 }
@@ -17486,7 +17843,7 @@
                             'golf': 'Golf',
                             '5crowns': '5 Crowns',
                             'phase10': 'Phase 10',
-                            'farkle': 'Farkle',
+                            'farkle': 'Farkel',
                             'darts': 'Darts',
                             'scrabble': 'Scrabble',
                             'yahtzee': 'Yahtzee'
@@ -17626,7 +17983,7 @@
                         'golf': 'Golf',
                         '5crowns': '5 Crowns',
                         'phase10': 'Phase 10',
-                        'farkle': 'Farkle',
+                        'farkle': 'Farkel',
                         'darts': 'Darts',
                         'scrabble': 'Scrabble',
                         'yahtzee': 'Yahtzee',
@@ -17648,7 +18005,7 @@
                                 showVoiceFeedback('All turns completed!', '');
                                 setTimeout(hideVoiceFeedback, 2000);
                             }
-                    speak('I didn\'t catch that. Please say Golf, 5 Crowns, Phase 10, Farkle, Darts, Scrabble, Yahtzee, or General.');
+                    speak('I didn\'t catch that. Please say Golf, 5 Crowns, Phase 10, Farkel, Darts, Scrabble, Yahtzee, or General.');
                     showVoiceFeedback('Game not recognized', transcript);
                     setTimeout(() => {
                         hideVoiceFeedback();
@@ -18802,7 +19159,7 @@
                     'golf': 'Golf',
                     '5crowns': '5 Crowns',
                     'phase10': 'Phase 10',
-                    'farkle': 'Farkle',
+                    'farkle': 'Farkel',
                     'darts': 'Darts',
                     'dominoes': 'Dominoes',
                     'scrabble': 'Scrabble',
@@ -19823,7 +20180,7 @@
                 
                 // Don't render players on main screen - Dominoes uses its own grid interface
             } else {
-                // Use generic grid for General and Farkle
+                // Use generic grid for General and Farkel
                 if (currentGameType === 'general' || currentGameType === 'farkle') {
                     console.log('Switching to Generic Grid mode for', currentGameType);
                     scoringMode = 'generic';
@@ -19979,7 +20336,7 @@
             'scrabble': 'Scrabble',
             'yahtzee':  'Yahtzee',
             'phase10':  'Phase 10',
-            'farkle':   'Farkle',
+            'farkle':   'Farkel',
             'darts':    'Darts',
             'dominoes': 'Dominoes',
             'general':  'General'
@@ -20592,14 +20949,14 @@
                 
                 // Reset Generic Grid scores if in that mode
                 if (scoringMode === 'generic' && (currentGameType === 'general' || currentGameType === 'darts' || currentGameType === 'farkle')) {
-                    // For Farkle: reset back to 12 rows
+                    // For Farkel: reset back to 12 rows
                     if (currentGameType === 'farkle') {
                         GENERIC_TURNS = ['1','2','3','4','5','6','7','8','9','10','11','12'];
                         genericMaxTurn = 12;
-                        // Also reset Farkle game state
+                        // Also reset Farkel game state
                         farkleLastTurnWinner = null;
                         farkleFinalRoundPlayers = new Set();
-                        farkleConsecutiveFarkles = {};
+                        farkleConsecutiveFarkels = {};
                     }
                     players.forEach(player => {
                         genericGridScores[player.id] = {};
@@ -21886,6 +22243,743 @@
         // ── DICE ROLLER 3D ────────────────────────────────────────────────────
         let diceState = { sides: 6, usePips: true, qty: 1 };
 
+        // ── 5 CROWNS RULES ─────────────────────────────────────────────────────
+        function closeCrownsRules() { document.getElementById('crownsRulesModal').style.display = 'none'; }
+        function openCrownsRules() {
+            document.getElementById('crownsRulesModal').style.display = 'flex';
+            document.getElementById('crownsRulesContent').innerHTML = buildCrownsRulesHTML();
+        }
+        function buildCrownsRulesHTML() {
+            const rule = (icon, text) => `<div class="scrabble-rule-row"><span style="font-size:1.2rem;flex-shrink:0;">${icon}</span><span>${text}</span></div>`;
+            const section = (title, content) => `<div class="scrabble-rules-section"><h3>${title}</h3>${content}</div>`;
+            const roundRow = (round, wild, cards) => `<div class="scrabble-rule-row"><span style="font-weight:800;min-width:60px;font-size:0.82rem;flex-shrink:0;">Round ${round}</span><span>Wild: <strong>${wild}</strong> &nbsp;|&nbsp; Cards dealt: <strong>${cards}</strong></span></div>`;
+            return `
+            <div class="scrabble-rules-objective">
+                <strong>Objective:</strong> Over 11 rounds, form <strong>books</strong> (sets of same-rank cards) and <strong>runs</strong> (sequences in the same suit) to go out. The player with the <strong>lowest score</strong> at the end wins.
+            </div>
+            ${section('The Deck', `
+                ${rule('🃏', '5 Crowns uses a <strong>double deck</strong> of 116 cards — 5 suits (♠ ♥ ♦ ♣ ★) with ranks 3–K, plus 3 Jokers per deck.')}
+                ${rule('⭐', 'The fifth suit is <strong>Stars</strong> (★).')}
+                ${rule('🤡', '<strong>Jokers</strong> are always wild.')}
+            `)}
+            ${section('Rounds & Wild Cards', `
+                <div class="scrabble-rules-objective" style="font-size:0.8rem;margin-bottom:8px;">Each round, the rank matching the card count is <strong>wild</strong>.</div>
+                ${roundRow(1,'3s','3')}
+                ${roundRow(2,'4s','4')}
+                ${roundRow(3,'5s','5')}
+                ${roundRow(4,'6s','6')}
+                ${roundRow(5,'7s','7')}
+                ${roundRow(6,'8s','8')}
+                ${roundRow(7,'9s','9')}
+                ${roundRow(8,'10s','10')}
+                ${roundRow(9,'Jacks','11')}
+                ${roundRow(10,'Queens','12')}
+                ${roundRow(11,'Kings','13')}
+            `)}
+            ${section('Taking a Turn', `
+                ${rule('↕️', '<strong>Draw</strong> one card from the draw pile or the top of the discard pile.')}
+                ${rule('🗃️', '<strong>Discard</strong> one card face-up onto the discard pile.')}
+                ${rule('✅', 'When you can arrange your <strong>entire hand</strong> into valid books and runs (with at most one leftover card), you may <strong>go out</strong>.')}
+            `)}
+            ${section('Books & Runs', `
+                ${rule('📦', '<strong>Book:</strong> 3 or more cards of the <strong>same rank</strong> (suits don\'t matter). Wild cards can fill in.')}
+                ${rule('🔗', '<strong>Run:</strong> 3 or more cards in <strong>consecutive rank order</strong>, all the <strong>same suit</strong>. Wild cards can fill gaps.')}
+                ${rule('🃏', '<strong>Wild cards</strong> (Jokers + the round\'s wild rank) can substitute for any card in a book or run.')}
+                ${rule('⚠️', 'A group of all wild cards does <strong>not</strong> count as a valid book or run.')}
+            `)}
+            ${section('Going Out', `
+                ${rule('🚪', 'On your turn, if your hand forms valid books/runs, discard your last card and announce you\'re going out.')}
+                ${rule('⏭️', 'All <strong>other players get one final turn</strong> to reduce their hand as much as possible.')}
+                ${rule('📝', 'Everyone scores the <strong>penalty value</strong> of any cards remaining in their hand.')}
+            `)}
+            ${section('Card Values (Penalties)', `
+                ${rule('3️⃣', 'Cards 3–9: face value (3 pts, 4 pts … 9 pts).')}
+                ${rule('🔟', 'Cards 10–K: <strong>10 points</strong> each.')}
+                ${rule('🃏', 'Jokers: <strong>50 points</strong> each.')}
+                ${rule('⭐', 'Wild cards (round\'s rank): <strong>20 points</strong> each.')}
+            `)}
+            ${section('Winning', `
+                ${rule('🏆', 'After all 11 rounds, the player with the <strong>lowest total score</strong> wins.')}
+            `)}`;
+        }
+
+        // ── DARTS RULES ────────────────────────────────────────────────────────
+        function closeDartsRules() { document.getElementById('dartsRulesModal').style.display = 'none'; }
+        function openDartsRules() {
+            document.getElementById('dartsRulesModal').style.display = 'flex';
+            document.getElementById('dartsRulesContent').innerHTML = buildDartsRulesHTML();
+        }
+        function buildDartsRulesHTML() {
+            const rule = (icon, text) => `<div class="scrabble-rule-row"><span style="font-size:1.2rem;flex-shrink:0;">${icon}</span><span>${text}</span></div>`;
+            const section = (title, content) => `<div class="scrabble-rules-section"><h3>${title}</h3>${content}</div>`;
+            return `
+            <div class="scrabble-rules-objective">
+                <strong>Objective:</strong> Starting from 501 (or 301), players take turns throwing 3 darts and subtracting their score. First player to reach <em>exactly zero</em> wins — but the final dart must land on a double (or the bullseye).
+            </div>
+            ${section('The Dartboard', `
+                ${rule('🎯', 'The board has segments numbered 1–20 plus the bullseye.')}
+                ${rule('💚', '<strong>Outer Bull (Green):</strong> 25 points.')}
+                ${rule('🔴', '<strong>Inner Bull (Red):</strong> 50 points — counts as a double.')}
+                ${rule('➕', '<strong>Double ring</strong> (thin outer band): doubles the segment value.')}
+                ${rule('✖️', '<strong>Triple ring</strong> (thin middle band): triples the segment value.')}
+            `)}
+            ${section('Taking a Turn', `
+                ${rule('🏹', 'Each turn, throw <strong>3 darts</strong>. Add up all three scores and subtract from your total.')}
+                ${rule('⚠️', 'If your score would go below zero, or land on 1 (with Double Out), your turn is <strong>bust</strong> — no points deducted and your score resets to what it was before the turn.')}
+                ${rule('🔄', 'Unused darts in a bust turn are forfeited.')}
+            `)}
+            ${section('Double In (Optional)', `
+                ${rule('🎯', 'If <strong>Double In</strong> is enabled, you must hit a double before your score starts counting.')}
+                ${rule('💡', 'Any darts thrown before your first double do not count.')}
+            `)}
+            ${section('Finishing (Double Out)', `
+                ${rule('🏆', 'To win, your final dart must land on a <strong>double</strong> that brings your score to exactly zero.')}
+                ${rule('🔴', 'The <strong>bullseye</strong> (inner bull, 50 pts) counts as a double and can be used to finish.')}
+                ${rule('💡', 'Example: if you need 32 to finish, aim for Double 16.')}
+                ${rule('💡', 'If you need an odd number remaining, you cannot finish — plan ahead!')}
+            `)}
+            ${section('Common Finishes', `
+                ${rule('170', 'Maximum finish: T20 + T20 + Bullseye')}
+                ${rule('121', 'T20 + T11 + D20')}
+                ${rule('40', 'D20 (one dart)')}
+                ${rule('32', 'D16 (one dart)')}
+                ${rule('24', 'D12 (one dart)')}
+            `)}`;
+        }
+
+        // ── DOMINOES RULES ─────────────────────────────────────────────────────
+        function closeDominoesRules() { document.getElementById('dominoesRulesModal').style.display = 'none'; }
+        function openDominoesRules() {
+            document.getElementById('dominoesRulesModal').style.display = 'flex';
+            document.getElementById('dominoesRulesContent').innerHTML = buildDominoesRulesHTML();
+        }
+        function buildDominoesRulesHTML() {
+            const rule = (icon, text) => `<div class="scrabble-rule-row"><span style="font-size:1.2rem;flex-shrink:0;">${icon}</span><span>${text}</span></div>`;
+            const section = (title, content) => `<div class="scrabble-rules-section"><h3>${title}</h3>${content}</div>`;
+            return `
+            <div class="scrabble-rules-objective">
+                <strong>Objective (Draw Dominoes):</strong> Be the first player to play all your tiles. Score points by adding up the pips on opponents' unplayed tiles. First to reach <strong>100 points</strong> wins.
+            </div>
+            ${section('Setup', `
+                ${rule('🁣', 'A standard set has <strong>28 tiles</strong> (double-six set: 0-0 through 6-6).')}
+                ${rule('✋', '2 players draw <strong>7 tiles</strong> each; 3–4 players draw <strong>5 tiles</strong> each.')}
+                ${rule('🔒', 'Keep your tiles hidden from opponents. Remaining tiles form the <strong>boneyard</strong>.')}
+            `)}
+            ${section('Starting the Game', `
+                ${rule('1️⃣', 'The player with the highest double (e.g. [6|6]) plays first, placing it face-up.')}
+                ${rule('🔄', 'If no one has a double, the player with the heaviest tile starts.')}
+            `)}
+            ${section('Taking a Turn', `
+                ${rule('🔗', 'Play a tile from your hand that <strong>matches</strong> an open end of the chain.')}
+                ${rule('↔️', 'Doubles are placed <strong>crosswise</strong> and both ends are open.')}
+                ${rule('🃏', 'If you cannot play, draw from the boneyard until you can — or until the boneyard has 2 tiles left.')}
+                ${rule('⏭️', 'If you still cannot play (boneyard exhausted), pass your turn.')}
+            `)}
+            ${section('Winning a Hand', `
+                ${rule('🏆', 'First player to play all their tiles wins the hand.')}
+                ${rule('🔒', 'If the game is <strong>blocked</strong> (no one can play), the player with the fewest pips wins.')}
+            `)}
+            ${section('Scoring', `
+                ${rule('➕', 'The winner scores the <strong>total pips</strong> on all opponents\' remaining tiles (rounded to nearest 5 in some variants).')}
+                ${rule('🏅', 'First player to accumulate <strong>100 points</strong> wins the match.')}
+                ${rule('🔁', 'If the blocked-game winner is determined by fewest pips, they score the total of everyone else\'s tiles minus their own.')}
+            `)}`;
+        }
+
+        // ── PHASE 10 RULES ─────────────────────────────────────────────────────
+        function closePhase10Rules() { document.getElementById('phase10RulesModal').style.display = 'none'; }
+        function openPhase10Rules() {
+            document.getElementById('phase10RulesModal').style.display = 'flex';
+            document.getElementById('phase10RulesContent').innerHTML = buildPhase10RulesHTML();
+        }
+        function buildPhase10RulesHTML() {
+            const rule = (icon, text) => `<div class="scrabble-rule-row"><span style="font-size:1.2rem;flex-shrink:0;">${icon}</span><span>${text}</span></div>`;
+            const section = (title, content) => `<div class="scrabble-rules-section"><h3>${title}</h3>${content}</div>`;
+            const phases = [
+                ['Phase 1', '2 sets of 3'],
+                ['Phase 2', '1 set of 3 + 1 run of 4'],
+                ['Phase 3', '1 set of 4 + 1 run of 4'],
+                ['Phase 4', '1 run of 7'],
+                ['Phase 5', '1 run of 8'],
+                ['Phase 6', '1 run of 9'],
+                ['Phase 7', '2 sets of 4'],
+                ['Phase 8', '7 cards of one colour'],
+                ['Phase 9', '1 set of 5 + 1 set of 2'],
+                ['Phase 10', '1 set of 5 + 1 set of 3'],
+            ];
+            return `
+            <div class="scrabble-rules-objective">
+                <strong>Objective:</strong> Be the first player to complete all 10 Phases in order. Each Phase is a specific combination of cards. Players must complete Phases in sequence — you can't advance until the current Phase is done.
+            </div>
+            ${section('The 10 Phases', phases.map(([ph, desc]) =>
+                `<div class="scrabble-rule-row"><span style="font-weight:800;font-size:0.8rem;min-width:68px;flex-shrink:0;">${ph}</span><span>${desc}</span></div>`
+            ).join(''))}
+            ${section('Card Types', `
+                ${rule('🔢', '<strong>Numbered cards (1–12):</strong> come in 4 colours. Used in sets and runs.')}
+                ${rule('🃏', '<strong>Wild cards:</strong> can represent any number or colour.')}
+                ${rule('⏭️', '<strong>Skip cards:</strong> force the next player to lose their turn.')}
+            `)}
+            ${section('Gameplay', `
+                ${rule('🃏', 'Deal <strong>10 cards</strong> to each player. Turn one card face-up to start the discard pile.')}
+                ${rule('↕️', 'On your turn: <strong>draw</strong> one card (from deck or discard pile), then <strong>discard</strong> one card.')}
+                ${rule('✅', 'If you have your Phase, you may <strong>lay it down</strong> before discarding.')}
+                ${rule('➕', 'Once your Phase is down, add remaining cards to any player\'s laid-down Phase (<strong>hitting</strong>).')}
+                ${rule('🏁', 'The round ends when a player plays all their cards (goes out).')}
+            `)}
+            ${section('Sets & Runs', `
+                ${rule('📦', '<strong>Set:</strong> cards of the same number (e.g. three 7s).')}
+                ${rule('🔗', '<strong>Run:</strong> consecutive numbers (e.g. 4-5-6-7). Colour doesn\'t matter.')}
+                ${rule('🎨', '<strong>Colour group:</strong> cards of the same colour (any number).')}
+            `)}
+            ${section('Scoring', `
+                ${rule('➕', 'At the end of each round, players who didn\'t go out score <strong>penalty points</strong> for cards in hand.')}
+                ${rule('5️⃣', 'Cards 1–9: <strong>5 points</strong> each.')}
+                ${rule('🔟', 'Cards 10–12: <strong>10 points</strong> each.')}
+                ${rule('🃏', 'Wild cards: <strong>25 points</strong> each.')}
+                ${rule('⏭️', 'Skip cards: <strong>15 points</strong> each.')}
+                ${rule('🏆', 'The player who completes all 10 Phases first wins. Ties broken by <strong>lowest score</strong>.')}
+            `)}`;
+        }
+
+        // ── YAHTZEE DICE ROLLER ENGINE ─────────────────────────────────────────
+        let yahtzeeRollerMode = false;
+        let yahtzeeActivePlayerId = null;
+        let yahtzeeDiceValues = [0,0,0,0,0];   // current 5 dice values
+        let yahtzeeKeptIndices = new Set();      // indices the player wants to keep
+        let yahtzeeRollsRemaining = 3;
+        let yahtzeeDiceElements = [];            // DOM .die-scene elements
+        let yahtzeeCurrentPlayerIndex = 0;       // whose turn it is
+
+        function openYahtzeeDiceRoller() {
+            if (players.length === 0) return;
+
+            // Find the current player using the turn index, skip players with no open categories
+            let target = null;
+            for (let attempts = 0; attempts < players.length; attempts++) {
+                const idx = (yahtzeeCurrentPlayerIndex + attempts) % players.length;
+                const p = players[idx];
+                const used = yahtzeeUsedCategories[p.id] || {};
+                const hasOpen = Object.keys(YAHTZEE_CATEGORIES).some(k => !used[k]);
+                if (hasOpen) { target = p; yahtzeeCurrentPlayerIndex = idx; break; }
+            }
+            if (!target) return;
+            yahtzeeActivePlayerId = target.id;
+
+            // Reset state
+            yahtzeeRollerMode = true;
+            yahtzeeDiceValues = [0,0,0,0,0];
+            yahtzeeKeptIndices = new Set();
+            yahtzeeRollsRemaining = 3;
+            yahtzeeDiceElements = [];
+
+            // Show modal
+            document.getElementById('yahtzeeDiceModal').style.display = 'flex';
+            document.getElementById('yahtzeeDiceStatusBar').textContent = `${target.name}'s turn`;
+            document.getElementById('yahtzeeSuggestions').style.display = 'none';
+            document.getElementById('yahtzeeDiceTotalBar').style.display = 'none';
+            document.getElementById('yahtzeeZeroBtn').style.display = 'none';
+            document.getElementById('yahtzeeRollBtn').textContent = '🎲 Roll 5 Dice';
+            document.getElementById('yahtzeeRollBtn').disabled = false;
+            document.getElementById('yahtzeeRollBtn').style.opacity = '1';
+            document.getElementById('yahtzeeDiceRollsLeft').textContent = 'Rolls remaining: 3';
+            document.getElementById('yahtzeeRollBtn').onclick = yahtzeeRoll;
+
+            // Empty grid placeholder
+            const grid = document.getElementById('yahtzeeDiceGrid');
+            grid.innerHTML = '';
+        }
+
+        function closeYahtzeeDiceRoller() {
+            document.getElementById('yahtzeeDiceModal').style.display = 'none';
+            yahtzeeRollerMode = false;
+            yahtzeeActivePlayerId = null;
+        }
+
+        function yahtzeeRoll() {
+            if (yahtzeeRollsRemaining <= 0) return;
+            yahtzeeRollsRemaining--;
+
+            // Disable roll button immediately to prevent double-tap
+            const rollBtn = document.getElementById('yahtzeeRollBtn');
+            rollBtn.disabled = true;
+            rollBtn.style.opacity = '0.4';
+
+            // Roll un-kept dice
+            for (let i = 0; i < 5; i++) {
+                if (!yahtzeeKeptIndices.has(i)) {
+                    yahtzeeDiceValues[i] = Math.floor(Math.random() * 6) + 1;
+                }
+            }
+
+            // Render dice
+            const grid = document.getElementById('yahtzeeDiceGrid');
+            grid.innerHTML = '';
+            yahtzeeDiceElements = [];
+            let doneCount = 0;
+            let afterRollFired = false; // guard against double-fire
+
+            const checkDone = () => {
+                doneCount++;
+                if (doneCount === 5 && !afterRollFired) {
+                    afterRollFired = true;
+                    yahtzeeAfterRoll();
+                }
+            };
+
+            yahtzeeDiceValues.forEach((val, idx) => {
+                const isKept = yahtzeeKeptIndices.has(idx);
+                const scene = document.createElement('div');
+                scene.className = 'die-scene' + (isKept ? ' locked' : '');
+                scene.dataset.diceIdx = idx;
+                scene.dataset.diceVal = val;
+                const cube = buildCube(true, val);
+                scene.appendChild(cube);
+                grid.appendChild(scene);
+                yahtzeeDiceElements.push(scene);
+
+                if (isKept) {
+                    const face = VAL_TO_FACE[val];
+                    const [rx, ry] = FACE_ROTS[face];
+                    cube.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+                    checkDone();
+                } else {
+                    cube.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                    const delay = idx * 80;
+                    setTimeout(() => {
+                        animateCube(scene, cube, val, checkDone);
+                    }, delay);
+                }
+            });
+
+            // Update rolls remaining display
+            document.getElementById('yahtzeeDiceRollsLeft').textContent =
+                `Rolls remaining: ${yahtzeeRollsRemaining}`;
+        }
+
+        function yahtzeeAfterRoll() {
+            // Make un-kept dice clickable to keep
+            const grid = document.getElementById('yahtzeeDiceGrid');
+            const scenes = Array.from(grid.querySelectorAll('.die-scene[data-dice-idx]'));
+            yahtzeeDiceElements = new Array(5);
+            scenes.forEach(el => { yahtzeeDiceElements[parseInt(el.dataset.diceIdx)] = el; });
+
+            scenes.forEach(el => {
+                const idx = parseInt(el.dataset.diceIdx);
+                el.style.cursor = 'pointer';
+                el.style.filter = '';
+                el.style.opacity = '1';
+                el.classList.remove('farkle-selectable');
+
+                // Remove previous handlers
+                if (el._yahtzeeTouchStart) { el.removeEventListener('touchstart', el._yahtzeeTouchStart); }
+                if (el._yahtzeeClick) { el.removeEventListener('click', el._yahtzeeClick); }
+
+                const onTouchStart = (e) => { e.preventDefault(); e.stopPropagation(); yahtzeeToggleKeep(idx); };
+                const onClick = () => yahtzeeToggleKeep(idx);
+                el._yahtzeeTouchStart = onTouchStart;
+                el._yahtzeeClick = onClick;
+                el.addEventListener('touchstart', onTouchStart, { passive: false });
+                el.addEventListener('click', onClick);
+            });
+
+            // Show score suggestions
+            yahtzeeBuildSuggestions();
+
+            // Enable roll button if rolls remain
+            const rollBtn = document.getElementById('yahtzeeRollBtn');
+            if (yahtzeeRollsRemaining > 0) {
+                rollBtn.textContent = `🎲 Roll Again (${yahtzeeRollsRemaining} left)`;
+                rollBtn.disabled = false;
+                rollBtn.style.opacity = '1';
+                rollBtn.onclick = yahtzeeRoll;
+            } else {
+                rollBtn.textContent = '✅ End Turn — Pick a Category';
+                rollBtn.disabled = false;
+                rollBtn.style.opacity = '1';
+                rollBtn.onclick = () => {
+                    // Flash the suggestions list to draw attention
+                    const list = document.getElementById('yahtzeeSuggestionsList');
+                    list.style.transition = 'outline 0.1s';
+                    list.style.outline = '2px solid var(--neon-blue)';
+                    list.style.borderRadius = '8px';
+                    setTimeout(() => { list.style.outline = 'none'; }, 800);
+                };
+            }
+
+            document.getElementById('yahtzeeZeroBtn').style.display = '';
+        }
+
+        function yahtzeeToggleKeep(idx) {
+            const el = yahtzeeDiceElements[idx];
+            if (!el) return;
+            if (yahtzeeKeptIndices.has(idx)) {
+                yahtzeeKeptIndices.delete(idx);
+                el.classList.remove('locked');
+            } else {
+                yahtzeeKeptIndices.add(idx);
+                el.classList.add('locked');
+            }
+            void el.offsetHeight; // force repaint on iOS
+            yahtzeeBuildSuggestions(); // recalc with kept dice shown
+        }
+
+        function yahtzeeCalcScore(category, vals) {
+            const counts = [0,0,0,0,0,0,0];
+            vals.forEach(v => counts[v]++);
+            const sum = vals.reduce((a,b)=>a+b,0);
+            switch(category) {
+                case 'ones':   return counts[1] * 1;
+                case 'twos':   return counts[2] * 2;
+                case 'threes': return counts[3] * 3;
+                case 'fours':  return counts[4] * 4;
+                case 'fives':  return counts[5] * 5;
+                case 'sixes':  return counts[6] * 6;
+                case 'threeKind': return counts.some(c=>c>=3) ? sum : 0;
+                case 'fourKind':  return counts.some(c=>c>=4) ? sum : 0;
+                case 'fullHouse':
+                    return (counts.filter(c=>c===3).length===1 && counts.filter(c=>c===2).length===1) ? 25 : 0;
+                case 'smStraight': {
+                    const u = [...new Set(vals)].sort((a,b)=>a-b);
+                    for (let i=0;i<=u.length-4;i++) {
+                        if (u[i+3]-u[i]===3 && u[i+1]-u[i]===1 && u[i+2]-u[i]===2) return 30;
+                    }
+                    return 0;
+                }
+                case 'lgStraight': {
+                    const u = [...new Set(vals)].sort((a,b)=>a-b);
+                    if (u.length===5 && u[4]-u[0]===4) return 40;
+                    return 0;
+                }
+                case 'yahtzee':    return counts.some(c=>c===5) ? 50 : 0;
+                case 'chance':     return sum;
+                default: return 0;
+            }
+        }
+
+        function yahtzeeBuildSuggestions() {
+            const playerId = yahtzeeActivePlayerId;
+            const used = yahtzeeUsedCategories[playerId] || {};
+            const vals = yahtzeeDiceValues;
+
+            // Calculate score for each available category
+            const suggestions = Object.entries(YAHTZEE_CATEGORIES)
+                .filter(([key]) => !used[key] && key !== 'upperBonus' && key !== 'yahtzeeBonus')
+                .map(([key, cat]) => ({
+                    key, name: cat.name, score: yahtzeeCalcScore(key, vals)
+                }))
+                .sort((a,b) => b.score - a.score);
+
+            const list = document.getElementById('yahtzeeSuggestionsList');
+            const best = suggestions.find(s => s.score > 0);
+            list.innerHTML = suggestions.map(s => `
+                <div class="yahtzee-suggestion-row ${s.score === 0 ? 'zero-score' : ''} ${s === best ? 'best-score' : ''}"
+                     onclick="yahtzeeApplyScore('${s.key}', ${s.score})">
+                    <span class="yahtzee-suggestion-name">${s.name}</span>
+                    <span class="yahtzee-suggestion-pts">${s.score} pts</span>
+                </div>`).join('');
+
+            document.getElementById('yahtzeeSuggestions').style.display = 'block';
+        }
+
+        function yahtzeeApplyScore(category, score) {
+            const playerId = yahtzeeActivePlayerId;
+            const player = players.find(p => p.id === playerId);
+            if (!player) { closeYahtzeeDiceRoller(); return; }
+
+            saveStateForUndo(`${player.name} - ${YAHTZEE_CATEGORIES[category].name}: ${score}`);
+            yahtzeeScores[playerId][category] = score;
+            yahtzeeUsedCategories[playerId][category] = true;
+
+            // Yahtzee bonus
+            if (category === 'yahtzee' && score === 50) {
+                // already handled by existing logic
+            }
+
+            // Check upper bonus
+            const upper = ['ones','twos','threes','fours','fives','sixes'];
+            if (upper.includes(category)) {
+                const upperTotal = upper.reduce((s,k) => s + (yahtzeeScores[playerId][k] || 0), 0);
+                if (upperTotal >= 63) yahtzeeScores[playerId]['upperBonus'] = 35;
+            }
+
+            saveYahtzeeData();
+            renderYahtzeeTable();
+
+            // Advance to next player
+            yahtzeeCurrentPlayerIndex = (yahtzeeCurrentPlayerIndex + 1) % players.length;
+
+            closeYahtzeeDiceRoller();
+        }
+
+        function yahtzeeScoreZero() {
+            // Let player choose a category to score 0
+            const playerId = yahtzeeActivePlayerId;
+            const used = yahtzeeUsedCategories[playerId] || {};
+            const available = Object.entries(YAHTZEE_CATEGORIES)
+                .filter(([key]) => !used[key] && key !== 'upperBonus' && key !== 'yahtzeeBonus');
+
+            const list = document.getElementById('yahtzeeSuggestionsList');
+            list.innerHTML = '<div style="font-family:Outfit,sans-serif;font-size:0.78rem;color:var(--text-primary);opacity:0.7;margin-bottom:6px;">Choose a category to score 0:</div>' +
+                available.map(([key, cat]) => `
+                    <div class="yahtzee-suggestion-row zero-score"
+                         onclick="yahtzeeApplyScore('${key}', 0)">
+                        <span class="yahtzee-suggestion-name">${cat.name}</span>
+                        <span class="yahtzee-suggestion-pts">0 pts</span>
+                    </div>`).join('');
+            document.getElementById('yahtzeeSuggestions').style.display = 'block';
+        }
+
+        // ── YAHTZEE RULES ──────────────────────────────────────────────────────
+        function closeYahtzeeRules() { document.getElementById('yahtzeeRulesModal').style.display = 'none'; }
+        function openYahtzeeRules() {
+            document.getElementById('yahtzeeRulesModal').style.display = 'flex';
+            document.getElementById('yahtzeeRulesContent').innerHTML = buildYahtzeeRulesHTML();
+        }
+        function buildYahtzeeRulesHTML() {
+            const rule = (icon, text) => `<div class="scrabble-rule-row"><span style="font-size:1.2rem;flex-shrink:0;">${icon}</span><span>${text}</span></div>`;
+            const section = (title, content) => `<div class="scrabble-rules-section"><h3>${title}</h3>${content}</div>`;
+            const cat = (name, score, desc) => `<div class="scrabble-rule-row"><span style="font-weight:800;min-width:110px;font-size:0.8rem;flex-shrink:0;">${name}</span><div><div style="font-weight:700;color:var(--neon-blue);font-size:0.9rem;">${score}</div><div style="font-size:0.75rem;color:var(--text-primary);opacity:0.75;">${desc}</div></div></div>`;
+            return `
+            <div class="scrabble-rules-objective">
+                <strong>Objective:</strong> Score the most points over 13 rounds by rolling 5 dice and filling in scoring categories. Each category can only be used once. The player with the highest total wins.
+            </div>
+            ${section('Taking a Turn', `
+                ${rule('🎲', 'Roll all <strong>5 dice</strong>.')}
+                ${rule('🔒', 'Set aside any dice you want to keep, then roll the remaining dice again.')}
+                ${rule('🔄', 'You get up to <strong>3 rolls</strong> per turn (initial roll + 2 re-rolls).')}
+                ${rule('📝', 'After your rolls, choose a <strong>scoring category</strong> to fill in. You must fill in one even if the score is 0.')}
+            `)}
+            ${section('Upper Section', `
+                ${cat('Ones','Sum of all 1s','Score the total of all dice showing 1')}
+                ${cat('Twos','Sum of all 2s','Score the total of all dice showing 2')}
+                ${cat('Threes','Sum of all 3s','Score the total of all dice showing 3')}
+                ${cat('Fours','Sum of all 4s','Score the total of all dice showing 4')}
+                ${cat('Fives','Sum of all 5s','Score the total of all dice showing 5')}
+                ${cat('Sixes','Sum of all 6s','Score the total of all dice showing 6')}
+                ${rule('🎁', '<strong>Upper Bonus:</strong> Score 35 or more in the upper section and earn a <strong>+35 bonus</strong>.')}
+            `)}
+            ${section('Lower Section', `
+                ${cat('3 of a Kind','Sum of all 5 dice','At least 3 dice the same')}
+                ${cat('4 of a Kind','Sum of all 5 dice','At least 4 dice the same')}
+                ${cat('Full House','25 pts','3 of one number + 2 of another')}
+                ${cat('Sm. Straight','30 pts','4 sequential dice (e.g. 1-2-3-4)')}
+                ${cat('Lg. Straight','40 pts','5 sequential dice (e.g. 2-3-4-5-6)')}
+                ${cat('Chance','Sum of all 5 dice','Any combination — no restrictions')}
+                ${cat('Yahtzee!','50 pts','All 5 dice the same')}
+            `)}
+            ${section('Yahtzee Bonus & The Joker Rule', `
+                ${rule('🎯', 'If you roll a <strong>Yahtzee</strong> but have already scored in the Yahtzee box, you earn a <strong>100-point Yahtzee Bonus</strong>. Mark it in the Yahtzee Bonus box.')}
+                ${rule('🃏', 'Every extra Yahtzee also acts as a <strong>Joker</strong> — you must use it to fill in another category using these Joker rules:')}
+                ${rule('1️⃣', '<strong>Step 1 — Corresponding Upper Box:</strong> If the upper section box matching the Yahtzee\'s number (e.g. Fives for five 5s) is <em>not yet filled</em>, you <strong>must</strong> score it there.')}
+                ${rule('2️⃣', '<strong>Step 2 — Lower Section:</strong> If the corresponding upper box is already filled, you may score the Joker in <em>any open lower section box</em>. The Joker counts as: Full House (25), Sm. Straight (30), Lg. Straight (40) — even if the dice don\'t form those combinations.')}
+                ${rule('3️⃣', '<strong>Step 3 — Any Upper Box:</strong> If all lower section boxes are filled too, score the Joker in any remaining upper section box — counting only the dice matching that number.')}
+                ${rule('⚠️', 'If the Yahtzee box itself was scored as <strong>0</strong> (you scratched it), there is <strong>no bonus</strong> and the Joker rule does not apply — score normally in any open category.')}
+            `)}`;
+        }
+
+        // ── SCRABBLE RULES ─────────────────────────────────────────────────────
+        function closeScrabbleRules() {
+            document.getElementById('scrabbleRulesModal').style.display = 'none';
+        }
+
+        function openScrabbleRules() {
+            const modal = document.getElementById('scrabbleRulesModal');
+            modal.style.display = 'flex';
+            document.getElementById('scrabbleRulesContent').innerHTML = buildScrabbleRulesHTML();
+        }
+
+        function scrabbleTile(letter, pts) {
+            return `<div class="scrabble-tile">${letter}<sup>${pts}</sup></div>`;
+        }
+
+        function scrabbleSq(cls, label) {
+            return `<div class="scrabble-square ${cls}">${label}</div>`;
+        }
+
+        function buildScrabbleRulesHTML() {
+            const t = scrabbleTile;
+            const sq = scrabbleSq;
+
+            const tileRow = (tiles, label, detail) => `
+                <div class="scrabble-tile-row">
+                    <div class="scrabble-tile-group">${tiles}</div>
+                    <div class="scrabble-tile-info">
+                        <div class="scrabble-tile-label">${label}</div>
+                        <div class="scrabble-tile-detail">${detail}</div>
+                    </div>
+                </div>`;
+
+            const rule = (icon, text) => `
+                <div class="scrabble-rule-row">
+                    <span style="font-size:1.2rem;flex-shrink:0;">${icon}</span>
+                    <span>${text}</span>
+                </div>`;
+
+            return `
+            <div class="scrabble-rules-objective">
+                <strong>Objective:</strong> Score the most points by placing letter tiles on the board to form valid words. Players take turns placing tiles — each word must connect to existing tiles. The game ends when all tiles are drawn and one player uses their last tile, or no valid moves remain.
+            </div>
+
+            <div class="scrabble-rules-section">
+                <h3>Board Premium Squares</h3>
+                <div class="scrabble-tile-row">
+                    ${sq('sq-tws','TRIPLE WORD')}
+                    <div class="scrabble-tile-info">
+                        <div class="scrabble-tile-label">Triple Word Score</div>
+                        <div class="scrabble-tile-detail">Multiply the entire word score by 3. Red squares at board edges and corners.</div>
+                    </div>
+                </div>
+                <div class="scrabble-tile-row">
+                    ${sq('sq-dws','DOUBLE WORD')}
+                    <div class="scrabble-tile-info">
+                        <div class="scrabble-tile-label">Double Word Score</div>
+                        <div class="scrabble-tile-detail">Multiply the entire word score by 2. Pink squares on the diagonal. The centre star is also a DWS.</div>
+                    </div>
+                </div>
+                <div class="scrabble-tile-row">
+                    ${sq('sq-tls','TRIPLE LETTER')}
+                    <div class="scrabble-tile-info">
+                        <div class="scrabble-tile-label">Triple Letter Score</div>
+                        <div class="scrabble-tile-detail">Multiply that one tile's value by 3.</div>
+                    </div>
+                </div>
+                <div class="scrabble-tile-row">
+                    ${sq('sq-dls','DOUBLE LETTER')}
+                    <div class="scrabble-tile-info">
+                        <div class="scrabble-tile-label">Double Letter Score</div>
+                        <div class="scrabble-tile-detail">Multiply that one tile's value by 2. Light blue squares scattered across the board.</div>
+                    </div>
+                </div>
+                <div class="scrabble-tile-row">
+                    ${sq('sq-start','★')}
+                    <div class="scrabble-tile-info">
+                        <div class="scrabble-tile-label">Centre Star</div>
+                        <div class="scrabble-tile-detail">First word must cover this square. Acts as a Double Word Score for the opening play.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scrabble-rules-section">
+                <h3>Tile Values</h3>
+                ${tileRow(t('A',1)+t('E',1)+t('I',1)+t('O',1)+t('U',1)+t('L',1)+t('N',1)+t('S',1)+t('T',1)+t('R',1), '1 Point', 'A, E, I, O, U, L, N, S, T, R')}
+                ${tileRow(t('D',2)+t('G',2), '2 Points', 'D, G')}
+                ${tileRow(t('B',3)+t('C',3)+t('M',3)+t('P',3), '3 Points', 'B, C, M, P')}
+                ${tileRow(t('F',4)+t('H',4)+t('V',4)+t('W',4)+t('Y',4), '4 Points', 'F, H, V, W, Y')}
+                ${tileRow(t('K',5), '5 Points', 'K')}
+                ${tileRow(t('J',8)+t('X',8), '8 Points', 'J, X')}
+                ${tileRow(t('Q',10)+t('Z',10), '10 Points', 'Q, Z')}
+                ${tileRow(t('_',0), '0 Points', 'Blank tile — can represent any letter')}
+            </div>
+
+            <div class="scrabble-rules-section">
+                <h3>Gameplay Rules</h3>
+                ${rule('🎯', 'Each player draws <strong>7 tiles</strong> from the bag at the start.')}
+                ${rule('1️⃣', 'The first word must be placed on the <strong>centre star</strong> and score as a Double Word.')}
+                ${rule('🔗', 'Every subsequent word must connect to <strong>at least one existing tile</strong> on the board.')}
+                ${rule('➕', 'You may also extend an existing word by adding letters before or after it.')}
+                ${rule('🔄', 'Instead of placing tiles, you may <strong>exchange</strong> any or all of your tiles for new ones — but you lose your turn.')}
+                ${rule('⏭️', 'You may also choose to <strong>pass</strong> your turn (no points scored).')}
+                ${rule('📐', 'All tiles played in one turn must be in the <strong>same row or column</strong>, forming a single continuous word.')}
+                ${rule('✅', 'All new words formed (including cross-words) must be <strong>valid dictionary words</strong>.')}
+                ${rule('🏆', 'After placing all 7 tiles in one turn, score a <strong>50-point bonus</strong> (called a Bingo).')}
+            </div>
+
+            <div class="scrabble-rules-section">
+                <h3>Scoring</h3>
+                ${rule('🔢', 'Add up the face values of all tiles played, applying letter/word premium squares.')}
+                ${rule('📦', 'Premium squares only count for the <strong>first time</strong> a tile is placed on them.')}
+                ${rule('✖️', 'If a word covers <strong>multiple word multipliers</strong>, apply them all (e.g. two DWS = ×4).')}
+                ${rule('🔚', 'When the game ends, each player <strong>subtracts</strong> the point total of their remaining tiles.')}
+                ${rule('🎁', 'If one player uses all their tiles, they <strong>add</strong> the sum of all other players\' remaining tiles to their score.')}
+            </div>`;
+        }
+
+        function closeFarkelRules() {
+            document.getElementById('farkleRulesModal').style.display = 'none';
+        }
+
+        function openFarkelRules() {
+            const modal = document.getElementById('farkleRulesModal');
+            modal.style.display = 'flex';
+            document.getElementById('farkleRulesContent').innerHTML = buildFarkelRulesHTML();
+        }
+
+        function dieSVG(val, size = 32, dimmed = false) {
+            const PIP_POSITIONS = {
+                1: [[50,50]],
+                2: [[25,25],[75,75]],
+                3: [[25,25],[50,50],[75,75]],
+                4: [[25,25],[75,25],[25,75],[75,75]],
+                5: [[25,25],[75,25],[50,50],[25,75],[75,75]],
+                6: [[25,22],[75,22],[25,50],[75,50],[25,78],[75,78]]
+            };
+            const alpha = dimmed ? '0.35' : '1';
+            const pips = (PIP_POSITIONS[val] || []).map(([cx,cy]) =>
+                `<circle cx="${cx}" cy="${cy}" r="7" fill="#1a1a2e"/>`
+            ).join('');
+            return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" style="opacity:${alpha};flex-shrink:0;">
+                <rect x="4" y="4" width="92" height="92" rx="16" fill="white" stroke="#d0d0d0" stroke-width="3"/>
+                ${pips}
+            </svg>`;
+        }
+
+        function buildFarkelRulesHTML() {
+            const d = (v, dim) => dieSVG(v, 30, dim);
+            const row = (dice, combo, score, note='') => `
+                <div class="farkle-rule-row">
+                    <div class="farkle-rule-dice">${dice}</div>
+                    <div class="farkle-rule-info">
+                        <div class="farkle-rule-combo">${combo}</div>
+                        <div class="farkle-rule-score">${score}</div>
+                        ${note ? `<div class="farkle-rule-note">${note}</div>` : ''}
+                    </div>
+                </div>`;
+
+            return `
+            <div class="farkle-rules-objective">
+                <strong>Objective:</strong> Be the first player to bank ${farkleWinningScore.toLocaleString()} or more points. When a player hits the target, all others get one final turn to beat their score.
+            </div>
+
+            <div class="farkle-rules-section">
+                <h3>Special Combinations (all 6 dice)</h3>
+                ${row(d(1)+d(2)+d(3)+d(4)+d(5)+d(6), '1-2-3-4-5-6 Straight', '1,500 pts')}
+                ${row(d(1)+d(1)+d(3)+d(3)+d(5)+d(5), 'Three Pairs', '1,500 pts', 'Any three matching pairs')}
+                ${row(d(4)+d(4)+d(4)+d(4)+d(2)+d(2), 'Four of a Kind + Pair', '1,500 pts')}
+            </div>
+
+            <div class="farkle-rules-section">
+                <h3>Three of a Kind</h3>
+                ${row(d(1)+d(1)+d(1), 'Three 1s', '1,000 pts')}
+                ${row(d(2)+d(2)+d(2), 'Three 2s', '200 pts')}
+                ${row(d(3)+d(3)+d(3), 'Three 3s', '300 pts')}
+                ${row(d(4)+d(4)+d(4), 'Three 4s', '400 pts')}
+                ${row(d(5)+d(5)+d(5), 'Three 5s', '500 pts')}
+                ${row(d(6)+d(6)+d(6), 'Three 6s', '600 pts')}
+            </div>
+
+            <div class="farkle-rules-section">
+                <h3>More of a Kind (doubles the three-of-a-kind value)</h3>
+                ${row(d(2)+d(2)+d(2)+d(2), 'Four of a Kind', '2× three-of-a-kind', 'e.g. four 2s = 400 pts')}
+                ${row(d(3)+d(3)+d(3)+d(3)+d(3), 'Five of a Kind', '3× three-of-a-kind', 'e.g. five 3s = 900 pts')}
+                ${row(d(6)+d(6)+d(6)+d(6)+d(6)+d(6), 'Six of a Kind', '4× three-of-a-kind', 'e.g. six 6s = 2,400 pts')}
+            </div>
+
+            <div class="farkle-rules-section">
+                <h3>Single Scoring Dice</h3>
+                ${row(d(1), 'Single 1', '100 pts')}
+                ${row(d(5), 'Single 5', '50 pts')}
+            </div>
+
+            <div class="farkle-rules-section">
+                <h3>Turn Rules</h3>
+                ${row('🎲', 'Roll all 6 dice', 'Lock at least one scoring die each roll')}
+                ${row('🔒', 'Bank your score', 'End your turn and keep your points')}
+                ${row('🔥', 'Hot Dice!', 'If all 6 dice score, roll all 6 again and keep accumulating')}
+                ${row('💥', 'Farkel!', 'If no dice score, you lose all unbanked points for this turn')}
+                ${farkleTriplePenaltyEnabled ? row('⚠️', '3 Farkels in a row', '−1,000 pts penalty') : ''}
+            </div>`;
+        }
+
         function openDiceRoller() {
             farkleMode = false;
             document.getElementById('diceRollerModal').style.display = 'flex';
@@ -21905,22 +22999,69 @@
         let farkleDiceElements = [];  // DOM elements matching farkleDiceValues
         let farkleLockedIndices = new Set(); // indices in farkleDiceValues that are locked
         let farkleNewDiceStartIdx = 0;       // index where new (unscored) dice begin this roll
+        // Spicy mode: each physical die slot (0-5) has a different red face value
+        // Slot 0 → red face = 1, slot 1 → red face = 2, ... slot 5 → red face = 6
+        const SPICY_RED_FACE = [1, 2, 3, 4, 5, 6];
+        let farkleRedMultiplier = 1; // accumulated doubling from red pips this turn
+
+        function buildSpicyCube(slotIdx, faceValue) {
+            // Dark die with white pips; the red face is SPICY_RED_FACE[slotIdx]
+            const redFace = SPICY_RED_FACE[slotIdx % 6];
+            const faceValues = { front:1, back:6, right:2, left:5, top:3, bottom:4 };
+            const faceNames  = ['front','back','right','left','top','bottom'];
+            const faceClasses= ['f-front','f-back','f-right','f-left','f-top','f-bottom'];
+
+            const cube = document.createElement('div');
+            cube.className = 'die-cube';
+
+            faceNames.forEach((name, i) => {
+                const val = faceValues[name];
+                const face = document.createElement('div');
+                face.className = 'die-face spicy';
+                const isRedFace = (val === redFace);
+                (PIP_POS[val] || []).forEach(([l, t]) => {
+                    const p = document.createElement('div');
+                    p.className = 'pip' + (isRedFace ? ' red-pip' : '');
+                    p.style.left = (l - 7.5) + '%';
+                    p.style.top  = (t - 7.5) + '%';
+                    face.appendChild(p);
+                });
+                face.classList.add(faceClasses[i]);
+                cube.appendChild(face);
+            });
+            return cube;
+        }
 
         // Modifier state
         let farkleWinningScore = 5000;
         let farkleTriplePenaltyEnabled = true;
-        let farkleConsecutiveFarkles = {}; // playerId → count of consecutive farkles
+        let farkleSpicyMode = false;
+        let farkleConsecutiveFarkels = {}; // playerId → count of consecutive farkles
         let farkleLastTurnWinner = null;   // playerId who first crossed winning score
         let farkleFinalRoundPlayers = new Set(); // players who still get their final turn
 
-        function updateFarkleModifiers() {
+        function updateFarkelModifiers() {
             farkleWinningScore = parseInt(document.querySelector('input[name="farkleWinScore"]:checked')?.value || '5000');
             farkleTriplePenaltyEnabled = document.getElementById('farkleTriplePenalty')?.checked ?? true;
+            farkleSpicyMode = document.querySelector('input[name="farkleVariant"]:checked')?.value === 'spicy';
         }
 
-        // Farkle scoring: compute score of a set of dice values
+        // Spicy Farkel: count how many locked dice show their red face
+        // Each red-face die doubles the score (multiplier stacks: 2 red = 4x, 3 red = 8x)
+        function getSpicyMultiplier(lockedIndicesSet) {
+            if (!farkleSpicyMode) return 1;
+            let redCount = 0;
+            lockedIndicesSet.forEach(idx => {
+                const val = farkleDiceValues[idx];
+                const redFace = SPICY_RED_FACE[idx % 6];
+                if (val === redFace) redCount++;
+            });
+            return Math.pow(2, redCount);
+        }
+
+        // Farkel scoring: compute score of a set of dice values
         // Returns { score, scoringIndices } where scoringIndices are indices that score
-        function scoreFarkleDice(vals) {
+        function scoreFarkelDice(vals) {
             const counts = [0,0,0,0,0,0,0]; // index 1-6
             vals.forEach(v => counts[v]++);
             let score = 0;
@@ -21981,8 +23122,8 @@
             return { score, scoringIndices };
         }
 
-        function openFarkleDiceRoller() {
-            updateFarkleModifiers();
+        function openFarkelDiceRoller() {
+            updateFarkelModifiers();
             // Find the player whose turn it is (lowest currentGenericTurn index)
             let targetPlayer = null;
             let minTurn = Infinity;
@@ -21999,6 +23140,7 @@
             farkleDiceElements = [];
             farkleLockedIndices = new Set();
             farkleNewDiceStartIdx = 0;
+            farkleRedMultiplier = 1; // reset multiplier each turn
 
             // Configure: 6 D6 pips
             diceState.sides = 6;
@@ -22009,7 +23151,7 @@
             const pipBtn = document.querySelector('.dice-type-btn[data-sides="6"][data-pip="true"]');
             if (pipBtn) pipBtn.classList.add('active');
 
-            // Show modal in Farkle mode
+            // Show modal in Farkel mode
             document.getElementById('diceRollerModal').style.display = 'flex';
             document.getElementById('diceChangeDiceBtn').style.display = 'none';
             document.getElementById('diceEndTurnBtn').style.display = '';
@@ -22022,7 +23164,6 @@
 
             const player = players.find(p => p.id === farkleActivePlayerId);
             const statusBar = document.getElementById('farkleStatusBar');
-
             if (farkleLastTurnWinner !== null && farkleFinalRoundPlayers.has(farkleActivePlayerId)) {
                 const leaderTotal = players.reduce((max, p) => {
                     const t = Object.values(genericGridScores[p.id]||{}).reduce((s,v)=>s+(v==='F'?0:(v||0)),0);
@@ -22030,9 +23171,9 @@
                 }, 0);
                 const myTotal = Object.values(genericGridScores[farkleActivePlayerId]||{}).reduce((s,v)=>s+(v==='F'?0:(v||0)),0);
                 const needed = leaderTotal - myTotal + 1;
-                statusBar.innerHTML = `${player?.name}<br><span style="font-size:1.05rem;font-weight:800;color:#ff6d00;white-space:nowrap;">Final Turn! Need ${needed.toLocaleString()} pts to win</span>`;
+                statusBar.innerHTML = `${player?.name}${farkleSpicyMode ? ' 🌶️' : ''}<br><span style="font-size:1.05rem;font-weight:800;color:#ff6d00;white-space:nowrap;">Final Turn! Need ${needed.toLocaleString()} pts to win</span>`;
             } else {
-                statusBar.textContent = player ? `${player.name}'s turn` : '';
+                statusBar.textContent = player ? `${player.name}'s turn${farkleSpicyMode ? ' 🌶️' : ''}` : '';
             }
             document.getElementById('farkleTurnScore').textContent = '';
 
@@ -22110,7 +23251,8 @@
                 scene.className = 'die-scene' + (isAlreadyLocked ? ' locked' : '');
                 scene.dataset.diceIdx = idx;
                 scene.dataset.diceVal = val;
-                const cube = buildCube(true, val); // always pips
+                // Spicy mode: use dark dice with red pip on that slot's special face
+                const cube = farkleSpicyMode ? buildSpicyCube(idx, val) : buildCube(true, val);
                 if (!isAlreadyLocked) cube.style.transform = 'rotateX(0deg) rotateY(0deg)';
                 scene.appendChild(cube);
                 grid.appendChild(scene);
@@ -22148,11 +23290,11 @@
         function farkleAfterRoll() {
             const lockedBefore = farkleNewDiceStartIdx;
             const newVals = farkleDiceValues.slice(lockedBefore);
-            const { score: newRollScore, scoringIndices } = scoreFarkleDice(newVals);
+            const { score: newRollScore, scoringIndices } = scoreFarkelDice(newVals);
 
             if (newRollScore === 0) {
                 farkleTurnTotal = 0;
-                farkleShowFarkle();
+                farkleShowFarkel();
                 return;
             }
 
@@ -22245,7 +23387,10 @@
             const newlyLockedVals = [...farkleLockedIndices]
                 .filter(i => i >= farkleNewDiceStartIdx)
                 .map(i => farkleDiceValues[i]);
-            const { score } = scoreFarkleDice(newlyLockedVals);
+            const { score: baseScore } = scoreFarkelDice(newlyLockedVals);
+            // Spicy: multiply by 2 for each locked red-face die (all currently locked, not just new)
+            const multiplier = getSpicyMultiplier(farkleLockedIndices);
+            const score = baseScore * multiplier;
             const displayScore = farkleTurnTotal + score;
 
             document.getElementById('farkleTurnScore').textContent = '';
@@ -22274,7 +23419,8 @@
             const totalBar = document.getElementById('diceTotalBar');
             if (hasNewLocked) {
                 const lockedStr = newlyLockedVals.slice().sort((a,b)=>a-b).join(' + ');
-                totalBar.textContent = `Locked: ${lockedStr} = ${score} pts (turn total: ${displayScore})`;
+                const multLabel = farkleSpicyMode && multiplier > 1 ? ` 🌶️ ×${multiplier}` : '';
+                totalBar.textContent = `Locked: ${lockedStr} = ${baseScore} pts${multLabel} → ${score} pts (turn total: ${displayScore})`;
             } else {
                 totalBar.textContent = 'Click dice to lock them in';
             }
@@ -22304,25 +23450,27 @@
                 return;
             }
 
-            // Accumulate score from newly locked dice only
+            // Accumulate score from newly locked dice only (with spicy multiplier)
             const newlyLockedVals = [...farkleLockedIndices]
                 .filter(i => i >= farkleNewDiceStartIdx)
                 .map(i => farkleDiceValues[i]);
-            const { score: lockedScore } = scoreFarkleDice(newlyLockedVals);
-            farkleTurnTotal += lockedScore;
+            const { score: lockedScore } = scoreFarkelDice(newlyLockedVals);
+            const multiplier = getSpicyMultiplier(farkleLockedIndices);
+            farkleTurnTotal += lockedScore * multiplier;
 
             // Roll remaining (hot dice case is now handled directly via button onclick)
             farkleRoll();
         }
 
         function farkleHotDice() {
-            // Accumulate the score from the newly locked dice (same as farkleRollRemaining does)
+            // Accumulate the score from the newly locked dice (with spicy multiplier)
             const newlyLockedVals = [...farkleLockedIndices]
                 .filter(i => i >= farkleNewDiceStartIdx)
                 .map(i => farkleDiceValues[i]);
             if (newlyLockedVals.length > 0) {
-                const { score: lockedScore } = scoreFarkleDice(newlyLockedVals);
-                farkleTurnTotal += lockedScore;
+                const { score: lockedScore } = scoreFarkelDice(newlyLockedVals);
+                const multiplier = getSpicyMultiplier(farkleLockedIndices);
+                farkleTurnTotal += lockedScore * multiplier;
             }
 
             // Reset dice state for fresh 6-dice roll
@@ -22346,10 +23494,10 @@
             }, 900);
         }
 
-        function farkleShowFarkle() {
+        function farkleShowFarkel() {
             // Track consecutive farkles for triple penalty
             if (farkleActivePlayerId !== null) {
-                farkleConsecutiveFarkles[farkleActivePlayerId] = (farkleConsecutiveFarkles[farkleActivePlayerId] || 0) + 1;
+                farkleConsecutiveFarkels[farkleActivePlayerId] = (farkleConsecutiveFarkels[farkleActivePlayerId] || 0) + 1;
             }
 
             const label = document.getElementById('diceResultLabel');
@@ -22390,7 +23538,7 @@
         }
 
         function farkleBankScore() {
-            updateFarkleModifiers();
+            updateFarkelModifiers();
 
             let banked = farkleTurnTotal;
             // Only add dice locked THIS roll (not already counted in farkleTurnTotal)
@@ -22398,8 +23546,9 @@
                 .filter(i => i >= farkleNewDiceStartIdx)
                 .map(i => farkleDiceValues[i]);
             if (newlyLockedVals.length > 0) {
-                const { score } = scoreFarkleDice(newlyLockedVals);
-                banked += score;
+                const { score: baseScore } = scoreFarkelDice(newlyLockedVals);
+                const multiplier = getSpicyMultiplier(farkleLockedIndices);
+                banked += baseScore * multiplier;
             }
 
             const player = players.find(p => p.id === farkleActivePlayerId);
@@ -22409,30 +23558,30 @@
             const turn = GENERIC_TURNS[turnIndex];
             if (!turn) { closeDiceRoller(); return; }
 
-            // ── Triple Farkle penalty ──────────────────────────────────────────
-            const consecutiveFarkles = farkleConsecutiveFarkles[farkleActivePlayerId] || 0;
+            // ── Triple Farkel penalty ──────────────────────────────────────────
+            const consecutiveFarkels = farkleConsecutiveFarkels[farkleActivePlayerId] || 0;
             let penalty = 0;
             if (banked === 0) {
-                // This was a Farkle — consecutive count already incremented in farkleShowFarkle
-                if (farkleTriplePenaltyEnabled && consecutiveFarkles >= 3) {
+                // This was a Farkel — consecutive count already incremented in farkleShowFarkel
+                if (farkleTriplePenaltyEnabled && consecutiveFarkels >= 3) {
                     penalty = -1000;
-                    farkleConsecutiveFarkles[farkleActivePlayerId] = 0; // reset after penalty
-                    showVoiceFeedback(`${player.name} — 3 Farkles in a row! −1,000 pts`, '', false);
+                    farkleConsecutiveFarkels[farkleActivePlayerId] = 0; // reset after penalty
+                    showVoiceFeedback(`${player.name} — 3 Farkels in a row! −1,000 pts`, '', false);
                     setTimeout(hideVoiceFeedback, 3000);
                 }
             } else {
                 // Scored — reset consecutive farkle count
-                farkleConsecutiveFarkles[farkleActivePlayerId] = 0;
+                farkleConsecutiveFarkels[farkleActivePlayerId] = 0;
             }
 
             const netScore = banked + penalty;
 
             if (netScore !== 0 || penalty !== 0) {
-                saveStateForUndo(`${player.name} - Turn ${turn}: ${netScore} (Farkle)`);
+                saveStateForUndo(`${player.name} - Turn ${turn}: ${netScore} (Farkel)`);
                 genericGridScores[farkleActivePlayerId][turn] = (genericGridScores[farkleActivePlayerId][turn] || 0) + netScore;
             } else {
-                // Pure Farkle — store sentinel 'F' so it renders red
-                saveStateForUndo(`${player.name} - Turn ${turn}: Farkle`);
+                // Pure Farkel — store sentinel 'F' so it renders red
+                saveStateForUndo(`${player.name} - Turn ${turn}: Farkel`);
                 genericGridScores[farkleActivePlayerId][turn] = 'F';
             }
 
@@ -22471,7 +23620,7 @@
             renderGenericGridTable();
             closeDiceRoller();
 
-            // Reset Farkle state
+            // Reset Farkel state
             farkleMode = false;
             farkleActivePlayerId = null;
             farkleTurnTotal = 0;
