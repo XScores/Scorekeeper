@@ -370,7 +370,7 @@
                 max-width: 80px !important;
             }
             
-            /* Farkel/General: Turn column */
+            /* Farkle/General: Turn column */
             #genericGridTable .crowns-hole-label {
                 min-width: 35px !important;
                 width: auto !important;
@@ -384,7 +384,7 @@
                 max-width: 140px !important;
             }
             
-            /* Yahtzee: Category column */
+            /* Yatzy: Category column */
             #yahtzeeTable .crowns-hole-label {
                 min-width: 120px !important;
                 width: 120px !important;
@@ -980,7 +980,7 @@
                 white-space: nowrap !important;
                 padding: 6px 10px !important;
             }
-            /* Yahtzee: longest label is "BONUS 35 (if ≥63)" */
+            /* Yatzy: longest label is "BONUS 35 (if ≥63)" */
             #yahtzeeTable .crowns-hole-label {
                 width: 1% !important;
                 min-width: 0 !important;
@@ -996,7 +996,7 @@
                 white-space: nowrap !important;
                 padding: 6px 10px !important;
             }
-            /* General/Farkel: "Turn N", "TOTAL" */
+            /* General/Farkle: "Turn N", "TOTAL" */
             #genericGridTable .crowns-hole-label {
                 width: 1% !important;
                 min-width: 0 !important;
@@ -3469,7 +3469,7 @@
         .crowns-table td.crowns-hole-label {
             padding: 6px 6px;
         }
-        /* Make Turn column in Farkel/General match Crown column in 5 Crowns */
+        /* Make Turn column in Farkle/General match Crown column in 5 Crowns */
         .crowns-table td.crowns-hole-label:not(.golf-info-column) {
             background: rgba(0, 0, 0, 0.5);
             color: var(--text-primary);
@@ -3488,7 +3488,7 @@
         .crowns-table tbody tr:not(.total-row) td.crowns-hole-label.golf-info-column {
             background: rgba(57, 255, 20, 0.2) !important;
         }
-        /* Yahtzee-specific styles */
+        /* Yatzy-specific styles */
         .yahtzee-available {
             background: rgba(0, 245, 255, 0.15) !important;
             cursor: pointer !important;
@@ -3511,6 +3511,13 @@
             border-top: 2px solid var(--neon-blue);
             border-bottom: 2px solid var(--neon-blue);
         }
+        #yumTable th,
+        #yumTable td { border: 1px solid rgba(0,245,255,0.2); padding: 6px 10px; text-align: center; }
+        #yumTable .crowns-hole-label { text-align: left; font-size: 0.82rem; font-weight: 700; background: rgba(0,0,0,0.25); }
+        #yumButtons, #yumButtons > div { gap: 10px; }
+        body[data-theme="stainless"] #yumTable th,
+        body[data-theme="stainless"] #yumTable td { border-color: rgba(80,100,130,0.3); }
+        body[data-theme="stainless"] #yumTable .crowns-hole-label { background: rgba(0,0,0,0.08); }
         #yahtzeeTable th,
         #yahtzeeTable td {
             font-size: 0.95rem;
@@ -6437,7 +6444,7 @@
         body[data-theme="ios"] .crowns-table tbody tr:not(.total-row):not(.crowns-total-row) td.round-label {
             background: rgba(0, 122, 255, 0.12) !important;
         }
-        /* Yahtzee GRAND TOTAL — blue with white text */
+        /* Yatzy GRAND TOTAL — blue with white text */
         body[data-theme="ios"] .crowns-table .yahtzee-grand-total {
             background: #007AFF !important;
         }
@@ -6454,7 +6461,7 @@
             color: #FFFFFF !important;
             background: transparent !important;
         }
-        /* Scrabble/Phase10/Farkel/General/Dominoes total row label — white text */
+        /* Scrabble/Phase10/Farkle/General/Dominoes total row label — white text */
         body[data-theme="ios"] .crowns-table .crowns-total-row td.crowns-hole-label {
             color: #FFFFFF !important;
         }
@@ -6608,7 +6615,7 @@
         body[data-theme="ios-dark"] .crowns-table .golf-in-row td.crowns-hole-label {
             background: transparent !important;
         }
-        /* Dark: blue background on Yahtzee section total rows to match header */
+        /* Dark: blue background on Yatzy section total rows to match header */
         body[data-theme="ios-dark"] .crowns-table .yahtzee-upper-total,
         body[data-theme="ios-dark"] .crowns-table .yahtzee-lower-total {
             background: #0A84FF !important;
@@ -7269,12 +7276,13 @@
                     <div class="dropdown-list-item-game" data-value="5crowns" onclick="selectGameType('5crowns')">5 Crowns</div>
                     <div class="dropdown-list-item-game" data-value="darts" onclick="selectGameType('darts')">Darts</div>
                     <div class="dropdown-list-item-game" data-value="dominoes" onclick="selectGameType('dominoes')">Dominoes</div>
-                    <div class="dropdown-list-item-game" data-value="farkle" onclick="selectGameType('farkle')">Farkel</div>
+                    <div class="dropdown-list-item-game" data-value="farkle" onclick="selectGameType('farkle')">Farkle</div>
                     <div class="dropdown-list-item-game" data-value="general" onclick="selectGameType('general')">General</div>
                     <div class="dropdown-list-item-game" data-value="golf" onclick="selectGameType('golf')">Golf</div>
                     <div class="dropdown-list-item-game" data-value="phase10" onclick="selectGameType('phase10')">Phase 10</div>
                     <div class="dropdown-list-item-game" data-value="scrabble" onclick="selectGameType('scrabble')">Scrabble</div>
-                    <div class="dropdown-list-item-game" data-value="yahtzee" onclick="selectGameType('yahtzee')">Yahtzee</div>
+                    <div class="dropdown-list-item-game" data-value="yahtzee" onclick="selectGameType('yahtzee')">Yatzy</div>
+                    <div class="dropdown-list-item-game" data-value="yum" onclick="selectGameType('yum')">Yum</div>
                     <div class="dropdown-list-item-game" data-value="custom" onclick="openCustomGameTrackingModal()" style="border-top: 2px solid var(--neon-blue); margin-top: 8px; padding-top: 12px;">Custom Game Tracking</div>
                     <div class="dropdown-list-item-game" data-value="scoreflipper" onclick="openScoreFlipper()" style="border-top: 1px solid rgba(0,245,255,0.2); margin-top: 4px; padding-top: 10px;">🎯 Score Flipper</div>
                 </div>
@@ -7284,12 +7292,13 @@
                 <option value="5crowns">5 Crowns</option>
                 <option value="darts">Darts</option>
                 <option value="dominoes">Dominoes</option>
-                <option value="farkle">Farkel</option>
+                <option value="farkle">Farkle</option>
                 <option value="general">General</option>
                 <option value="golf">Golf</option>
                 <option value="phase10">Phase 10</option>
                 <option value="scrabble">Scrabble</option>
-                <option value="yahtzee">Yahtzee</option>
+                <option value="yahtzee">Yatzy</option>
+                <option value="yum">Yum</option>
             </select>
         </div>
         
@@ -7467,8 +7476,24 @@
                     
                     <div id="yahtzeeButtons" style="display: none; margin-top: 20px;">
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                            <button id="yahtzeeRollDiceBtn" class="btn-secondary" onclick="openYahtzeeDiceRoller()" style="display:none;">🎲 Roll Dice</button>
-                            <button class="btn-secondary" onclick="openYahtzeeRules()">📋 Yahtzee Rules</button>
+                            <button id="yahtzeeRollDiceBtn" class="btn-secondary" onclick="openYatzyDiceRoller()" style="display:none;">🎲 Roll Dice</button>
+                            <button class="btn-secondary" onclick="openYatzyRules()">📋 Yatzy Rules</button>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+                            <button class="btn-secondary" onclick="goHome()">Home</button>
+                            <button class="btn-secondary" onclick="resetScores()">Reset</button>
+                            <button class="btn-secondary" onclick="endGame()">End Game</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="yumMode" class="crowns-mode">
+                <div class="crowns-container">
+                    <table class="crowns-table" id="yumTable"></table>
+                    <div id="yumButtons" style="display: none; margin-top: 20px;">
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button id="yumRollDiceBtn" class="btn-secondary" onclick="openYumDiceRoller()" style="display:none;">🎲 Roll Dice</button>
+                            <button class="btn-secondary" onclick="openYumRules()">📋 Yum Rules</button>
                         </div>
                         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
                             <button class="btn-secondary" onclick="goHome()">Home</button>
@@ -7496,35 +7521,35 @@
             </div>
             <div id="genericGridMode" class="crowns-mode">
                 <div class="crowns-container">
-                    <!-- Farkel Modifiers — above the grid, only shown for Farkel game type -->
+                    <!-- Farkle Modifiers — above the grid, only shown for Farkle game type -->
                     <div id="farkleModifiers" style="display:none; margin-bottom:12px;">
                         <div class="farkle-modifiers-panel">
                             <div class="farkle-mod-row">
                                 <span class="farkle-mod-label" style="color:#000000;">Variant:</span>
                                 <label class="farkle-mod-check">
-                                    <input type="radio" name="farkleVariant" id="farkleVariantRegular" value="regular" checked onchange="updateFarkelModifiers()">
+                                    <input type="radio" name="farkleVariant" id="farkleVariantRegular" value="regular" checked onchange="updateFarkleModifiers()">
                                     <span>Regular</span>
                                 </label>
                                 <label class="farkle-mod-check">
-                                    <input type="radio" name="farkleVariant" id="farkleVariantSpicy" value="spicy" onchange="updateFarkelModifiers()">
+                                    <input type="radio" name="farkleVariant" id="farkleVariantSpicy" value="spicy" onchange="updateFarkleModifiers()">
                                     <span>🌶️ Spicy</span>
                                 </label>
                             </div>
                             <div class="farkle-mod-row">
                                 <span class="farkle-mod-label" style="color:#000000;">Winning Score:</span>
                                 <label class="farkle-mod-check">
-                                    <input type="radio" name="farkleWinScore" id="farkleWin5k" value="5000" checked onchange="updateFarkelModifiers()">
+                                    <input type="radio" name="farkleWinScore" id="farkleWin5k" value="5000" checked onchange="updateFarkleModifiers()">
                                     <span>5,000</span>
                                 </label>
                                 <label class="farkle-mod-check">
-                                    <input type="radio" name="farkleWinScore" id="farkleWin10k" value="10000" onchange="updateFarkelModifiers()">
+                                    <input type="radio" name="farkleWinScore" id="farkleWin10k" value="10000" onchange="updateFarkleModifiers()">
                                     <span>10,000</span>
                                 </label>
                             </div>
                             <div class="farkle-mod-row">
                                 <label class="farkle-mod-check">
-                                    <input type="checkbox" id="farkleTriplePenalty" checked onchange="updateFarkelModifiers()">
-                                    <span>3 Farkels in a row = −1,000 pts</span>
+                                    <input type="checkbox" id="farkleTriplePenalty" checked onchange="updateFarkleModifiers()">
+                                    <span>3 Farkles in a row = −1,000 pts</span>
                                 </label>
                             </div>
                         </div>
@@ -7533,8 +7558,8 @@
                     <table class="crowns-table" id="genericGridTable"></table>
 
                     <div id="genericGridButtons" style="display: none; margin-top: 14px; gap: 10px; display: flex;">
-                        <button id="farkleRollDiceBtn" class="btn-secondary" onclick="openFarkelDiceRoller()" style="display:none;">🎲 Roll Dice</button>
-                        <button id="addGenericRowBtn" class="btn-secondary" onclick="openFarkelRules()">📋 Farkel Rules</button>
+                        <button id="farkleRollDiceBtn" class="btn-secondary" onclick="openFarkleDiceRoller()" style="display:none;">🎲 Roll Dice</button>
+                        <button id="addGenericRowBtn" class="btn-secondary" onclick="openFarkleRules()">📋 Farkle Rules</button>
                     </div>
                     
                     <div id="genericGridGameButtons" style="display: none; margin-top: 10px;">
@@ -7714,12 +7739,14 @@
                 <div class="custom-dropdown-list" id="winsTrackerDropdownList">
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('5crowns')">5 Crowns</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('darts')">Darts</div>
-                    <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('farkle')">Farkel</div>
+                    <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('dominoes')">Dominoes</div>
+                    <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('farkle')">Farkle</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('general')">General</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('golf')">Golf</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('phase10')">Phase 10</div>
                     <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('scrabble')">Scrabble</div>
-                    <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('yahtzee')">Yahtzee</div>
+                    <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('yahtzee')">Yatzy</div>
+                    <div class="dropdown-list-item-theme" onclick="selectWinsTrackerGame('yum')">Yum</div>
                     <div class="dropdown-list-item-theme" onclick="openCustomGamesViewer()">Custom Games</div>
                 </div>
             </div>
@@ -7772,7 +7799,7 @@
                 </div>
                 <div class="voice-help-content" id="voiceHelpContent">
                     <ul>
-                        <li><strong>🎮 Game Selection:</strong> "Golf" • "5 Crowns" • "Farkel" • "Darts - 501" • "Scrabble" • "General"</li>
+                        <li><strong>🎮 Game Selection:</strong> "Golf" • "5 Crowns" • "Farkle" • "Darts - 501" • "Scrabble" • "General"</li>
                         <li><strong>👥 Add Multiple Players:</strong> "Add players" → Say names → "Done" when finished</li>
                         <li><strong>➕ Add Single Player:</strong> "Add Sarah" • "Add Guy and Emma"</li>
                         <li><strong>🎯 Add Points (Name First):</strong> "Emma 5" • "Jonathan 20" • "Guy, 5"</li>
@@ -7879,10 +7906,10 @@
         </div>
     </div>
 
-    <!-- Yahtzee Dice Roller Modal -->
+    <!-- Yatzy Dice Roller Modal -->
     <div id="yahtzeeDiceModal" class="timer-modal" style="display:none;">
         <div class="timer-modal-content" style="max-width:420px;padding:20px 18px 24px;">
-            <button class="timer-modal-close" onclick="closeYahtzeeDiceRoller()">✕</button>
+            <button class="timer-modal-close" onclick="closeYatzyDiceRoller()">✕</button>
             <div id="yahtzeeDiceStatusBar" class="farkle-status-bar" style="margin-bottom:4px;"></div>
             <div id="yahtzeeDiceRollsLeft" style="font-family:Outfit,sans-serif;font-size:0.85rem;font-weight:700;text-align:center;color:#ff6d00;margin-bottom:10px;"></div>
             <div id="yahtzeeDiceGrid" class="dice-results-grid six-dice" style="margin-bottom:10px;"></div>
@@ -7909,6 +7936,17 @@
                 <div class="timer-modal-title" style="margin-bottom:0;">👑 5 Crowns Rules</div>
             </div>
             <div id="crownsRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
+        </div>
+    </div>
+
+    <!-- Yum Rules Modal -->
+    <div id="yumRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeYumRules()">
+        <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:20px 18px 14px;flex-shrink:0;">
+                <button class="timer-modal-close" onclick="closeYumRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🎲 Yum Rules</div>
+            </div>
+            <div id="yumRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
         </div>
     </div>
 
@@ -7945,12 +7983,12 @@
         </div>
     </div>
 
-    <!-- Yahtzee Rules Modal -->
-    <div id="yahtzeeRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeYahtzeeRules()">
+    <!-- Yatzy Rules Modal -->
+    <div id="yahtzeeRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeYatzyRules()">
         <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
             <div style="padding:20px 18px 14px;flex-shrink:0;">
-                <button class="timer-modal-close" onclick="closeYahtzeeRules()">✕</button>
-                <div class="timer-modal-title" style="margin-bottom:0;">🎲 Yahtzee Rules</div>
+                <button class="timer-modal-close" onclick="closeYatzyRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🎲 Yatzy Rules</div>
             </div>
             <div id="yahtzeeRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
         </div>
@@ -7967,12 +8005,12 @@
         </div>
     </div>
 
-    <!-- Farkel Rules Modal -->
-    <div id="farkleRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeFarkelRules()">
+    <!-- Farkle Rules Modal -->
+    <div id="farkleRulesModal" class="timer-modal" style="display:none;" onclick="if(event.target===this)closeFarkleRules()">
         <div class="timer-modal-content" style="max-width:440px;max-height:90vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
             <div style="padding:20px 18px 14px;flex-shrink:0;">
-                <button class="timer-modal-close" onclick="closeFarkelRules()">✕</button>
-                <div class="timer-modal-title" style="margin-bottom:0;">🎲 Farkel Rules</div>
+                <button class="timer-modal-close" onclick="closeFarkleRules()">✕</button>
+                <div class="timer-modal-title" style="margin-bottom:0;">🎲 Farkle Rules</div>
             </div>
             <div id="farkleRulesContent" style="overflow-y:auto;padding:0 18px 24px;flex:1;"></div>
         </div>
@@ -8253,10 +8291,11 @@
                     'golf': 'Golf',
                     '5crowns': '5 Crowns',
                     'phase10': 'Phase 10',
-                    'farkle': 'Farkel',
+                    'farkle': 'Farkle',
                     'darts': 'Darts',
                     'scrabble': 'Scrabble',
-                    'yahtzee': 'Yahtzee',
+                    'yahtzee': 'Yatzy',
+                'yum': 'Yum',
                     'scoreflipper': 'Score Flipper'
                 };
                 
@@ -8533,7 +8572,7 @@
         let savedGolfCourses = {}; // Saved courses with par and HCP data
         let scrabbleScores = {}; // Store Scrabble scores by player and turn
         let currentScrabbleTurn = {}; // Track current turn index for each player
-        let yahtzeeScores = {}; // Store Yahtzee scores by player and category
+        let yahtzeeScores = {}; // Store Yatzy scores by player and category
         let yahtzeeUsedCategories = {}; // Track which categories have been used by each player
         let phase10Scores = {}; // Store Phase 10 scores by player and phase
         let phase10Completed = {}; // Track which phases have been completed by each player
@@ -8573,6 +8612,25 @@
             'chance': { name: 'Chance', section: 'lower', points: 'sum' }
         };
         
+        // ── YUM CATEGORIES ─────────────────────────────────────────────────────
+        const YUM_CATEGORIES = {
+            // Upper Section — score sum of matching dice
+            'ones':   { name: "1's",  section: 'upper', max: 5  },
+            'twos':   { name: "2's",  section: 'upper', max: 10 },
+            'threes': { name: "3's",  section: 'upper', max: 15 },
+            'fours':  { name: "4's",  section: 'upper', max: 20 },
+            'fives':  { name: "5's",  section: 'upper', max: 25 },
+            'sixes':  { name: "6's",  section: 'upper', max: 30 },
+            // Lower Section
+            'threeKind':   { name: '3 of a Kind',    section: 'lower', desc: 'Points Thrown',  fixed: null },
+            'fourKind':    { name: '4 of a Kind',    section: 'lower', desc: 'Points Thrown',  fixed: null },
+            'smStraight':  { name: 'Short Straight', section: 'lower', desc: '15 pts (4 seq)', fixed: 15   },
+            'lgStraight':  { name: 'Long Straight',  section: 'lower', desc: '20 pts (5 seq)', fixed: 20   },
+            'highRoll':    { name: 'High Roll',      section: 'lower', desc: 'Points Thrown',  fixed: null },
+            'fullHouse':   { name: 'Full House',     section: 'lower', desc: '25 pts',         fixed: 25   },
+            'yum':         { name: 'YUM',            section: 'lower', desc: '30 pts',         fixed: 30   },
+        };
+
         const PHASE10_PHASES = [
             { num: 1, name: '2 sets of 3' },
             { num: 2, name: '1 set of 3 + 1 run of 4' },
@@ -8924,10 +8982,11 @@
                     'golf': 'Golf',
                     '5crowns': '5 Crowns',
                     'phase10': 'Phase 10',
-                    'farkle': 'Farkel',
+                    'farkle': 'Farkle',
                     'darts': 'Darts',
                     'scrabble': 'Scrabble',
-                    'yahtzee': 'Yahtzee'
+                    'yahtzee': 'Yatzy',
+                'yum': 'Yum'
                 };
                 
                 titleEl.textContent = `${gameNames[gameType] || gameType} Complete!`;
@@ -9169,6 +9228,14 @@
                         scorecard.scores[player.name] = {...yahtzeeScores[player.id]};
                     });
                     break;
+
+                case 'yum':
+                    scorecard.scores = {};
+                    scorecard.categories = Object.keys(YUM_CATEGORIES);
+                    players.forEach(player => {
+                        scorecard.scores[player.name] = {...yumScores[player.id]};
+                    });
+                    break;
                     
                 case 'phase10':
                     scorecard.scores = {};
@@ -9242,10 +9309,11 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkel',
+                'farkle': 'Farkle',
                 'darts': 'Darts',
                 'scrabble': 'Scrabble',
-                'yahtzee': 'Yahtzee'
+                'yahtzee': 'Yatzy',
+                'yum': 'Yum'
             };
             
             const gameName = gameNames[gameType] || gameType;
@@ -9392,9 +9460,10 @@
                 '5crowns': '5 Crowns',
                 'scrabble': 'Scrabble',
                 'darts': 'Darts',
-                'yahtzee': 'Yahtzee',
+                'yahtzee': 'Yatzy',
+                'yum': 'Yum',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkel',
+                'farkle': 'Farkle',
                 'general': 'General'
             };
             if (modalTitle) {
@@ -9725,7 +9794,7 @@
                     `;
                 }
             } else if (gameType === 'farkle') {
-                // Show detailed turn-by-turn scoring for Farkel in grid format
+                // Show detailed turn-by-turn scoring for Farkle in grid format
                 if (scorecard.scores && Object.keys(scorecard.scores).length > 0) {
                     html += `
                         <div style="margin-bottom: 15px;">
@@ -9760,7 +9829,7 @@
                         }
                     });
                     
-                    // Farkel turns
+                    // Farkle turns
                     for (let turn = 1; turn <= maxTurns; turn++) {
                         html += `<tr>`;
                         html += `<td style="text-align: center; background: rgba(128,128,128,0.3); font-weight: 700; width: 40px;">${turn}</td>`;
@@ -9867,7 +9936,7 @@
                     `;
                 }
             } else if (gameType === 'yahtzee') {
-                // Show detailed category-by-category scoring for Yahtzee in grid format
+                // Show detailed category-by-category scoring for Yatzy in grid format
                 if (scorecard.scores && Object.keys(scorecard.scores).length > 0) {
                     html += `
                         <div style="margin-bottom: 15px;">
@@ -9933,7 +10002,7 @@
                         { key: 'fullHouse', name: 'Full House' },
                         { key: 'smStraight', name: 'Sm Straight' },
                         { key: 'lgStraight', name: 'Lg Straight' },
-                        { key: 'yahtzee', name: 'Yahtzee' },
+                        { key: 'yahtzee', name: 'Yatzy' },
                         { key: 'chance', name: 'Chance' }
                     ];
                     
@@ -9946,8 +10015,8 @@
                         html += '</tr>';
                     });
                     
-                    // Yahtzee Bonus
-                    html += '<tr><td style="background: rgba(128,128,128,0.3); font-weight: 700;">Yahtzee Bonus</td>';
+                    // Yatzy Bonus
+                    html += '<tr><td style="background: rgba(128,128,128,0.3); font-weight: 700;">Yatzy Bonus</td>';
                     scorecard.players.forEach(playerName => {
                         const bonus = scorecard.scores[playerName] ? (scorecard.scores[playerName]['yahtzeeBonus'] || 0) : 0;
                         html += `<td style="text-align: center; font-weight: 700; color: ${bonus > 0 ? '#28a745' : 'inherit'};">${bonus > 0 ? bonus : '-'}</td>`;
@@ -9971,7 +10040,7 @@
                             lowerCategories.forEach(cat => {
                                 totalScore += scorecard.scores[playerName][cat.key] || 0;
                             });
-                            // Yahtzee bonus
+                            // Yatzy bonus
                             totalScore += scorecard.scores[playerName]['yahtzeeBonus'] || 0;
                         }
                         html += `<td style="text-align: center; font-weight: 800; color: #000;">${totalScore || ''}</td>`;
@@ -9985,6 +10054,42 @@
                             </div>
                         </div>
                     `;
+                }
+            } else if (gameType === 'yum') {
+                if (scorecard.scores && Object.keys(scorecard.scores).length > 0) {
+                    const playerCount = scorecard.players.length;
+                    const colW = `calc((100% - 130px) / ${playerCount})`;
+                    html += `<div style="margin-bottom:15px;overflow:hidden;"><table class="crowns-table" style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:0.9rem;"><thead><tr><th style="text-align:center;background:rgba(128,128,128,0.3);width:130px;font-weight:700;">Category</th>`;
+                    scorecard.players.forEach(n => { html += `<th style="text-align:center;width:${colW};font-weight:700;font-size:0.85rem;">${escapeHtml(n)}</th>`; });
+                    html += '</tr></thead><tbody>';
+                    html += '<tr style="background:#28A745;"><td style="text-align:center;font-weight:800;color:#fff;">UPPER</td>';
+                    scorecard.players.forEach(()=>{html+='<td></td>';});
+                    html += '</tr>';
+                    const upCats = [{k:'ones',n:"1's"},{k:'twos',n:"2's"},{k:'threes',n:"3's"},{k:'fours',n:"4's"},{k:'fives',n:"5's"},{k:'sixes',n:"6's"}];
+                    upCats.forEach(({k,n})=>{
+                        html+=`<tr><td style="background:rgba(128,128,128,0.3);font-weight:700;">${n}</td>`;
+                        scorecard.players.forEach(pn=>{const s=scorecard.scores[pn]?.[k]||0;html+=`<td style="text-align:center;background:${s>0?'rgba(0,123,255,0.6)':'rgba(0,245,255,0.1)'};">${s||'-'}</td>`;});
+                        html+='</tr>';
+                    });
+                    html+='<tr><td style="background:rgba(128,128,128,0.3);font-weight:700;">Bonus (≥63→25)</td>';
+                    scorecard.players.forEach(pn=>{const b=scorecard.scores[pn]?.upperBonus||0;html+=`<td style="text-align:center;font-weight:700;color:${b>0?'#28a745':'inherit'};">${b>0?'+25':'-'}</td>`;});
+                    html+='</tr>';
+                    html+='<tr style="background:rgba(255,0,110,0.5);"><td style="text-align:center;font-weight:800;color:#fff;">LOWER</td>';
+                    scorecard.players.forEach(()=>{html+='<td></td>';});
+                    html+='</tr>';
+                    const lowCats = [{k:'threeKind',n:'3 of a Kind'},{k:'fourKind',n:'4 of a Kind'},{k:'smStraight',n:'Short Straight'},{k:'lgStraight',n:'Long Straight'},{k:'highRoll',n:'High Roll'},{k:'fullHouse',n:'Full House'},{k:'yum',n:'YUM'}];
+                    lowCats.forEach(({k,n})=>{
+                        html+=`<tr><td style="background:rgba(128,128,128,0.3);font-weight:700;">${n}</td>`;
+                        scorecard.players.forEach(pn=>{const s=scorecard.scores[pn]?.[k]||0;html+=`<td style="text-align:center;background:${s>0?'rgba(0,123,255,0.6)':'rgba(0,245,255,0.1)'};">${s||'-'}</td>`;});
+                        html+='</tr>';
+                    });
+                    html+='<tr style="background:rgba(255,215,0,0.4);border-top:3px solid #666;"><td style="text-align:center;font-weight:800;color:#000;">GRAND TOTAL</td>';
+                    scorecard.players.forEach(pn=>{
+                        const sc=scorecard.scores[pn];
+                        const tot=sc?(upCats.reduce((s,{k})=>s+(sc[k]||0),0)+(sc.upperBonus||0)+lowCats.reduce((s,{k})=>s+(sc[k]||0),0)):0;
+                        html+=`<td style="text-align:center;font-weight:800;color:#000;">${tot||''}</td>`;
+                    });
+                    html+='</tr></tbody></table></div>';
                 }
             } else if (gameType === 'darts' && scorecard.gameSettings) {
                 // Build the game description based on double in/out settings
@@ -10011,8 +10116,8 @@
                 `;
             }
             
-            // Show final scores (but not for Golf, Farkel, General, or Yahtzee - they show detailed grids instead)
-            if (!['golf', 'farkle', 'general', 'yahtzee'].includes(gameType)) {
+            // Show final scores (but not for Golf, Farkle, General, or Yatzy - they show detailed grids instead)
+            if (!['golf', 'farkle', 'general', 'yahtzee', 'yum'].includes(gameType)) {
                 // Sort scores from best to worst based on game type
                 const isLowerScoreWins = ['5crowns', 'golf', 'phase10'].includes(gameType);
                 const sortedScores = [...scorecard.finalScores].sort((a, b) => {
@@ -10539,7 +10644,7 @@
             }
             
             // Speak the prompt
-            const promptText = 'Welcome Player One! What game are we playing today? Say Golf, 5 Crowns, Phase 10, Farkel, Darts, Scrabble, Yahtzee, or General.';
+            const promptText = 'Welcome Player One! What game are we playing today? Say Golf, 5 Crowns, Phase 10, Farkle, Darts, Scrabble, Yatzy, or General.';
             
             console.log('About to speak prompt:', promptText);
             console.log('isSpeakerMuted before speak call:', isSpeakerMuted);
@@ -10682,7 +10787,7 @@
                     currentGolfHole = {};
                     renderGolfTable();
                 } else if (currentGameType === 'farkle' || scoringMode === 'generic') {
-                    // Reset generic grid scores for Farkel and other generic grid games
+                    // Reset generic grid scores for Farkle and other generic grid games
                     genericGridScores = {};
                     currentGenericTurn = {};
                     players.forEach(player => {
@@ -10939,14 +11044,22 @@
             } else if (currentGameType === 'yahtzee') {
                 yahtzeeCurrentPlayerIndex = 0;
                 players.forEach(player => {
-                    YAHTZEE_CATEGORIES.forEach(cat => {
+                    Object.keys(YAHTZEE_CATEGORIES).forEach(cat => {
                         if (yahtzeeScores[player.id]) {
                             yahtzeeScores[player.id][cat] = null;
                         }
                     });
                 });
-                saveYahtzeeData();
-                renderYahtzeeTable();
+                saveYatzyData();
+                renderYatzyTable();
+            } else if (currentGameType === 'yum') {
+                yumCurrentPlayerIndex = 0;
+                players.forEach(player => {
+                    yumScores[player.id] = { ones:0,twos:0,threes:0,fours:0,fives:0,sixes:0,subTotal:0,upperBonus:0,upperTotal:0,threeKind:0,fourKind:0,smStraight:0,lgStraight:0,highRoll:0,fullHouse:0,yum:0,lowerTotal:0,grandTotal:0 };
+                    yumUsedCategories[player.id] = {};
+                });
+                saveYumData();
+                renderYumTable();
             } else if (currentGameType === 'phase10') {
                 players.forEach(player => {
                     for (let phase = 1; phase <= 10; phase++) {
@@ -11034,6 +11147,10 @@
                 hasAnyScores = players.some(player => 
                     Object.values(yahtzeeScores[player.id] || {}).some(score => score !== 0)
                 );
+            } else if (scoringMode === 'yum' && currentGameType === 'yum') {
+                hasAnyScores = players.some(player =>
+                    Object.keys(YUM_CATEGORIES).some(cat => yumUsedCategories[player.id]?.[cat])
+                );
             } else if (scoringMode === 'phase10' && currentGameType === 'phase10') {
                 hasAnyScores = players.some(player => 
                     Object.values(phase10Scores[player.id] || {}).some(score => score !== 0)
@@ -11087,8 +11204,9 @@
                     total -= scrabbleScores[player.id]?.['unplayed'] || 0;
                     total += scrabbleScores[player.id]?.['opponents'] || 0;
                     finalScore = total;
+                } else if (scoringMode === 'yum' && currentGameType === 'yum') {
+                    finalScore = yumScores[player.id]?.grandTotal || 0;
                 } else if (scoringMode === 'yahtzee' && currentGameType === 'yahtzee') {
-                    // Calculate Yahtzee grand total: upper + lower sections + bonuses
                     const upperScore = (yahtzeeScores[player.id]?.ones || 0) + 
                                      (yahtzeeScores[player.id]?.twos || 0) + 
                                      (yahtzeeScores[player.id]?.threes || 0) + 
@@ -11139,11 +11257,12 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkel',
+                'farkle': 'Farkle',
                 'darts': 'Darts',
                 'dominoes': 'Dominoes',
                 'scrabble': 'Scrabble',
-                'yahtzee': 'Yahtzee',
+                'yahtzee': 'Yatzy',
+                'yum': 'Yum',
                 'general': 'General'
             };
             const gameName = gameNames[currentGameType] || 'General';
@@ -11781,10 +11900,12 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkel',
+                'farkle': 'Farkle',
                 'darts': 'Darts',
+                'dominoes': 'Dominoes',
                 'scrabble': 'Scrabble',
-                'yahtzee': 'Yahtzee'
+                'yahtzee': 'Yatzy',
+                'yum': 'Yum'
             };
             
             // Update display
@@ -11814,9 +11935,11 @@
                 { id: '5crowns', name: '5 Crowns' },
                 { id: 'scrabble', name: 'Scrabble' },
                 { id: 'darts', name: 'Darts' },
-                { id: 'yahtzee', name: 'Yahtzee' },
+                { id: 'dominoes', name: 'Dominoes' },
+                { id: 'yahtzee', name: 'Yatzy' },
+                { id: 'yum', name: 'Yum' },
                 { id: 'phase10', name: 'Phase 10' },
-                { id: 'farkle', name: 'Farkel' },
+                { id: 'farkle', name: 'Farkle' },
                 { id: 'general', name: 'General' }
             ];
             
@@ -11856,10 +11979,11 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkel',
+                'farkle': 'Farkle',
                 'darts': 'Darts',
                 'scrabble': 'Scrabble',
-                'yahtzee': 'Yahtzee'
+                'yahtzee': 'Yatzy',
+                'yum': 'Yum'
             };
             
             title.innerHTML = `${gameNames[gameType]} Statistics`;
@@ -12634,6 +12758,7 @@
             if (lower.includes('dart')) return 'darts';
             if (lower.includes('scrabble')) return 'scrabble';
             if (lower.includes('yahtzee') || lower.includes('yatzy')) return 'yahtzee';
+            if (lower.includes('yum')) return 'yum';
             if (lower.includes('general')) return 'general';
             
             // If no match found, default to 'general' for any other game name
@@ -12885,8 +13010,8 @@
                     currentScore = SCRABBLE_TURNS.reduce((sum, turn) => 
                         sum + (scrabbleScores[player.id]?.[turn] || 0), 0);
                 } else if (currentGameType === 'yahtzee') {
-                    // Calculate Yahtzee total including bonuses
-                    currentScore = calculateYahtzeeTotal(player.id);
+                    // Calculate Yatzy total including bonuses
+                    currentScore = calculateYatzyTotal(player.id);
                 } else if (currentGameType === 'phase10') {
                     // Sum up all phase scores
                     currentScore = 0;
@@ -14313,12 +14438,13 @@
                 { value: '5crowns',  label: '5 Crowns' },
                 { value: 'darts',    label: 'Darts' },
                 { value: 'dominoes', label: 'Dominoes' },
-                { value: 'farkle',   label: 'Farkel' },
+                { value: 'farkle',   label: 'Farkle' },
                 { value: 'general',  label: 'General' },
                 { value: 'golf',     label: 'Golf' },
                 { value: 'phase10',  label: 'Phase 10' },
                 { value: 'scrabble', label: 'Scrabble' },
-                { value: 'yahtzee',  label: 'Yahtzee' },
+                { value: 'yahtzee',  label: 'Yatzy' },
+                { value: 'yum',      label: 'Yum' },
                 { value: 'custom',        label: 'Custom Game Tracking', separator: true },
                 { value: 'scoreflipper',  label: '🎯 Score Flipper' },
             ];
@@ -14414,11 +14540,12 @@
                 'golf': 'Golf',
                 '5crowns': '5 Crowns',
                 'phase10': 'Phase 10',
-                'farkle': 'Farkel',
+                'farkle': 'Farkle',
                 'darts': 'Darts',
                 'dominoes': 'Dominoes',
                 'scrabble': 'Scrabble',
-                'yahtzee': 'Yahtzee'
+                'yahtzee': 'Yatzy',
+                'yum': 'Yum'
             };
             
             if (selectedSpan) {
@@ -16118,7 +16245,425 @@
         }
         // ===== YAHTZEE GRID FUNCTIONS =====
         
-        function initializeYahtzeeScores() {
+        // ── YUM GAME STATE ─────────────────────────────────────────────────────
+        let yumScores = {};
+        let yumUsedCategories = {};
+        let yumCurrentPlayerIndex = 0;
+
+        function initializeYumScores() {
+            if (!yumScores) yumScores = {};
+            if (!yumUsedCategories) yumUsedCategories = {};
+            players.forEach(player => {
+                if (!yumScores[player.id]) {
+                    yumScores[player.id] = {
+                        ones:0, twos:0, threes:0, fours:0, fives:0, sixes:0,
+                        subTotal:0, upperBonus:0, upperTotal:0,
+                        threeKind:0, fourKind:0, smStraight:0, lgStraight:0,
+                        highRoll:0, fullHouse:0, yum:0,
+                        lowerTotal:0, grandTotal:0
+                    };
+                }
+                if (!yumUsedCategories[player.id]) yumUsedCategories[player.id] = {};
+            });
+        }
+
+        function saveYumData() {
+            localStorage.setItem('scorekeeper_yum_scores', JSON.stringify(yumScores));
+            localStorage.setItem('scorekeeper_yum_used', JSON.stringify(yumUsedCategories));
+        }
+
+        function loadYumData() {
+            try {
+                const s = localStorage.getItem('scorekeeper_yum_scores');
+                const u = localStorage.getItem('scorekeeper_yum_used');
+                if (s) yumScores = JSON.parse(s);
+                if (u) yumUsedCategories = JSON.parse(u);
+            } catch(e) {}
+        }
+
+        function calcYumScore(cat, vals) {
+            const counts = [0,0,0,0,0,0,0];
+            vals.forEach(v => counts[v]++);
+            const sum = vals.reduce((a,b)=>a+b,0);
+            switch(cat) {
+                case 'ones':   return counts[1]*1;
+                case 'twos':   return counts[2]*2;
+                case 'threes': return counts[3]*3;
+                case 'fours':  return counts[4]*4;
+                case 'fives':  return counts[5]*5;
+                case 'sixes':  return counts[6]*6;
+                case 'threeKind': return counts.some(c=>c>=3) ? sum : 0;
+                case 'fourKind':  return counts.some(c=>c>=4) ? sum : 0;
+                case 'highRoll':  return counts.some(c=>c>=5) ? sum : 0;
+                case 'smStraight': {
+                    const u=[...new Set(vals)].sort((a,b)=>a-b);
+                    for(let i=0;i<=u.length-4;i++) {
+                        if(u[i+3]-u[i]===3&&u[i+1]-u[i]===1&&u[i+2]-u[i]===2) return 15;
+                    }
+                    return 0;
+                }
+                case 'lgStraight': {
+                    const u=[...new Set(vals)].sort((a,b)=>a-b);
+                    if(u.length>=5&&u[4]-u[0]===4) return 20;
+                    return 0;
+                }
+                case 'fullHouse':
+                    return (counts.filter(c=>c===3).length===1&&counts.filter(c=>c===2).length===1) ? 25 : 0;
+                case 'yum': return counts.some(c=>c>=5) ? 30 : 0;
+                default: return 0;
+            }
+        }
+
+        function renderYumTable() {
+            const table = document.getElementById('yumTable');
+            const buttonContainer = document.getElementById('yumButtons');
+            if (!table) return;
+
+            if (players.length === 0) {
+                table.innerHTML = '';
+                if (buttonContainer) buttonContainer.style.display = 'none';
+                return;
+            }
+            if (buttonContainer) buttonContainer.style.display = 'block';
+            const rollBtn = document.getElementById('yumRollDiceBtn');
+            if (rollBtn) rollBtn.style.display = '';
+
+            initializeYumScores();
+
+            const n = players.length;
+            const cell = (pid, cat) => {
+                const score = yumScores[pid][cat] || 0;
+                const used  = yumUsedCategories[pid][cat];
+                const cls   = used ? 'yahtzee-used' : 'yahtzee-available';
+                const disp  = score > 0 ? score : (used ? '0' : '-');
+                return `<td class="${cls}" onclick="enterYumScore(${pid},'${cat}')" style="cursor:pointer;">${disp}</td>`;
+            };
+            const sectionHeader = (label, colour) =>
+                `<tr><td colspan="${n+1}" style="background:${colour};color:white;font-weight:800;text-align:center;padding:6px;">${label}</td></tr>`;
+            const maxCell = txt => `<td style="font-size:0.7rem;opacity:0.6;border-left:2px solid rgba(255,255,255,0.15);">${txt}</td>`;
+
+            let h = `<thead><tr>
+                <th class="crowns-hole-label" style="min-width:130px;">ROLL / JEU DE DÉS</th>
+                <th style="font-size:0.7rem;opacity:0.6;min-width:50px;border-right:2px solid rgba(255,255,255,0.15);">MAX</th>`;
+            players.forEach(p => { h += `<th class="crowns-player-header"><div style="cursor:pointer;" onclick="editYumPlayerName(${p.id})">${p.name}</div></th>`; });
+            h += '</tr></thead><tbody>';
+
+            // UPPER SECTION
+            h += sectionHeader('UPPER SECTION / PARTIE SUPÉRIEURE', '#28A745');
+            const upCats = ['ones','twos','threes','fours','fives','sixes'];
+            upCats.forEach(cat => {
+                const def = YUM_CATEGORIES[cat];
+                h += `<tr><td class="crowns-hole-label">${def.name}</td>${maxCell(def.max)}`;
+                players.forEach(p => { h += cell(p.id, cat); });
+                h += '</tr>';
+            });
+
+            // Sub Total
+            h += `<tr style="background:rgba(0,245,255,0.08);"><td class="crowns-hole-label" style="font-weight:700;">Sub Total / Sous Total</td>${maxCell('—')}`;
+            players.forEach(p => {
+                const sub = upCats.reduce((s,k)=>s+(yumScores[p.id][k]||0),0);
+                yumScores[p.id].subTotal = sub;
+                h += `<td style="font-weight:700;">${sub||'-'}</td>`;
+            });
+            h += '</tr>';
+
+            // Bonus
+            h += `<tr style="background:rgba(255,215,0,0.1);"><td class="crowns-hole-label" style="font-weight:700;">Bonus if ≥63<br><span style="font-size:0.72rem;opacity:0.7;">Boni si 63 ou plus</span></td>${maxCell(25)}`;
+            players.forEach(p => {
+                const sub = yumScores[p.id].subTotal || 0;
+                const bonus = sub >= 63 ? 25 : 0;
+                yumScores[p.id].upperBonus = bonus;
+                h += `<td style="font-weight:700;color:${bonus>0?'#28a745':'inherit'};">${bonus>0?'+25':'-'}</td>`;
+            });
+            h += '</tr>';
+
+            // Upper Total
+            h += `<tr style="background:rgba(0,245,255,0.12);"><td class="crowns-hole-label" style="font-weight:800;">TOTAL UPPER / PARTIE SUPÉRIEURE</td>${maxCell('—')}`;
+            players.forEach(p => {
+                const tot = (yumScores[p.id].subTotal||0)+(yumScores[p.id].upperBonus||0);
+                yumScores[p.id].upperTotal = tot;
+                h += `<td style="font-weight:800;">${tot||'-'}</td>`;
+            });
+            h += '</tr>';
+
+            // LOWER SECTION
+            h += sectionHeader('LOWER SECTION / PARTIE INFÉRIEURE', 'var(--neon-pink, #ff006e)');
+            const lowCats = [
+                {key:'threeKind', label:'3 of a Kind / 3 Pareils',    max:'Pts'},
+                {key:'fourKind',  label:'4 of a Kind / 4 Pareils',    max:'Pts'},
+                {key:'smStraight',label:'Short Straight / Courte Séq.', max:15},
+                {key:'lgStraight',label:'Long Straight / Longue Séq.', max:20},
+                {key:'highRoll',  label:'High Roll / Roulement de Surplus', max:'Pts'},
+                {key:'fullHouse', label:'Full House / Main Pleine',    max:25},
+                {key:'yum',       label:'YUM',                        max:30},
+            ];
+            lowCats.forEach(({key,label,max}) => {
+                h += `<tr><td class="crowns-hole-label">${label}</td>${maxCell(max)}`;
+                players.forEach(p => { h += cell(p.id, key); });
+                h += '</tr>';
+            });
+
+            // Lower Total
+            h += `<tr style="background:rgba(255,0,110,0.08);"><td class="crowns-hole-label" style="font-weight:800;">TOTAL LOWER / PARTIE INFÉRIEURE</td>${maxCell('—')}`;
+            const lowKeys = lowCats.map(c=>c.key);
+            players.forEach(p => {
+                const tot = lowKeys.reduce((s,k)=>s+(yumScores[p.id][k]||0),0);
+                yumScores[p.id].lowerTotal = tot;
+                h += `<td style="font-weight:800;">${tot||'-'}</td>`;
+            });
+            h += '</tr>';
+
+            // Upper Total repeated
+            h += `<tr style="background:rgba(0,245,255,0.05);"><td class="crowns-hole-label" style="font-weight:700;">Total Upper / Partie Supérieure</td>${maxCell('—')}`;
+            players.forEach(p => { h += `<td style="font-weight:700;">${yumScores[p.id].upperTotal||'-'}</td>`; });
+            h += '</tr>';
+
+            // Grand Total
+            h += `<tr style="background:rgba(255,215,0,0.15);"><td class="crowns-hole-label" style="font-weight:800;font-size:1rem;">GRAND TOTAL / MONTANT TOTAL</td>${maxCell('—')}`;
+            players.forEach(p => {
+                const grand = (yumScores[p.id].upperTotal||0)+(yumScores[p.id].lowerTotal||0);
+                yumScores[p.id].grandTotal = grand;
+                p.score = grand;
+                h += `<td style="font-weight:800;font-size:1rem;background:rgba(255,215,0,0.2);">${grand||'-'}</td>`;
+            });
+            h += '</tr>';
+
+            h += '</tbody>';
+            table.innerHTML = h;
+        }
+
+        function editYumPlayerName(playerId) {
+            // reuse generic edit
+            const player = players.find(p=>p.id===playerId);
+            if(!player) return;
+            const newName = prompt('Edit player name:', player.name);
+            if(newName && newName.trim()) {
+                player.name = newName.trim();
+                renderYumTable();
+            }
+        }
+
+        function enterYumScore(playerId, category) {
+            const player = players.find(p=>p.id===playerId);
+            if(!player) return;
+            const def = YUM_CATEGORIES[category];
+            const current = yumScores[playerId][category]||0;
+            const maxScore = def.fixed || (def.max || 999);
+            const val = prompt(player.name + ' — ' + def.name + '\nEnter score:', current || '');
+            if(val===null) return;
+            const score = Math.max(0, parseInt(val)||0);
+            saveStateForUndo(`\${player.name} - Yum \${def.name}: \${score}`);
+            yumScores[playerId][category] = score;
+            yumUsedCategories[playerId][category] = true;
+            saveYumData();
+            renderYumTable();
+        }
+
+        function closeYumRules() { document.getElementById('yumRulesModal').style.display = 'none'; }
+        function openYumRules() {
+            document.getElementById('yumRulesModal').style.display = 'flex';
+            document.getElementById('yumRulesContent').innerHTML = buildYumRulesHTML();
+        }
+        function buildYumRulesHTML() {
+            const rule = (icon, text) => `<div class="scrabble-rule-row"><span style="font-size:1.2rem;flex-shrink:0;">${icon}</span><span>${text}</span></div>`;
+            const section = (title, content) => `<div class="scrabble-rules-section"><h3>${title}</h3>${content}</div>`;
+            const cat = (name, score, desc) => `<div class="scrabble-rule-row"><span style="font-weight:800;min-width:120px;font-size:0.82rem;flex-shrink:0;">${name}</span><div><div style="font-weight:700;color:var(--neon-blue);font-size:0.9rem;">${score}</div>${desc?`<div style="font-size:0.75rem;color:var(--text-primary);opacity:0.75;">${desc}</div>`:''}</div></div>`;
+            return `
+            <div class="scrabble-rules-objective">
+                <strong>Objective:</strong> Score the most points over 12 rounds by rolling 5 dice up to 3 times per turn. Fill in all categories. The player with the highest <strong>Grand Total</strong> wins.
+            </div>
+            ${section('Taking a Turn', `
+                ${rule('🎲', 'Roll all <strong>5 dice</strong>.')}
+                ${rule('🔒', 'Keep any dice you want — tap to lock them in place.')}
+                ${rule('🔄', 'Re-roll the remaining dice up to <strong>2 more times</strong> (3 rolls total).')}
+                ${rule('📝', 'After rolling, choose a <strong>category</strong> to score. Each category can only be used once.')}
+            `)}
+            ${section('Upper Section', `
+                ${cat("1's", 'Sum of all 1s', 'Max 5 pts')}
+                ${cat("2's", 'Sum of all 2s', 'Max 10 pts')}
+                ${cat("3's", 'Sum of all 3s', 'Max 15 pts')}
+                ${cat("4's", 'Sum of all 4s', 'Max 20 pts')}
+                ${cat("5's", 'Sum of all 5s', 'Max 25 pts')}
+                ${cat("6's", 'Sum of all 6s', 'Max 30 pts')}
+                ${rule('🎁', '<strong>Bonus: 25 pts</strong> if your Upper Sub-Total is <strong>63 or more</strong>.')}
+            `)}
+            ${section('Lower Section', `
+                ${cat('3 of a Kind', 'Points Thrown', 'At least 3 dice the same — score sum of ALL 5 dice')}
+                ${cat('4 of a Kind', 'Points Thrown', 'At least 4 dice the same — score sum of ALL 5 dice')}
+                ${cat('Short Straight', '15 pts', '4 sequential dice (e.g. 2-3-4-5)')}
+                ${cat('Long Straight', '20 pts', '5 sequential dice (e.g. 1-2-3-4-5 or 2-3-4-5-6)')}
+                ${cat('High Roll', 'Points Thrown', '5 of a kind — score sum of ALL 5 dice')}
+                ${cat('Full House', '25 pts', '3 of one number + 2 of another')}
+                ${cat('YUM', '30 pts', '5 of a kind — score exactly 30 pts')}
+            `)}
+            ${section('Key Differences from Yatzy', `
+                ${rule('🔑', 'Bonus is <strong>25 pts</strong> (not 35) for Upper ≥ 63.')}
+                ${rule('🔑', 'Short Straight = <strong>15 pts</strong> (not 30).')}
+                ${rule('🔑', 'Long Straight = <strong>20 pts</strong> (not 40).')}
+                ${rule('🔑', '<strong>High Roll</strong> (5-of-a-kind) scores the <strong>sum of all dice</strong>, not a fixed value.')}
+                ${rule('🔑', '<strong>YUM</strong> (5-of-a-kind) scores a fixed <strong>30 pts</strong>.')}
+                ${rule('🔑', 'No "Chance" category.')}
+            `)}
+            ${section('Winning', `
+                ${rule('🏆', 'Grand Total = Total of Upper Half + Total of Lower Half.')}
+                ${rule('🥇', 'Player with the <strong>highest Grand Total</strong> wins.')}
+            `)}`;
+        }
+
+        // ── YUM DICE ROLLER ─────────────────────────────────────────────────────
+        let yumRollerMode = false;
+        let yumActivePlayerId = null;
+        let yumDiceValues = [0,0,0,0,0];
+        let yumKeptIndices = new Set();
+        let yumRollsRemaining = 3;
+        let yumDiceElements = [];
+
+        function openYumDiceRoller() {
+            if(players.length===0) return;
+            let target=null;
+            for(let a=0;a<players.length;a++) {
+                const idx=(yumCurrentPlayerIndex+a)%players.length;
+                const p=players[idx];
+                const used=yumUsedCategories[p.id]||{};
+                const hasOpen=Object.keys(YUM_CATEGORIES).some(k=>!used[k]);
+                if(hasOpen){target=p;yumCurrentPlayerIndex=idx;break;}
+            }
+            if(!target) return;
+            yumActivePlayerId=target.id;
+            yumRollerMode=true;
+            yumDiceValues=[0,0,0,0,0];
+            yumKeptIndices=new Set();
+            yumRollsRemaining=3;
+            yumDiceElements=[];
+
+            // Reuse the Yatzy dice modal UI
+            document.getElementById('yahtzeeDiceModal').style.display='flex';
+            document.getElementById('yahtzeeDiceStatusBar').textContent=`\${target.name}'s turn (Yum)`;
+            document.getElementById('yahtzeeDiceRollsLeft').textContent='Rolls remaining: 3';
+            document.getElementById('yahtzeeSuggestions').style.display='none';
+            document.getElementById('yahtzeeDiceTotalBar').style.display='none';
+            document.getElementById('yahtzeeZeroBtn').style.display='none';
+            document.getElementById('yahtzeeRollBtn').textContent='🎲 Roll 5 Dice';
+            document.getElementById('yahtzeeRollBtn').onclick=yumRoll;
+            document.getElementById('yahtzeeRollBtn').disabled=false;
+            document.getElementById('yahtzeeRollBtn').style.opacity='1';
+            document.getElementById('yahtzeeDiceGrid').innerHTML='';
+        }
+
+        function closeYumDiceRoller() {
+            document.getElementById('yahtzeeDiceModal').style.display='none';
+            yumRollerMode=false;
+            yumActivePlayerId=null;
+            // Reset the shared roll button back to Yatzy so opening Yatzy next works correctly
+            const rollBtn = document.getElementById('yahtzeeRollBtn');
+            if (rollBtn) { rollBtn.onclick = yahtzeeRoll; rollBtn.disabled = false; rollBtn.style.opacity = '1'; }
+        }
+
+        function yumRoll() {
+            if(yumRollsRemaining<=0) return;
+            yumRollsRemaining--;
+            const rollBtn=document.getElementById('yahtzeeRollBtn');
+            rollBtn.disabled=true; rollBtn.style.opacity='0.4';
+
+            for(let i=0;i<5;i++) {
+                if(!yumKeptIndices.has(i)) yumDiceValues[i]=Math.floor(Math.random()*6)+1;
+            }
+            const grid=document.getElementById('yahtzeeDiceGrid');
+            grid.innerHTML='';
+            yumDiceElements=[];
+            let doneCount=0, fired=false;
+            const checkDone=()=>{ doneCount++; if(doneCount===5&&!fired){fired=true;yumAfterRoll();} };
+
+            yumDiceValues.forEach((val,idx)=>{
+                const isKept=yumKeptIndices.has(idx);
+                const scene=document.createElement('div');
+                scene.className='die-scene'+(isKept?' locked':'');
+                scene.dataset.diceIdx=idx;
+                const cube=buildCube(true,val);
+                scene.appendChild(cube);
+                grid.appendChild(scene);
+                yumDiceElements.push(scene);
+                if(isKept){const f=VAL_TO_FACE[val];const[rx,ry]=FACE_ROTS[f];cube.style.transform=`rotateX(\${rx}deg) rotateY(\${ry}deg)`;checkDone();}
+                else{cube.style.transform='rotateX(0deg) rotateY(0deg)';setTimeout(()=>{animateCube(scene,cube,val,checkDone);},idx*80);}
+            });
+            document.getElementById('yahtzeeDiceRollsLeft').textContent=`Rolls remaining: \${yumRollsRemaining}`;
+        }
+
+        function yumAfterRoll() {
+            const grid=document.getElementById('yahtzeeDiceGrid');
+            const scenes=Array.from(grid.querySelectorAll('.die-scene'));
+            yumDiceElements=scenes;
+            scenes.forEach((el,idx)=>{
+                el.style.cursor='pointer';
+                if(el._yumTouchStart) el.removeEventListener('touchstart',el._yumTouchStart);
+                if(el._yumClick) el.removeEventListener('click',el._yumClick);
+                const onTouch=(e)=>{e.preventDefault();e.stopPropagation();yumToggleKeep(idx);};
+                const onClick=()=>yumToggleKeep(idx);
+                el._yumTouchStart=onTouch; el._yumClick=onClick;
+                el.addEventListener('touchstart',onTouch,{passive:false});
+                el.addEventListener('click',onClick);
+            });
+            yumBuildSuggestions();
+            const rollBtn=document.getElementById('yahtzeeRollBtn');
+            if(yumRollsRemaining>0){
+                rollBtn.textContent=`🎲 Roll Again (\${yumRollsRemaining} left)`;
+                rollBtn.disabled=false; rollBtn.style.opacity='1'; rollBtn.onclick=yumRoll;
+            } else {
+                rollBtn.textContent='✅ End Turn — Pick a Category';
+                rollBtn.disabled=false; rollBtn.style.opacity='1';
+                rollBtn.onclick=()=>{ const l=document.getElementById('yahtzeeSuggestionsList'); l.style.outline='2px solid var(--neon-blue)'; l.style.borderRadius='8px'; setTimeout(()=>{l.style.outline='none';},800); };
+            }
+            document.getElementById('yahtzeeZeroBtn').style.display='';
+            document.getElementById('yahtzeeZeroBtn').onclick=yumScoreZero;
+        }
+
+        function yumToggleKeep(idx) {
+            const el=yumDiceElements[idx];
+            if(!el) return;
+            if(yumKeptIndices.has(idx)){yumKeptIndices.delete(idx);el.classList.remove('locked');}
+            else{yumKeptIndices.add(idx);el.classList.add('locked');}
+            void el.offsetHeight;
+            yumBuildSuggestions();
+        }
+
+        function yumBuildSuggestions() {
+            const pid=yumActivePlayerId;
+            const used=yumUsedCategories[pid]||{};
+            const vals=yumDiceValues;
+            const suggs=Object.entries(YUM_CATEGORIES)
+                .filter(([k])=>!used[k])
+                .map(([k,def])=>({key:k,name:def.name,score:calcYumScore(k,vals)}))
+                .sort((a,b)=>b.score-a.score);
+            const list=document.getElementById('yahtzeeSuggestionsList');
+            const best=suggs.find(s=>s.score>0);
+            list.innerHTML=suggs.map(s=>`<div class="yahtzee-suggestion-row \${s.score===0?'zero-score':''} \${s===best?'best-score':''}" onclick="yumApplyScore('\${s.key}',\${s.score})"><span class="yahtzee-suggestion-name">\${s.name}</span><span class="yahtzee-suggestion-pts">\${s.score} pts</span></div>`).join('');
+            document.getElementById('yahtzeeSuggestions').style.display='block';
+        }
+
+        function yumApplyScore(category,score) {
+            const pid=yumActivePlayerId;
+            const player=players.find(p=>p.id===pid);
+            if(!player){closeYumDiceRoller();return;}
+            saveStateForUndo(`\${player.name} - Yum \${YUM_CATEGORIES[category].name}: \${score}`);
+            yumScores[pid][category]=score;
+            yumUsedCategories[pid][category]=true;
+            saveYumData();
+            renderYumTable();
+            yumCurrentPlayerIndex=(yumCurrentPlayerIndex+1)%players.length;
+            closeYumDiceRoller();
+        }
+
+        function yumScoreZero() {
+            const pid=yumActivePlayerId;
+            const used=yumUsedCategories[pid]||{};
+            const available=Object.entries(YUM_CATEGORIES).filter(([k])=>!used[k]);
+            const list=document.getElementById('yahtzeeSuggestionsList');
+            list.innerHTML='<div style="font-family:Outfit,sans-serif;font-size:0.78rem;color:var(--text-primary);opacity:0.7;margin-bottom:6px;">Choose a category to score 0:</div>'+
+                available.map(([k,def])=>`<div class="yahtzee-suggestion-row zero-score" onclick="yumApplyScore('\${k}',0)"><span class="yahtzee-suggestion-name">\${def.name}</span><span class="yahtzee-suggestion-pts">0 pts</span></div>`).join('');
+            document.getElementById('yahtzeeSuggestions').style.display='block';
+        }
+
+        function initializeYatzyScores() {
             // Only initialize if yahtzeeScores doesn't exist
             if (!yahtzeeScores) {
                 yahtzeeScores = {};
@@ -16148,7 +16693,7 @@
                         lgStraight: 0,
                         yahtzee: 0,
                         chance: 0,
-                        yahtzeeBonus: 0 // For additional Yahtzees
+                        yahtzeeBonus: 0 // For additional Yatzys
                     };
                 }
                 // Initialize used categories tracker
@@ -16157,9 +16702,9 @@
                 }
             });
             
-            console.log('Initialized Yahtzee scores:', yahtzeeScores);
+            console.log('Initialized Yatzy scores:', yahtzeeScores);
         }
-        function renderYahtzeeTable() {
+        function renderYatzyTable() {
             const buttonContainer = document.getElementById('yahtzeeButtons');
             
             console.log('=== RENDER YAHTZEE TABLE ===');
@@ -16182,7 +16727,7 @@
             // Player headers
             players.forEach(player => {
                 html += `<th class="crowns-player-header">
-                    <div style="cursor: pointer;" onclick="editYahtzeePlayerName(${player.id})">${player.name}</div>
+                    <div style="cursor: pointer;" onclick="editYatzyPlayerName(${player.id})">${player.name}</div>
                 </th>`;
             });
             
@@ -16200,7 +16745,7 @@
                     const score = yahtzeeScores[player.id][cat] || 0;
                     const used = yahtzeeUsedCategories[player.id][cat];
                     const cellClass = used ? 'yahtzee-used' : 'yahtzee-available';
-                    html += `<td class="${cellClass}" onclick="enterYahtzeeScore(${player.id}, '${cat}')" style="cursor: pointer;">${score > 0 ? score : (used ? '0' : '-')}</td>`;
+                    html += `<td class="${cellClass}" onclick="enterYatzyScore(${player.id}, '${cat}')" style="cursor: pointer;">${score > 0 ? score : (used ? '0' : '-')}</td>`;
                 });
                 html += '</tr>';
             });
@@ -16252,13 +16797,13 @@
                     const score = yahtzeeScores[player.id][cat.key] || 0;
                     const used = yahtzeeUsedCategories[player.id][cat.key];
                     const cellClass = used ? 'yahtzee-used' : 'yahtzee-available';
-                    html += `<td class="${cellClass}" onclick="enterYahtzeeScore(${player.id}, '${cat.key}')" style="cursor: pointer;">${score > 0 ? score : (used ? '0' : '-')}</td>`;
+                    html += `<td class="${cellClass}" onclick="enterYatzyScore(${player.id}, '${cat.key}')" style="cursor: pointer;">${score > 0 ? score : (used ? '0' : '-')}</td>`;
                 });
                 html += '</tr>';
             });
             
-            // Yahtzee Bonus
-            html += '<tr style="background: rgba(255, 215, 0, 0.1);"><td class="crowns-hole-label" style="font-weight: 700;">Yahtzee Bonus<br><span style="font-size: 0.85rem; opacity: 0.7;">100 per extra</span></td>';
+            // Yatzy Bonus
+            html += '<tr style="background: rgba(255, 215, 0, 0.1);"><td class="crowns-hole-label" style="font-weight: 700;">Yatzy Bonus<br><span style="font-size: 0.85rem; opacity: 0.7;">100 per extra</span></td>';
             players.forEach(player => {
                 const bonus = yahtzeeScores[player.id].yahtzeeBonus || 0;
                 html += `<td style="font-weight: 700; color: ${bonus > 0 ? '#28a745' : 'inherit'};">${bonus > 0 ? bonus : '-'}</td>`;
@@ -16309,7 +16854,7 @@
             document.getElementById('yahtzeeTable').innerHTML = html;
             savePlayers(); // Save updated totals
         }
-        async function enterYahtzeeScore(playerId, category) {
+        async function enterYatzyScore(playerId, category) {
             // Cancel any voice operations when manually editing
             cancelAllVoiceOperations();
             
@@ -16342,7 +16887,7 @@
                     input.removeEventListener('blur', saveScore);
                     input.removeEventListener('keypress', handleKeypress);
                     
-                    renderYahtzeeTable();
+                    renderYatzyTable();
                     return;
                 }
                 
@@ -16353,19 +16898,19 @@
                 yahtzeeScores[playerId][category] = score;
                 yahtzeeUsedCategories[playerId][category] = true;
                 
-                // Check for Yahtzee bonus (if scoring additional yahtzees)
+                // Check for Yatzy bonus (if scoring additional yahtzees)
                 if (category === 'yahtzee' && score === 50 && yahtzeeUsedCategories[playerId].yahtzee && yahtzeeScores[playerId].yahtzee > 0) {
                     yahtzeeScores[playerId].yahtzeeBonus = (yahtzeeScores[playerId].yahtzeeBonus || 0) + 100;
-                    speak(`Yahtzee bonus! ${player.name} gets 100 extra points!`);
+                    speak(`Yatzy bonus! ${player.name} gets 100 extra points!`);
                 }
                 
-                saveYahtzeeData();
+                saveYatzyData();
                 
                 // CRITICAL: Remove event listeners before re-rendering
                 input.removeEventListener('blur', saveScore);
                 input.removeEventListener('keypress', handleKeypress);
                 
-                renderYahtzeeTable();
+                renderYatzyTable();
                 
                 // No voice feedback for manual input
             };
@@ -16379,7 +16924,7 @@
             input.addEventListener('blur', saveScore, { once: true });
             input.addEventListener('keypress', handleKeypress);
         }
-        function editYahtzeePlayerName(playerId) {
+        function editYatzyPlayerName(playerId) {
             const player = players.find(p => p.id === playerId);
             if (!player) return;
             
@@ -16410,7 +16955,7 @@
                         delete yahtzeeUsedCategories[playerId];
                         savePlayers();
                     }
-                    renderYahtzeeTable();
+                    renderYatzyTable();
                     return;
                 }
                 
@@ -16418,7 +16963,7 @@
                     player.name = newName;
                     savePlayers();
                 }
-                renderYahtzeeTable();
+                renderYatzyTable();
             };
             
             const handleKeypress = (e) => {
@@ -16430,11 +16975,11 @@
             input.addEventListener('blur', saveEdit, { once: true });
             input.addEventListener('keypress', handleKeypress);
         }
-        function saveYahtzeeData() {
+        function saveYatzyData() {
             localStorage.setItem('scorekeeper_yahtzee_scores', JSON.stringify(yahtzeeScores));
             localStorage.setItem('scorekeeper_yahtzee_used', JSON.stringify(yahtzeeUsedCategories));
         }
-        function loadYahtzeeData() {
+        function loadYatzyData() {
             const savedScores = localStorage.getItem('scorekeeper_yahtzee_scores');
             const savedUsed = localStorage.getItem('scorekeeper_yahtzee_used');
             
@@ -16650,7 +17195,7 @@
                 phase10Completed = JSON.parse(savedCompleted);
             }
         }
-        // ===== GENERIC GRID FUNCTIONS (for General/Darts/Farkel) =====
+        // ===== GENERIC GRID FUNCTIONS (for General/Darts/Farkle) =====
         
         function initializeGenericGridScores() {
             // Only initialize if genericGridScores doesn't exist
@@ -16698,10 +17243,10 @@
                 if (gameButtonContainer) gameButtonContainer.style.display = 'none';
                 return;
             }
-            // Show buttons only for Farkel
+            // Show buttons only for Farkle
             if (buttonContainer) buttonContainer.style.display = currentGameType === 'farkle' ? 'flex' : 'none';
             if (gameButtonContainer) gameButtonContainer.style.display = 'block';
-            // Show Roll Dice button only for Farkel
+            // Show Roll Dice button only for Farkle
             const rollDiceBtn = document.getElementById('farkleRollDiceBtn');
             if (rollDiceBtn) rollDiceBtn.style.display = currentGameType === 'farkle' ? '' : 'none';
             const modPanel = document.getElementById('farkleModifiers');
@@ -16726,11 +17271,11 @@
                 
                 players.forEach(player => {
                     const raw = genericGridScores[player.id][turn];
-                    const isFarkel = raw === 'F';
-                    const score = isFarkel ? 0 : (raw || 0);
+                    const isFarkle = raw === 'F';
+                    const score = isFarkle ? 0 : (raw || 0);
                     const isCurrentTurn = currentGenericTurn[player.id] === index;
                     const cellClass = isCurrentTurn ? 'current-turn-cell' : '';
-                    const style = isFarkel
+                    const style = isFarkle
                         ? 'cursor:pointer;color:#e53935;font-weight:800;background:rgba(255,0,110,0.18);'
                         : 'cursor:pointer;';
                     html += `<td class="${cellClass}" onclick="editGenericGridScore(${player.id}, '${turn}')" style="${style}">${score}</td>`;
@@ -16748,7 +17293,7 @@
                     total += v === 'F' ? 0 : (v || 0);
                 });
                 player.score = total; // Update player's main score
-                // In Farkel: green = current leader above winning score; red bg = was leading but now beaten
+                // In Farkle: green = current leader above winning score; red bg = was leading but now beaten
                 let totalStyle = 'font-weight:800;';
                 if (currentGameType === 'farkle') {
                     // Find the highest total among all players
@@ -17616,7 +18161,7 @@
                                 successCount++;
                                 feedbackMessages.push(`${player.name}: ${points}`);
                             } else if (scoringMode === 'yahtzee' && currentGameType === 'yahtzee') {
-                                // Yahtzee doesn't have automatic turn advancement via voice
+                                // Yatzy doesn't have automatic turn advancement via voice
                                 player.score += points;
                                 savePlayers();
                                 successCount++;
@@ -17790,7 +18335,7 @@
                     addGenericRow();
                     return;
                 } else {
-                    showVoiceFeedback('Only available in Scrabble, General, Darts, or Farkel modes', '');
+                    showVoiceFeedback('Only available in Scrabble, General, Darts, or Farkle modes', '');
                     setTimeout(hideVoiceFeedback, 2000);
                     return;
                 }
@@ -17843,10 +18388,11 @@
                             'golf': 'Golf',
                             '5crowns': '5 Crowns',
                             'phase10': 'Phase 10',
-                            'farkle': 'Farkel',
+                            'farkle': 'Farkle',
                             'darts': 'Darts',
                             'scrabble': 'Scrabble',
-                            'yahtzee': 'Yahtzee'
+                            'yahtzee': 'Yatzy',
+                'yum': 'Yum'
                         };
                         selectedGameSpan.textContent = gameNames[gametype] || gametype;
                     }
@@ -17953,8 +18499,11 @@
                         } else if (scoringMode === 'scrabble' && currentGameType === 'scrabble') {
                             renderScrabbleTable();
                         } else if (scoringMode === 'yahtzee' && currentGameType === 'yahtzee') {
-                            saveYahtzeeData();
-                            renderYahtzeeTable();
+                            saveYatzyData();
+                            renderYatzyTable();
+                        } else if (scoringMode === 'yum' && currentGameType === 'yum') {
+                            saveYumData();
+                            renderYumTable();
                         } else if (scoringMode === 'phase10' && currentGameType === 'phase10') {
                             savePhase10Data();
                             renderPhase10Table();
@@ -17983,10 +18532,11 @@
                         'golf': 'Golf',
                         '5crowns': '5 Crowns',
                         'phase10': 'Phase 10',
-                        'farkle': 'Farkel',
+                        'farkle': 'Farkle',
                         'darts': 'Darts',
                         'scrabble': 'Scrabble',
-                        'yahtzee': 'Yahtzee',
+                        'yahtzee': 'Yatzy',
+                'yum': 'Yum',
                         'general': 'General'
                     };
                     
@@ -18005,7 +18555,7 @@
                                 showVoiceFeedback('All turns completed!', '');
                                 setTimeout(hideVoiceFeedback, 2000);
                             }
-                    speak('I didn\'t catch that. Please say Golf, 5 Crowns, Phase 10, Farkel, Darts, Scrabble, Yahtzee, or General.');
+                    speak('I didn\'t catch that. Please say Golf, 5 Crowns, Phase 10, Farkle, Darts, Scrabble, Yatzy, or General.');
                     showVoiceFeedback('Game not recognized', transcript);
                     setTimeout(() => {
                         hideVoiceFeedback();
@@ -18190,8 +18740,11 @@
                         } else if (scoringMode === 'scrabble' && currentGameType === 'scrabble') {
                             renderScrabbleTable();
                         } else if (scoringMode === 'yahtzee' && currentGameType === 'yahtzee') {
-                            saveYahtzeeData();
-                            renderYahtzeeTable();
+                            saveYatzyData();
+                            renderYatzyTable();
+                        } else if (scoringMode === 'yum' && currentGameType === 'yum') {
+                            saveYumData();
+                            renderYumTable();
                         } else if (scoringMode === 'phase10' && currentGameType === 'phase10') {
                             savePhase10Data();
                             renderPhase10Table();
@@ -18493,8 +19046,11 @@
                             } else if (scoringMode === 'scrabble' && currentGameType === 'scrabble') {
                                 renderScrabbleTable();
                             } else if (scoringMode === 'yahtzee' && currentGameType === 'yahtzee') {
-                                saveYahtzeeData();
-                                renderYahtzeeTable();
+                                saveYatzyData();
+                                renderYatzyTable();
+                            } else if (scoringMode === 'yum' && currentGameType === 'yum') {
+                                saveYumData();
+                                renderYumTable();
                             } else if (scoringMode === 'phase10' && currentGameType === 'phase10') {
                                 savePhase10Data();
                                 renderPhase10Table();
@@ -19159,11 +19715,12 @@
                     'golf': 'Golf',
                     '5crowns': '5 Crowns',
                     'phase10': 'Phase 10',
-                    'farkle': 'Farkel',
+                    'farkle': 'Farkle',
                     'darts': 'Darts',
                     'dominoes': 'Dominoes',
                     'scrabble': 'Scrabble',
-                    'yahtzee': 'Yahtzee'
+                    'yahtzee': 'Yatzy',
+                'yum': 'Yum'
                 };
                 if (selectedSpan) {
                     selectedSpan.textContent = gameNames[savedGameType] || savedGameType;
@@ -19662,6 +20219,7 @@
             const phase10Mode = document.getElementById('phase10Mode');
             const genericGridMode = document.getElementById('genericGridMode');
             const dominoesMode = document.getElementById('dominoesMode');
+            const yumMode = document.getElementById('yumMode');
             const darts501Container = document.getElementById('darts501Container');
             
             // Hide game mode containers
@@ -19673,6 +20231,7 @@
             if (phase10Mode) phase10Mode.classList.remove('active');
             if (genericGridMode) genericGridMode.classList.remove('active');
             if (dominoesMode) dominoesMode.classList.remove('active');
+            if (yumMode) yumMode.classList.remove('active');
             if (darts501Container) darts501Container.style.display = 'none';
             
             // Hide all game button containers
@@ -19681,12 +20240,14 @@
             const phase10Buttons = document.getElementById('phase10Buttons');
             const genericGridButtons = document.getElementById('genericGridButtons');
             const genericGridGameButtons = document.getElementById('genericGridGameButtons');
+            const yumButtons = document.getElementById('yumButtons');
             
             if (scrabbleButtons) scrabbleButtons.style.display = 'none';
             if (yahtzeeButtons) yahtzeeButtons.style.display = 'none';
             if (phase10Buttons) phase10Buttons.style.display = 'none';
             if (genericGridButtons) genericGridButtons.style.display = 'none';
             if (genericGridGameButtons) genericGridGameButtons.style.display = 'none';
+            if (yumButtons) yumButtons.style.display = 'none';
 
             // Hide Score Flipper
             const scoreFlipper = document.getElementById('scoreFlipper');
@@ -20095,21 +20656,22 @@
                 
                 // Don't render players on main screen - Scrabble uses its own grid interface
             } else if (currentGameType === 'yahtzee') {
-                console.log('Switching to Yahtzee grid mode');
+                console.log('Switching to Yatzy grid mode');
                 scoringMode = 'yahtzee';
-                
-                // Hide all other modes first
                 hideAllGameModes();
-                
-                // Show Yahtzee mode
                 const yahtzeeMode = document.getElementById('yahtzeeMode');
                 yahtzeeMode.classList.add('active');
-                
-                // Initialize grid with existing players (preserves any existing data)
-                initializeYahtzeeScores();
-                renderYahtzeeTable();
-                
-                // Don't render players on main screen - Yahtzee uses its own grid interface
+                initializeYatzyScores();
+                renderYatzyTable();
+            } else if (currentGameType === 'yum') {
+                console.log('Switching to Yum grid mode');
+                scoringMode = 'yum';
+                hideAllGameModes();
+                const yumMode = document.getElementById('yumMode');
+                if (yumMode) yumMode.classList.add('active');
+                loadYumData();
+                initializeYumScores();
+                renderYumTable();
             } else if (currentGameType === 'phase10') {
                 console.log('Switching to Phase 10 grid mode');
                 scoringMode = 'phase10';
@@ -20180,7 +20742,7 @@
                 
                 // Don't render players on main screen - Dominoes uses its own grid interface
             } else {
-                // Use generic grid for General and Farkel
+                // Use generic grid for General and Farkle
                 if (currentGameType === 'general' || currentGameType === 'farkle') {
                     console.log('Switching to Generic Grid mode for', currentGameType);
                     scoringMode = 'generic';
@@ -20334,9 +20896,10 @@
             '5crowns':  '5 Crowns',
             'golf':     'Golf',
             'scrabble': 'Scrabble',
-            'yahtzee':  'Yahtzee',
+            'yahtzee':  'Yatzy',
+            'yum':      'Yum',
             'phase10':  'Phase 10',
-            'farkle':   'Farkel',
+            'farkle':   'Farkle',
             'darts':    'Darts',
             'dominoes': 'Dominoes',
             'general':  'General'
@@ -20669,9 +21232,14 @@
                 changeGameType(); // Ensure UI is properly set up
             } else if (currentGameType === 'yahtzee') {
                 scoringMode = 'yahtzee';
-                initializeYahtzeeScores();
-                renderYahtzeeTable();
-                changeGameType(); // Ensure UI is properly set up
+                initializeYatzyScores();
+                renderYatzyTable();
+                changeGameType();
+            } else if (currentGameType === 'yum') {
+                scoringMode = 'yum';
+                initializeYumScores();
+                renderYumTable();
+                changeGameType();
             } else if (currentGameType === 'phase10') {
                 scoringMode = 'phase10';
                 initializePhase10Scores();
@@ -20913,7 +21481,7 @@
                     renderScrabbleTable();
                 }
                 
-                // Reset Yahtzee scores if in that mode
+                // Reset Yatzy scores if in that mode
                 if (scoringMode === 'yahtzee' && currentGameType === 'yahtzee') {
                     players.forEach(player => {
                         if (yahtzeeScores[player.id]) {
@@ -20929,8 +21497,8 @@
                         // Clear all used categories so they show as "-" again
                         yahtzeeUsedCategories[player.id] = {};
                     });
-                    saveYahtzeeData();
-                    renderYahtzeeTable();
+                    saveYatzyData();
+                    renderYatzyTable();
                 }
                 
                 // Reset Phase 10 scores if in that mode
@@ -20947,16 +21515,27 @@
                     renderPhase10Table();
                 }
                 
+                // Reset Yum scores if in that mode
+                if (scoringMode === 'yum' && currentGameType === 'yum') {
+                    yumCurrentPlayerIndex = 0;
+                    players.forEach(player => {
+                        yumScores[player.id] = { ones:0,twos:0,threes:0,fours:0,fives:0,sixes:0,subTotal:0,upperBonus:0,upperTotal:0,threeKind:0,fourKind:0,smStraight:0,lgStraight:0,highRoll:0,fullHouse:0,yum:0,lowerTotal:0,grandTotal:0 };
+                        yumUsedCategories[player.id] = {};
+                    });
+                    saveYumData();
+                    renderYumTable();
+                }
+
                 // Reset Generic Grid scores if in that mode
                 if (scoringMode === 'generic' && (currentGameType === 'general' || currentGameType === 'darts' || currentGameType === 'farkle')) {
-                    // For Farkel: reset back to 12 rows
+                    // For Farkle: reset back to 12 rows
                     if (currentGameType === 'farkle') {
                         GENERIC_TURNS = ['1','2','3','4','5','6','7','8','9','10','11','12'];
                         genericMaxTurn = 12;
-                        // Also reset Farkel game state
+                        // Also reset Farkle game state
                         farkleLastTurnWinner = null;
                         farkleFinalRoundPlayers = new Set();
-                        farkleConsecutiveFarkels = {};
+                        farkleConsecutiveFarkles = {};
                     }
                     players.forEach(player => {
                         genericGridScores[player.id] = {};
@@ -21007,6 +21586,9 @@
                 currentScrabbleTurn = {};
                 yahtzeeScores = {};
                 yahtzeeUsedCategories = {};
+                yumScores = {};
+                yumUsedCategories = {};
+                yumCurrentPlayerIndex = 0;
                 phase10Scores = {};
                 phase10Completed = {};
                 genericGridScores = {};
@@ -21043,7 +21625,7 @@
                 // Save cleared state
                 savePlayers();
                 saveCrownsScores();
-                saveYahtzeeData();
+                saveYatzyData();
                 savePhase10Data();
                 saveGenericGridData();
                 localStorage.setItem('scorekeeper_current_crowns_round', JSON.stringify(currentCrownsRound));
@@ -22450,7 +23032,7 @@
         let yahtzeeDiceElements = [];            // DOM .die-scene elements
         let yahtzeeCurrentPlayerIndex = 0;       // whose turn it is
 
-        function openYahtzeeDiceRoller() {
+        function openYatzyDiceRoller() {
             if (players.length === 0) return;
 
             // Find the current player using the turn index, skip players with no open categories
@@ -22489,7 +23071,7 @@
             grid.innerHTML = '';
         }
 
-        function closeYahtzeeDiceRoller() {
+        function closeYatzyDiceRoller() {
             document.getElementById('yahtzeeDiceModal').style.display = 'none';
             yahtzeeRollerMode = false;
             yahtzeeActivePlayerId = null;
@@ -22684,13 +23266,13 @@
         function yahtzeeApplyScore(category, score) {
             const playerId = yahtzeeActivePlayerId;
             const player = players.find(p => p.id === playerId);
-            if (!player) { closeYahtzeeDiceRoller(); return; }
+            if (!player) { closeYatzyDiceRoller(); return; }
 
             saveStateForUndo(`${player.name} - ${YAHTZEE_CATEGORIES[category].name}: ${score}`);
             yahtzeeScores[playerId][category] = score;
             yahtzeeUsedCategories[playerId][category] = true;
 
-            // Yahtzee bonus
+            // Yatzy bonus
             if (category === 'yahtzee' && score === 50) {
                 // already handled by existing logic
             }
@@ -22702,13 +23284,13 @@
                 if (upperTotal >= 63) yahtzeeScores[playerId]['upperBonus'] = 35;
             }
 
-            saveYahtzeeData();
-            renderYahtzeeTable();
+            saveYatzyData();
+            renderYatzyTable();
 
             // Advance to next player
             yahtzeeCurrentPlayerIndex = (yahtzeeCurrentPlayerIndex + 1) % players.length;
 
-            closeYahtzeeDiceRoller();
+            closeYatzyDiceRoller();
         }
 
         function yahtzeeScoreZero() {
@@ -22730,12 +23312,12 @@
         }
 
         // ── YAHTZEE RULES ──────────────────────────────────────────────────────
-        function closeYahtzeeRules() { document.getElementById('yahtzeeRulesModal').style.display = 'none'; }
-        function openYahtzeeRules() {
+        function closeYatzyRules() { document.getElementById('yahtzeeRulesModal').style.display = 'none'; }
+        function openYatzyRules() {
             document.getElementById('yahtzeeRulesModal').style.display = 'flex';
-            document.getElementById('yahtzeeRulesContent').innerHTML = buildYahtzeeRulesHTML();
+            document.getElementById('yahtzeeRulesContent').innerHTML = buildYatzyRulesHTML();
         }
-        function buildYahtzeeRulesHTML() {
+        function buildYatzyRulesHTML() {
             const rule = (icon, text) => `<div class="scrabble-rule-row"><span style="font-size:1.2rem;flex-shrink:0;">${icon}</span><span>${text}</span></div>`;
             const section = (title, content) => `<div class="scrabble-rules-section"><h3>${title}</h3>${content}</div>`;
             const cat = (name, score, desc) => `<div class="scrabble-rule-row"><span style="font-weight:800;min-width:110px;font-size:0.8rem;flex-shrink:0;">${name}</span><div><div style="font-weight:700;color:var(--neon-blue);font-size:0.9rem;">${score}</div><div style="font-size:0.75rem;color:var(--text-primary);opacity:0.75;">${desc}</div></div></div>`;
@@ -22765,15 +23347,15 @@
                 ${cat('Sm. Straight','30 pts','4 sequential dice (e.g. 1-2-3-4)')}
                 ${cat('Lg. Straight','40 pts','5 sequential dice (e.g. 2-3-4-5-6)')}
                 ${cat('Chance','Sum of all 5 dice','Any combination — no restrictions')}
-                ${cat('Yahtzee!','50 pts','All 5 dice the same')}
+                ${cat('Yatzy!','50 pts','All 5 dice the same')}
             `)}
-            ${section('Yahtzee Bonus & The Joker Rule', `
-                ${rule('🎯', 'If you roll a <strong>Yahtzee</strong> but have already scored in the Yahtzee box, you earn a <strong>100-point Yahtzee Bonus</strong>. Mark it in the Yahtzee Bonus box.')}
-                ${rule('🃏', 'Every extra Yahtzee also acts as a <strong>Joker</strong> — you must use it to fill in another category using these Joker rules:')}
-                ${rule('1️⃣', '<strong>Step 1 — Corresponding Upper Box:</strong> If the upper section box matching the Yahtzee\'s number (e.g. Fives for five 5s) is <em>not yet filled</em>, you <strong>must</strong> score it there.')}
+            ${section('Yatzy Bonus & The Joker Rule', `
+                ${rule('🎯', 'If you roll a <strong>Yatzy</strong> but have already scored in the Yatzy box, you earn a <strong>100-point Yatzy Bonus</strong>. Mark it in the Yatzy Bonus box.')}
+                ${rule('🃏', 'Every extra Yatzy also acts as a <strong>Joker</strong> — you must use it to fill in another category using these Joker rules:')}
+                ${rule('1️⃣', '<strong>Step 1 — Corresponding Upper Box:</strong> If the upper section box matching the Yatzy\'s number (e.g. Fives for five 5s) is <em>not yet filled</em>, you <strong>must</strong> score it there.')}
                 ${rule('2️⃣', '<strong>Step 2 — Lower Section:</strong> If the corresponding upper box is already filled, you may score the Joker in <em>any open lower section box</em>. The Joker counts as: Full House (25), Sm. Straight (30), Lg. Straight (40) — even if the dice don\'t form those combinations.')}
                 ${rule('3️⃣', '<strong>Step 3 — Any Upper Box:</strong> If all lower section boxes are filled too, score the Joker in any remaining upper section box — counting only the dice matching that number.')}
-                ${rule('⚠️', 'If the Yahtzee box itself was scored as <strong>0</strong> (you scratched it), there is <strong>no bonus</strong> and the Joker rule does not apply — score normally in any open category.')}
+                ${rule('⚠️', 'If the Yatzy box itself was scored as <strong>0</strong> (you scratched it), there is <strong>no bonus</strong> and the Joker rule does not apply — score normally in any open category.')}
             `)}`;
         }
 
@@ -22894,14 +23476,14 @@
             </div>`;
         }
 
-        function closeFarkelRules() {
+        function closeFarkleRules() {
             document.getElementById('farkleRulesModal').style.display = 'none';
         }
 
-        function openFarkelRules() {
+        function openFarkleRules() {
             const modal = document.getElementById('farkleRulesModal');
             modal.style.display = 'flex';
-            document.getElementById('farkleRulesContent').innerHTML = buildFarkelRulesHTML();
+            document.getElementById('farkleRulesContent').innerHTML = buildFarkleRulesHTML();
         }
 
         function dieSVG(val, size = 32, dimmed = false) {
@@ -22923,7 +23505,7 @@
             </svg>`;
         }
 
-        function buildFarkelRulesHTML() {
+        function buildFarkleRulesHTML() {
             const d = (v, dim) => dieSVG(v, 30, dim);
             const row = (dice, combo, score, note='') => `
                 <div class="farkle-rule-row">
@@ -22975,8 +23557,8 @@
                 ${row('🎲', 'Roll all 6 dice', 'Lock at least one scoring die each roll')}
                 ${row('🔒', 'Bank your score', 'End your turn and keep your points')}
                 ${row('🔥', 'Hot Dice!', 'If all 6 dice score, roll all 6 again and keep accumulating')}
-                ${row('💥', 'Farkel!', 'If no dice score, you lose all unbanked points for this turn')}
-                ${farkleTriplePenaltyEnabled ? row('⚠️', '3 Farkels in a row', '−1,000 pts penalty') : ''}
+                ${row('💥', 'Farkle!', 'If no dice score, you lose all unbanked points for this turn')}
+                ${farkleTriplePenaltyEnabled ? row('⚠️', '3 Farkles in a row', '−1,000 pts penalty') : ''}
             </div>`;
         }
 
@@ -23036,17 +23618,17 @@
         let farkleWinningScore = 5000;
         let farkleTriplePenaltyEnabled = true;
         let farkleSpicyMode = false;
-        let farkleConsecutiveFarkels = {}; // playerId → count of consecutive farkles
+        let farkleConsecutiveFarkles = {}; // playerId → count of consecutive farkles
         let farkleLastTurnWinner = null;   // playerId who first crossed winning score
         let farkleFinalRoundPlayers = new Set(); // players who still get their final turn
 
-        function updateFarkelModifiers() {
+        function updateFarkleModifiers() {
             farkleWinningScore = parseInt(document.querySelector('input[name="farkleWinScore"]:checked')?.value || '5000');
             farkleTriplePenaltyEnabled = document.getElementById('farkleTriplePenalty')?.checked ?? true;
             farkleSpicyMode = document.querySelector('input[name="farkleVariant"]:checked')?.value === 'spicy';
         }
 
-        // Spicy Farkel: count how many locked dice show their red face
+        // Spicy Farkle: count how many locked dice show their red face
         // Each red-face die doubles the score (multiplier stacks: 2 red = 4x, 3 red = 8x)
         function getSpicyMultiplier(lockedIndicesSet) {
             if (!farkleSpicyMode) return 1;
@@ -23059,9 +23641,9 @@
             return Math.pow(2, redCount);
         }
 
-        // Farkel scoring: compute score of a set of dice values
+        // Farkle scoring: compute score of a set of dice values
         // Returns { score, scoringIndices } where scoringIndices are indices that score
-        function scoreFarkelDice(vals) {
+        function scoreFarkleDice(vals) {
             const counts = [0,0,0,0,0,0,0]; // index 1-6
             vals.forEach(v => counts[v]++);
             let score = 0;
@@ -23122,8 +23704,8 @@
             return { score, scoringIndices };
         }
 
-        function openFarkelDiceRoller() {
-            updateFarkelModifiers();
+        function openFarkleDiceRoller() {
+            updateFarkleModifiers();
             // Find the player whose turn it is (lowest currentGenericTurn index)
             let targetPlayer = null;
             let minTurn = Infinity;
@@ -23151,7 +23733,7 @@
             const pipBtn = document.querySelector('.dice-type-btn[data-sides="6"][data-pip="true"]');
             if (pipBtn) pipBtn.classList.add('active');
 
-            // Show modal in Farkel mode
+            // Show modal in Farkle mode
             document.getElementById('diceRollerModal').style.display = 'flex';
             document.getElementById('diceChangeDiceBtn').style.display = 'none';
             document.getElementById('diceEndTurnBtn').style.display = '';
@@ -23290,11 +23872,11 @@
         function farkleAfterRoll() {
             const lockedBefore = farkleNewDiceStartIdx;
             const newVals = farkleDiceValues.slice(lockedBefore);
-            const { score: newRollScore, scoringIndices } = scoreFarkelDice(newVals);
+            const { score: newRollScore, scoringIndices } = scoreFarkleDice(newVals);
 
             if (newRollScore === 0) {
                 farkleTurnTotal = 0;
-                farkleShowFarkel();
+                farkleShowFarkle();
                 return;
             }
 
@@ -23387,7 +23969,7 @@
             const newlyLockedVals = [...farkleLockedIndices]
                 .filter(i => i >= farkleNewDiceStartIdx)
                 .map(i => farkleDiceValues[i]);
-            const { score: baseScore } = scoreFarkelDice(newlyLockedVals);
+            const { score: baseScore } = scoreFarkleDice(newlyLockedVals);
             // Spicy: multiply by 2 for each locked red-face die (all currently locked, not just new)
             const multiplier = getSpicyMultiplier(farkleLockedIndices);
             const score = baseScore * multiplier;
@@ -23454,7 +24036,7 @@
             const newlyLockedVals = [...farkleLockedIndices]
                 .filter(i => i >= farkleNewDiceStartIdx)
                 .map(i => farkleDiceValues[i]);
-            const { score: lockedScore } = scoreFarkelDice(newlyLockedVals);
+            const { score: lockedScore } = scoreFarkleDice(newlyLockedVals);
             const multiplier = getSpicyMultiplier(farkleLockedIndices);
             farkleTurnTotal += lockedScore * multiplier;
 
@@ -23468,7 +24050,7 @@
                 .filter(i => i >= farkleNewDiceStartIdx)
                 .map(i => farkleDiceValues[i]);
             if (newlyLockedVals.length > 0) {
-                const { score: lockedScore } = scoreFarkelDice(newlyLockedVals);
+                const { score: lockedScore } = scoreFarkleDice(newlyLockedVals);
                 const multiplier = getSpicyMultiplier(farkleLockedIndices);
                 farkleTurnTotal += lockedScore * multiplier;
             }
@@ -23494,10 +24076,10 @@
             }, 900);
         }
 
-        function farkleShowFarkel() {
+        function farkleShowFarkle() {
             // Track consecutive farkles for triple penalty
             if (farkleActivePlayerId !== null) {
-                farkleConsecutiveFarkels[farkleActivePlayerId] = (farkleConsecutiveFarkels[farkleActivePlayerId] || 0) + 1;
+                farkleConsecutiveFarkles[farkleActivePlayerId] = (farkleConsecutiveFarkles[farkleActivePlayerId] || 0) + 1;
             }
 
             const label = document.getElementById('diceResultLabel');
@@ -23538,7 +24120,7 @@
         }
 
         function farkleBankScore() {
-            updateFarkelModifiers();
+            updateFarkleModifiers();
 
             let banked = farkleTurnTotal;
             // Only add dice locked THIS roll (not already counted in farkleTurnTotal)
@@ -23546,7 +24128,7 @@
                 .filter(i => i >= farkleNewDiceStartIdx)
                 .map(i => farkleDiceValues[i]);
             if (newlyLockedVals.length > 0) {
-                const { score: baseScore } = scoreFarkelDice(newlyLockedVals);
+                const { score: baseScore } = scoreFarkleDice(newlyLockedVals);
                 const multiplier = getSpicyMultiplier(farkleLockedIndices);
                 banked += baseScore * multiplier;
             }
@@ -23558,30 +24140,30 @@
             const turn = GENERIC_TURNS[turnIndex];
             if (!turn) { closeDiceRoller(); return; }
 
-            // ── Triple Farkel penalty ──────────────────────────────────────────
-            const consecutiveFarkels = farkleConsecutiveFarkels[farkleActivePlayerId] || 0;
+            // ── Triple Farkle penalty ──────────────────────────────────────────
+            const consecutiveFarkles = farkleConsecutiveFarkles[farkleActivePlayerId] || 0;
             let penalty = 0;
             if (banked === 0) {
-                // This was a Farkel — consecutive count already incremented in farkleShowFarkel
-                if (farkleTriplePenaltyEnabled && consecutiveFarkels >= 3) {
+                // This was a Farkle — consecutive count already incremented in farkleShowFarkle
+                if (farkleTriplePenaltyEnabled && consecutiveFarkles >= 3) {
                     penalty = -1000;
-                    farkleConsecutiveFarkels[farkleActivePlayerId] = 0; // reset after penalty
-                    showVoiceFeedback(`${player.name} — 3 Farkels in a row! −1,000 pts`, '', false);
+                    farkleConsecutiveFarkles[farkleActivePlayerId] = 0; // reset after penalty
+                    showVoiceFeedback(`${player.name} — 3 Farkles in a row! −1,000 pts`, '', false);
                     setTimeout(hideVoiceFeedback, 3000);
                 }
             } else {
                 // Scored — reset consecutive farkle count
-                farkleConsecutiveFarkels[farkleActivePlayerId] = 0;
+                farkleConsecutiveFarkles[farkleActivePlayerId] = 0;
             }
 
             const netScore = banked + penalty;
 
             if (netScore !== 0 || penalty !== 0) {
-                saveStateForUndo(`${player.name} - Turn ${turn}: ${netScore} (Farkel)`);
+                saveStateForUndo(`${player.name} - Turn ${turn}: ${netScore} (Farkle)`);
                 genericGridScores[farkleActivePlayerId][turn] = (genericGridScores[farkleActivePlayerId][turn] || 0) + netScore;
             } else {
-                // Pure Farkel — store sentinel 'F' so it renders red
-                saveStateForUndo(`${player.name} - Turn ${turn}: Farkel`);
+                // Pure Farkle — store sentinel 'F' so it renders red
+                saveStateForUndo(`${player.name} - Turn ${turn}: Farkle`);
                 genericGridScores[farkleActivePlayerId][turn] = 'F';
             }
 
@@ -23620,7 +24202,7 @@
             renderGenericGridTable();
             closeDiceRoller();
 
-            // Reset Farkel state
+            // Reset Farkle state
             farkleMode = false;
             farkleActivePlayerId = null;
             farkleTurnTotal = 0;
@@ -24863,7 +25445,7 @@
             loadInputMode();
             loadGolfMode();
             loadGolfData();
-            loadYahtzeeData();
+            loadYatzyData();
             loadPhase10Data();
             loadGenericGridData();
             loadScrabbleData();
