@@ -16339,7 +16339,7 @@
                 return `<td class="${cls}" onclick="enterYumScore(${pid},'${cat}')" style="cursor:pointer;">${disp}</td>`;
             };
             const sectionHeader = (label, colour) =>
-                `<tr><td colspan="${n+1}" style="background:${colour};color:white;font-weight:800;text-align:center;padding:6px;">${label}</td></tr>`;
+                `<tr><td colspan="${n+2}" style="background:${colour};color:white;font-weight:800;text-align:center;padding:6px;">${label}</td></tr>`;
             const maxCell = txt => `<td style="font-size:0.7rem;opacity:0.6;border-left:2px solid rgba(255,255,255,0.15);">${txt}</td>`;
 
             let h = `<thead><tr>
@@ -16452,7 +16452,7 @@
             const val = prompt(player.name + ' — ' + def.name + '\nEnter score:', current || '');
             if(val===null) return;
             const score = Math.max(0, parseInt(val)||0);
-            saveStateForUndo(`\${player.name} - Yum \${def.name}: \${score}`);
+            saveStateForUndo(`${player.name} - Yum ${def.name}: ${score}`);
             yumScores[playerId][category] = score;
             yumUsedCategories[playerId][category] = true;
             saveYumData();
@@ -16538,7 +16538,7 @@
 
             // Reuse the Yatzy dice modal UI
             document.getElementById('yahtzeeDiceModal').style.display='flex';
-            document.getElementById('yahtzeeDiceStatusBar').textContent=`\${target.name}'s turn (Yum)`;
+            document.getElementById('yahtzeeDiceStatusBar').textContent=`${target.name}'s turn (Yum)`;
             document.getElementById('yahtzeeDiceRollsLeft').textContent='Rolls remaining: 3';
             document.getElementById('yahtzeeSuggestions').style.display='none';
             document.getElementById('yahtzeeDiceTotalBar').style.display='none';
@@ -16583,10 +16583,10 @@
                 scene.appendChild(cube);
                 grid.appendChild(scene);
                 yumDiceElements.push(scene);
-                if(isKept){const f=VAL_TO_FACE[val];const[rx,ry]=FACE_ROTS[f];cube.style.transform=`rotateX(\${rx}deg) rotateY(\${ry}deg)`;checkDone();}
+                if(isKept){const f=VAL_TO_FACE[val];const[rx,ry]=FACE_ROTS[f];cube.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;checkDone();}
                 else{cube.style.transform='rotateX(0deg) rotateY(0deg)';setTimeout(()=>{animateCube(scene,cube,val,checkDone);},idx*80);}
             });
-            document.getElementById('yahtzeeDiceRollsLeft').textContent=`Rolls remaining: \${yumRollsRemaining}`;
+            document.getElementById('yahtzeeDiceRollsLeft').textContent=`Rolls remaining: ${yumRollsRemaining}`;
         }
 
         function yumAfterRoll() {
@@ -16606,7 +16606,7 @@
             yumBuildSuggestions();
             const rollBtn=document.getElementById('yahtzeeRollBtn');
             if(yumRollsRemaining>0){
-                rollBtn.textContent=`🎲 Roll Again (\${yumRollsRemaining} left)`;
+                rollBtn.textContent=`🎲 Roll Again (${yumRollsRemaining} left)`;
                 rollBtn.disabled=false; rollBtn.style.opacity='1'; rollBtn.onclick=yumRoll;
             } else {
                 rollBtn.textContent='✅ End Turn — Pick a Category';
@@ -16636,7 +16636,7 @@
                 .sort((a,b)=>b.score-a.score);
             const list=document.getElementById('yahtzeeSuggestionsList');
             const best=suggs.find(s=>s.score>0);
-            list.innerHTML=suggs.map(s=>`<div class="yahtzee-suggestion-row \${s.score===0?'zero-score':''} \${s===best?'best-score':''}" onclick="yumApplyScore('\${s.key}',\${s.score})"><span class="yahtzee-suggestion-name">\${s.name}</span><span class="yahtzee-suggestion-pts">\${s.score} pts</span></div>`).join('');
+            list.innerHTML=suggs.map(s=>`<div class="yahtzee-suggestion-row ${s.score===0?'zero-score':''} ${s===best?'best-score':''}" onclick="yumApplyScore('${s.key}',${s.score})"><span class="yahtzee-suggestion-name">${s.name}</span><span class="yahtzee-suggestion-pts">${s.score} pts</span></div>`).join('');
             document.getElementById('yahtzeeSuggestions').style.display='block';
         }
 
@@ -16644,7 +16644,7 @@
             const pid=yumActivePlayerId;
             const player=players.find(p=>p.id===pid);
             if(!player){closeYumDiceRoller();return;}
-            saveStateForUndo(`\${player.name} - Yum \${YUM_CATEGORIES[category].name}: \${score}`);
+            saveStateForUndo(`${player.name} - Yum ${YUM_CATEGORIES[category].name}: ${score}`);
             yumScores[pid][category]=score;
             yumUsedCategories[pid][category]=true;
             saveYumData();
@@ -16659,7 +16659,7 @@
             const available=Object.entries(YUM_CATEGORIES).filter(([k])=>!used[k]);
             const list=document.getElementById('yahtzeeSuggestionsList');
             list.innerHTML='<div style="font-family:Outfit,sans-serif;font-size:0.78rem;color:var(--text-primary);opacity:0.7;margin-bottom:6px;">Choose a category to score 0:</div>'+
-                available.map(([k,def])=>`<div class="yahtzee-suggestion-row zero-score" onclick="yumApplyScore('\${k}',0)"><span class="yahtzee-suggestion-name">\${def.name}</span><span class="yahtzee-suggestion-pts">0 pts</span></div>`).join('');
+                available.map(([k,def])=>`<div class="yahtzee-suggestion-row zero-score" onclick="yumApplyScore('${k}',0)"><span class="yahtzee-suggestion-name">${def.name}</span><span class="yahtzee-suggestion-pts">0 pts</span></div>`).join('');
             document.getElementById('yahtzeeSuggestions').style.display='block';
         }
 
