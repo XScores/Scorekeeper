@@ -159,6 +159,12 @@
             background: rgba(0, 0, 0, 0.15) !important;
             border-bottom: 1px solid rgba(80, 100, 130, 0.55) !important;
         }
+        /* Round/turn highlight must win over the Stainless label background above */
+        body[data-theme="stainless"] .crowns-table td.crowns-hole-label.highlighted:not(.golf-info-column) {
+            background: linear-gradient(135deg, var(--neon-blue), #00c4cc) !important;
+            color: #000000 !important;
+            box-shadow: 0 2px 8px rgba(0, 245, 255, 0.4) !important;
+        }
         
         body[data-theme="stainless"] .card,
         body[data-theme="stainless"] .tab-navigation {
@@ -3407,6 +3413,11 @@
             color: #000000 !important; /* Black text on bright background */
             box-shadow: 0 2px 8px rgba(0, 245, 255, 0.4) !important;
         }
+        /* Light yellow row highlight for the score cells in a selected round/turn */
+        .crowns-table td.round-row-highlight {
+            background: rgba(255, 235, 59, 0.35) !important;
+            color: #000000 !important;
+        }
         .crowns-table th.round-label {
             z-index: 15;
             color: #000000; /* Black text for better contrast on light blue */
@@ -3487,6 +3498,12 @@
         /* Light green background for Tee column cells (not OUT, IN, TOT) */
         .crowns-table tbody tr:not(.total-row) td.crowns-hole-label.golf-info-column {
             background: rgba(57, 255, 20, 0.2) !important;
+        }
+        /* Manual highlight on a Golf hole label should win over the green Tee background */
+        .crowns-table tbody tr:not(.total-row) td.crowns-hole-label.golf-info-column.highlighted {
+            background: linear-gradient(135deg, var(--neon-blue), #00c4cc) !important;
+            color: #000000 !important;
+            box-shadow: 0 2px 8px rgba(0, 245, 255, 0.4) !important;
         }
         /* Yatzy-specific styles */
         .yahtzee-available {
@@ -6441,6 +6458,12 @@
             color: #000000 !important;
             border-right: 2px solid #007AFF !important;
         }
+        /* Round/turn highlight must win over the iOS label background above */
+        body[data-theme="ios"] .crowns-table td.crowns-hole-label.highlighted:not(.golf-info-column) {
+            background: linear-gradient(135deg, var(--neon-blue), #00c4cc) !important;
+            color: #000000 !important;
+            box-shadow: 0 2px 8px rgba(0, 245, 255, 0.4) !important;
+        }
         body[data-theme="ios"] .crowns-table tbody tr:not(.total-row):not(.crowns-total-row) td.round-label {
             background: rgba(0, 122, 255, 0.12) !important;
         }
@@ -6605,6 +6628,12 @@
         body[data-theme="ios-dark"] .crowns-table td.crowns-hole-label:not(.golf-info-column) {
             border-right: 2px solid #0A84FF !important;
             background: #3A3A3C !important;
+        }
+        /* Round/turn highlight must win over the iOS Dark label background above */
+        body[data-theme="ios-dark"] .crowns-table td.crowns-hole-label.highlighted:not(.golf-info-column) {
+            background: linear-gradient(135deg, var(--neon-blue), #00c4cc) !important;
+            color: #000000 !important;
+            box-shadow: 0 2px 8px rgba(0, 245, 255, 0.4) !important;
         }
         body[data-theme="ios-dark"] .crowns-table .total-row td.crowns-hole-label,
         body[data-theme="ios-dark"] .crowns-table .crowns-total-row td.crowns-hole-label,
@@ -8580,6 +8609,9 @@
         let currentGenericTurn = {}; // Track current turn index for each player
         let highlightedGenericTurn = null; // Track which turn is highlighted
         let highlightedDominoesRound = null; // Track which Dominoes round is highlighted
+        let highlightedScrabbleTurn = null; // Track which Scrabble turn is highlighted
+        let highlightedPhase10Phase = null; // Track which Phase 10 phase is highlighted
+        let highlightedGolfHole = null; // Track which Golf hole is highlighted
         let dominoesScores = {}; // Store Dominoes scores by player and round
         let dominoesRounds = ['12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0']; // Mexican Train rounds: 12-12 down to 0-0
         let gameInProgress = false; // Track if game has started
@@ -13269,13 +13301,14 @@
             // Round rows
             CROWNS_ROUNDS.forEach(round => {
                 const isHighlighted = highlightedRound === round ? ' highlighted' : '';
+                const rowHighlight = highlightedRound === round ? ' round-row-highlight' : '';
                 if (isHighlighted) {
                     console.log('Round', round, 'should be highlighted. Class:', 'round-label' + isHighlighted);
                 }
                 html += `<tr><td class="round-label${isHighlighted}" onclick="toggleRoundHighlight('${round}')">${round}</td>`;
                 players.forEach(player => {
                     const score = crownsScores[player.id][round] || 0;
-                    html += `<td onclick="editCrownsScore(${player.id}, '${round}')" class="editable">${score}</td>`;
+                    html += `<td onclick="editCrownsScore(${player.id}, '${round}')" class="editable${rowHighlight}">${score}</td>`;
                 });
                 html += '</tr>';
             });
@@ -13634,22 +13667,24 @@
             // Front 9 holes (1-9)
             for (let i = 0; i < 9; i++) {
                 const hole = GOLF_HOLES[i];
-                html += `<tr><td class="crowns-hole-label golf-info-column">${hole}</td>`;
+                const isHighlighted = highlightedGolfHole === hole ? ' highlighted' : '';
+                const rowHighlight = highlightedGolfHole === hole ? ' round-row-highlight' : '';
+                html += `<tr><td class="crowns-hole-label golf-info-column${isHighlighted}" onclick="toggleGolfHoleHighlight('${hole}')" style="cursor: pointer;">${hole}</td>`;
                 
                 // Show Par, HCP, YRD columns if data exists
                 if (hasParData) {
                     const par = golfCoursePar[hole] || 0;
-                    html += `<td class="crowns-score golf-info-column" onclick="editPar('${hole}')">${par || ''}</td>`;
+                    html += `<td class="crowns-score golf-info-column${rowHighlight}" onclick="editPar('${hole}')">${par || ''}</td>`;
                 }
                 if (hasHcpData) {
                     const hcp = golfCourseHCP[hole] || 0;
-                    html += `<td class="crowns-score golf-info-column" onclick="editHCP('${hole}')">${hcp || ''}</td>`;
+                    html += `<td class="crowns-score golf-info-column${rowHighlight}" onclick="editHCP('${hole}')">${hcp || ''}</td>`;
                 }
                 if (hasYrdData) {
                     // Render 3 yardage columns
                     const yrdArray = golfCourseYRD[hole] || [0, 0, 0];
                     yrdArray.forEach((yrdVal, idx) => {
-                        html += `<td class="crowns-score golf-info-column" onclick="editYRD('${hole}', ${idx})">${yrdVal || ''}</td>`;
+                        html += `<td class="crowns-score golf-info-column${rowHighlight}" onclick="editYRD('${hole}', ${idx})">${yrdVal || ''}</td>`;
                     });
                 }
                 
@@ -13657,7 +13692,7 @@
                 players.forEach(player => {
                     const scoreValue = golfScores[player.id]?.[hole] || 0;
                     const isCurrentHole = currentGolfHole[player.id] === i;
-                    const highlightClass = isCurrentHole ? 'crowns-score-highlight' : '';
+                    const highlightClass = (isCurrentHole ? 'crowns-score-highlight' : '') + rowHighlight;
                     
                     // Display total strokes (or empty if 0)
                     const displayScore = scoreValue || '';
@@ -13706,22 +13741,24 @@
             // Back 9 holes (10-18)
             for (let i = 9; i < 18; i++) {
                 const hole = GOLF_HOLES[i];
-                html += `<tr><td class="crowns-hole-label golf-info-column">${hole}</td>`;
+                const isHighlighted = highlightedGolfHole === hole ? ' highlighted' : '';
+                const rowHighlight = highlightedGolfHole === hole ? ' round-row-highlight' : '';
+                html += `<tr><td class="crowns-hole-label golf-info-column${isHighlighted}" onclick="toggleGolfHoleHighlight('${hole}')" style="cursor: pointer;">${hole}</td>`;
                 
                 // Show Par, HCP, YRD columns if data exists
                 if (hasParData) {
                     const par = golfCoursePar[hole] || 0;
-                    html += `<td class="crowns-score golf-info-column" onclick="editPar('${hole}')">${par || ''}</td>`;
+                    html += `<td class="crowns-score golf-info-column${rowHighlight}" onclick="editPar('${hole}')">${par || ''}</td>`;
                 }
                 if (hasHcpData) {
                     const hcp = golfCourseHCP[hole] || 0;
-                    html += `<td class="crowns-score golf-info-column" onclick="editHCP('${hole}')">${hcp || ''}</td>`;
+                    html += `<td class="crowns-score golf-info-column${rowHighlight}" onclick="editHCP('${hole}')">${hcp || ''}</td>`;
                 }
                 if (hasYrdData) {
                     // Render 3 yardage columns
                     const yrdArray = golfCourseYRD[hole] || [0, 0, 0];
                     yrdArray.forEach((yrdVal, idx) => {
-                        html += `<td class="crowns-score golf-info-column" onclick="editYRD('${hole}', ${idx})">${yrdVal || ''}</td>`;
+                        html += `<td class="crowns-score golf-info-column${rowHighlight}" onclick="editYRD('${hole}', ${idx})">${yrdVal || ''}</td>`;
                     });
                 }
                 
@@ -13729,7 +13766,7 @@
                 players.forEach(player => {
                     const scoreValue = golfScores[player.id]?.[hole] || 0;
                     const isCurrentHole = currentGolfHole[player.id] === i;
-                    const highlightClass = isCurrentHole ? 'crowns-score-highlight' : '';
+                    const highlightClass = (isCurrentHole ? 'crowns-score-highlight' : '') + rowHighlight;
                     
                     // Display total strokes (or empty if 0)
                     const displayScore = scoreValue || '';
@@ -13819,6 +13856,15 @@
             if (buttonsDiv && players.length > 0) {
                 buttonsDiv.style.display = 'block';
             }
+        }
+        function toggleGolfHoleHighlight(hole) {
+            // Toggle the highlight - if already highlighted, unhighlight it
+            if (highlightedGolfHole === hole) {
+                highlightedGolfHole = null;
+            } else {
+                highlightedGolfHole = hole;
+            }
+            renderGolfTable();
         }
         function editPar(hole) {
             // Cancel any voice operations when manually editing
@@ -14986,11 +15032,13 @@
             
             // Turn rows
             SCRABBLE_TURNS.forEach((turn, index) => {
-                html += `<tr><td class="crowns-hole-label">${turn}</td>`;
+                const isHighlighted = highlightedScrabbleTurn === turn ? ' highlighted' : '';
+                const rowHighlight = highlightedScrabbleTurn === turn ? ' round-row-highlight' : '';
+                html += `<tr><td class="crowns-hole-label${isHighlighted}" onclick="toggleScrabbleTurnHighlight('${turn}')" style="cursor: pointer;">${turn}</td>`;
                 players.forEach(player => {
                     const score = scrabbleScores[player.id]?.[turn] || 0;
                     const isCurrentTurn = currentScrabbleTurn[player.id] === index;
-                    const highlightClass = isCurrentTurn ? 'crowns-score-highlight' : '';
+                    const highlightClass = (isCurrentTurn ? 'crowns-score-highlight' : '') + rowHighlight;
                     html += `<td class="crowns-score ${highlightClass}" onclick="editScrabbleScore(${player.id}, '${turn}')">${score}</td>`;
                 });
                 html += '</tr>';
@@ -15031,6 +15079,15 @@
             html += '</tr></tbody>';
             
             document.getElementById('scrabbleTable').innerHTML = html;
+        }
+        function toggleScrabbleTurnHighlight(turn) {
+            // Toggle the highlight - if already highlighted, unhighlight it
+            if (highlightedScrabbleTurn === turn) {
+                highlightedScrabbleTurn = null;
+            } else {
+                highlightedScrabbleTurn = turn;
+            }
+            renderScrabbleTable();
         }
         function editPlayerNameInScrabbleGrid(playerId) {
             // Cancel any voice operations when manually editing
@@ -17040,15 +17097,17 @@
             html += '</tr></thead><tbody>';
             
             PHASE10_PHASES.forEach(phase => {
+                const isHighlighted = highlightedPhase10Phase === phase.num ? ' highlighted' : '';
+                const rowHighlight = highlightedPhase10Phase === phase.num ? ' round-row-highlight' : '';
                 html += `<tr>`;
-                html += `<td class="crowns-hole-label" style="font-size: 0.95rem; font-weight: 800;">Phase ${phase.num}<br><span style="font-size: 0.75rem; opacity: 0.7; font-weight: 600;">${phase.name}</span></td>`;
+                html += `<td class="crowns-hole-label${isHighlighted}" onclick="togglePhase10PhaseHighlight(${phase.num})" style="font-size: 0.95rem; font-weight: 800; cursor: pointer;">Phase ${phase.num}<br><span style="font-size: 0.75rem; opacity: 0.7; font-weight: 600;">${phase.name}</span></td>`;
                 
                 players.forEach(player => {
                     const score = phase10Scores[player.id][phase.num] || 0;
                     const completed = phase10Completed[player.id][phase.num];
                     const cellStyle = completed ? 'background: rgba(0, 245, 255, 0.2); font-weight: 700;' : '';
                     const displayScore = completed ? `✓ ${score}` : score;
-                    html += `<td style="cursor: pointer; ${cellStyle}" onclick="enterPhase10Score(${player.id}, ${phase.num})">${displayScore > 0 || completed ? displayScore : '-'}</td>`;
+                    html += `<td class="${rowHighlight.trim()}" style="cursor: pointer; ${cellStyle}" onclick="enterPhase10Score(${player.id}, ${phase.num})">${displayScore > 0 || completed ? displayScore : '-'}</td>`;
                 });
                 
                 html += '</tr>';
@@ -17070,6 +17129,15 @@
             
             document.getElementById('phase10Table').innerHTML = html;
             savePlayers();
+        }
+        function togglePhase10PhaseHighlight(phaseNum) {
+            // Toggle the highlight - if already highlighted, unhighlight it
+            if (highlightedPhase10Phase === phaseNum) {
+                highlightedPhase10Phase = null;
+            } else {
+                highlightedPhase10Phase = phaseNum;
+            }
+            renderPhase10Table();
         }
         async function enterPhase10Score(playerId, phaseNum) {
             // Cancel any voice operations when manually editing
@@ -17266,6 +17334,7 @@
             // Turn rows
             GENERIC_TURNS.forEach((turn, index) => {
                 const isHighlighted = highlightedGenericTurn === turn ? ' highlighted' : '';
+                const rowHighlight = highlightedGenericTurn === turn ? ' round-row-highlight' : '';
                 html += `<tr>`;
                 html += `<td class="crowns-hole-label${isHighlighted}" onclick="toggleGenericTurnHighlight('${turn}')" style="cursor: pointer;">${turn}</td>`;
                 
@@ -17274,7 +17343,7 @@
                     const isFarkle = raw === 'F';
                     const score = isFarkle ? 0 : (raw || 0);
                     const isCurrentTurn = currentGenericTurn[player.id] === index;
-                    const cellClass = isCurrentTurn ? 'current-turn-cell' : '';
+                    const cellClass = (isCurrentTurn ? 'current-turn-cell' : '') + rowHighlight;
                     const style = isFarkle
                         ? 'cursor:pointer;color:#e53935;font-weight:800;background:rgba(255,0,110,0.18);'
                         : 'cursor:pointer;';
@@ -17659,6 +17728,7 @@
             dominoesRounds.forEach((round, index) => {
                 const dominoSVG = generateDominoSVG(parseInt(round));
                 const isHighlighted = highlightedDominoesRound === round ? ' highlighted' : '';
+                const rowHighlight = highlightedDominoesRound === round ? ' round-row-highlight' : '';
                 html += `<tr><td class="crowns-hole-label${isHighlighted}" 
                                  onclick="toggleDominoesRoundHighlight('${round}')" 
                                  style="text-align: left; padding: 4px 2px 4px 6px; min-width: 70px; max-width: 70px; width: 70px; white-space: nowrap; cursor: pointer;">${dominoSVG}${round}</td>`;
@@ -17668,7 +17738,7 @@
                                  inputmode="numeric"
                                  data-player-id="${player.id}" 
                                  data-round="${round}" 
-                                 class="editable-score-cell" 
+                                 class="editable-score-cell${rowHighlight}" 
                                  style="cursor: text;">${score}</td>`;
                 });
                 html += '</tr>';
